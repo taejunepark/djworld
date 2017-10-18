@@ -148,6 +148,18 @@ public class MemberController {
 		return "member/find";
 	}
 	
+	@RequestMapping("/infofind/{code}")
+	public String infoFind(@PathVariable String code, Model model) {
+		model.addAttribute("code", code);
+		return "member/infofind";
+	}
+	
+//	@RequestMapping(value="/infofind", method=RequestMethod.POST)
+//	public String infoFind(String id) {
+//		
+//		return "member/infofind";
+//	}
+	
 	@RequestMapping("/goodbye")
 	public String goodbye() {
 		return "member/goodbye";

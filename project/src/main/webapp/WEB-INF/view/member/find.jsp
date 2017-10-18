@@ -21,8 +21,6 @@
 			event.preventDefault();//기본 이벤트 중지
 			
 			var key = $(this).find("input[name=key]").val();
-			console.log(this);
-			console.log(key);
 			if(key.length > 0){
 				location.href = 
 					"${pageContext.request.contextPath}/member/find/"+key;
