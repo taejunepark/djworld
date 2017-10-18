@@ -9,4 +9,9 @@ public class MinihomeController {
 	public String home() {
 		return "mini/minihome";
 	}
+	
+	@RequestMapping("/comment")
+	public String comment() {
+		return "mini/comment";
+	}
 }

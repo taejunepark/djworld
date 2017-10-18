@@ -1,26 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>DOM ¼öÁ¤</title>
+        <title>DOM ìˆ˜ì •</title>
         <link rel="stylesheet" type="text/css" href="css/common.css">
         <link rel="stylesheet" type="text/css" href="css/swiper.css">
+        <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
         <style>
             a{
                 text-decoration: none;
                 color:black;
             }
             
+            div{
+            	border:1px solid black;
+            	margin: 1px 0px;
+            }
+            
+            /*ì „ì²´ div class*/
             .mini{
                 display: flex;
                 flex-wrap: wrap;
-                width: 100%;
-                height: 100%;
+                width: 850px;
+                height: 600px;
                 margin: 0px auto;
                 border: 1px solid black;
             }
             
+            /* Header div*/
             header{
                 border: 1px dotted blue;
                 text-align: right;
@@ -54,6 +63,7 @@
                 padding: 5px;
             }
             
+            /* ì£¼ìš” Div */
             main{
                 display: flex;
                 flex-wrap: wrap;
@@ -63,6 +73,7 @@
                 margin : 5px;
             }
             
+            /* ì‚¬ì´ë“œ Div */
             aside{
                 display:flex;
                 flex-wrap: wrap;
@@ -102,6 +113,7 @@
                 padding: 5px;
             }
             
+            /* Main Div */
             .highlight{
                 display: flex;
                 flex-wrap: wrap;
@@ -109,6 +121,7 @@
                 margin: 5px;
             }
             
+            /* ìƒˆ ê²Œì‹œë¬¼ ê´€ë ¨ Div*/
             .partOne{
                 display: flex;
                 border: 1px dotted blue;
@@ -133,6 +146,7 @@
                 width: 50%;
             }
             
+            /* ì„ì‹œ */
             .partTwo {
                 border: 1px dotted blue;
                 width: 100%;
@@ -141,6 +155,7 @@
                 padding: 5px;
             }
             
+            /* ì¼ì´Œí‰ ê´€ë ¨ Div*/
             .partThree{
                 border: 1px dotted blue;
                 width: 100%;
@@ -149,6 +164,7 @@
                 padding: 5px;
             }
             
+            /* ìš°ì¸¡ ë©”ë‰´ Div */
             .menu{
                 border: 1px dotted blue;
                 flex-grow: 1;
@@ -161,19 +177,33 @@
                 margin: 2px -40px;
             }
         </style>
-        <!-- jQuery¸¦ »ç¿ëÇÏ±â À§ÇÑ CDN ¼³Á¤ -->
+        <!-- jQueryë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•œ CDN ì„¤ì • -->
         <script src="https://code.jquery.com/jquery-latest.js"></script>
         <script src="regex04.js"></script>
         <script>
-            
+            $(document).ready(function(){
+                $("#comment_btn").click(function(){
+                    $.ajax({
+                        url:"comment",
+                        type:"get",
+                        data:{
+                        	comment:$("#comment").val(),
+                        },
+                        success:function(res){
+                            $("#addComment").prepend(res)
+                        }
+                    })
+                    $("#comment").val("")
+                })
+            })
         </script>
     </head>
     <body>
         <div class="mini">
             <header>
-                <a class="header_a" href="#">³» È¨ÇÇ</a>
-                <a class="header_a" href="#">¹Ù·Î °¡±â</a>
-                <a class="header_a" href="#">·Î±×ÀÎ</a>
+                <a class="header_a" href="#">ë‚´ í™ˆí”¼</a>
+                <a class="header_a" href="#">ë°”ë¡œ ê°€ê¸°</a>
+                <a class="header_a" href="#">ë¡œê·¸ì¸</a>
             </header>
             
             <div class="visit">
@@ -182,7 +212,7 @@
             </div>
             
             <div class="tmp">
-                <span>???´ÔÀÇ ¹Ì´Ï È¨ÇÇ</span>
+                <span>???ë‹˜ì˜ ë¯¸ë‹ˆ í™ˆí”¼</span>
             </div>
             
             <main>
@@ -193,19 +223,19 @@
                     
                     <div class="hello">
                         <h3>
-                            ÀÎ»ç¸»
-                            ¸¸³ª¼­ ¹æ°¡¿ö¿ë
-                            »ÑÀ×»ÑÀ×!
+                            ì¸ì‚¬ë§
+                            ë§Œë‚˜ì„œ ë°©ê°€ì›Œìš©
+                            ë¿Œì‰ë¿Œì‰!
                         </h3>
                     </div>
                     
                     <div class="edit">
-                        <a href="#">¼öÁ¤</a>
+                        <a href="#">ìˆ˜ì •</a>
                     </div>
                     
                     <div class="info">
                         <h3>
-                            ±â¸ğ¶ì(³²)
+                            ê¸°ëª¨ë (ë‚¨)
                         </h3>
                     </div>
                 </aside>
@@ -213,50 +243,52 @@
                 <div class="highlight">
                     <div class="partOne">
                         <div class="left">
-                            <font size="5">ÃÖ±Ù °Ô½Ã¹°</font>
+                            <font size="5">ìµœê·¼ ê²Œì‹œë¬¼</font>
                             <hr>
-                            ´ÙÀÌ¾î¸® ¿À´Ãµµ ³­ ¾ÆÇÁ´Ù...
+                            ë‹¤ì´ì–´ë¦¬ ì˜¤ëŠ˜ë„ ë‚œ ì•„í”„ë‹¤...
                             <br>
-                            °Ô½ÃÆÇ ÅÂÁØ¾Æ...
+                            ê²Œì‹œíŒ íƒœì¤€ì•„...
                             <br>
-                            »çÁøÃ¸ ¹Ì¾ÈÇÏ´Ù!!!!!
+                            ì‚¬ì§„ì²© ë¯¸ì•ˆí•˜ë‹¤!!!!!
                         </div>
                         
                         <div class="empty"></div>
                         
                         <div class="right">
                             <br><br>
-                            <a href="#">´ÙÀÌ¾î¸® 0/0</a> &nbsp;&nbsp; <a href="#">»çÁøÃ¸ 0/0</a><br>
-                            <a href="#">°øÀ¯ ´ÙÀÌ¾î¸®</a>&nbsp;&nbsp; <a href="#">°Ô½ÃÆÇ 0/0</a><br>
-                            <a href="#">¹æ¸í·Ï 0/0</a>
+                            <a href="#">ë‹¤ì´ì–´ë¦¬ 0/0</a> &nbsp;&nbsp; <a href="#">ì‚¬ì§„ì²© 0/0</a><br>
+                            <a href="#">ê³µìœ  ë‹¤ì´ì–´ë¦¬</a>&nbsp;&nbsp; <a href="#">ê²Œì‹œíŒ 0/0</a><br>
+                            <a href="#">ë°©ëª…ë¡ 0/0</a>
                         </div>
                     </div>
                     
                     <div class="partTwo">
-                        ¹ÌÁ¤
+                        ë¯¸ì •
                     </div>
                     
                     <div class="partThree">
-                        ÀÏÃÌÆò
+                        <input type="text" id="comment" placeholder="ì…ë ¥" required>
+                        <button id="comment_btn">ì™„ë£Œ</button>
+                        <hr id="addComment">
                     </div>
                 </div>
                 
                 <nav class="menu">
                     <ul>
                         <li>
-                            <a href="#">È¨</a>
+                            <a href="#">í™ˆ</a>
                         </li>
                         <li>
-                            <a href="#">´ÙÀÌ¾î¸®</a>
+                            <a href="#">ë‹¤ì´ì–´ë¦¬</a>
                         </li>
                         <li>
-                            <a href="#">°Ô½ÃÆÇ</a>
+                            <a href="#">ê²Œì‹œíŒ</a>
                         </li>
                         <li>
-                            <a href="#">»çÁøÃ¸</a>
+                            <a href="#">ì‚¬ì§„ì²©</a>
                         </li>
                         <li>
-                            <a href="#">°Ô½ÃÆÇ</a>
+                            <a href="#">ê²Œì‹œíŒ</a>
                         </li>
                     </ul>
                 </nav>
@@ -264,3 +296,13 @@
         </div>
     </body>
 </html>
+
+
+
+
+
+
+
+
+
+
