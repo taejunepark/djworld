@@ -16,5 +16,5 @@ public interface MemberDao {
 	boolean drop(String id, Member m);
 	List<Member> memberList();
 	List<Member> search(String key);
-	//kkkkkkkkkkkkkkkkkk
+	//kkkkkkkkkkkkkkkkkk1
 }
