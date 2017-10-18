@@ -1,0 +1,116 @@
+@charset "UTF-8";
+/* 개별적으로 적용할 속성을 정의 */
+            
+/* 테스트 코드 */
+div, header, footer, main, nav, aside, article, section{
+/*                border:1px dotted black; */
+}
+
+/* 페이지 설정 */
+.page{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* 상단 메뉴 */
+header{
+    width:100%;
+    min-height:80px;
+    text-align: center;
+    order:1;
+}
+
+aside {
+    width: 100%;
+    text-align: center;
+    min-height: 300px;
+    padding: 15px;
+    /*        border: 1px solid black;*/
+    order: 3;
+}
+
+/* 중앙 영역 */
+main{
+    flex-grow:1;
+    min-height:500px;
+    padding:30px;
+    order:4;
+}
+
+/* 하단 영역 */
+footer{
+    width:100%;
+    min-height:50px;
+    text-align:center;
+
+    border-top:1px solid black;
+    order:5;
+}
+
+/* 메뉴 관련된 style */
+nav{
+    background: black;
+    width:100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding:0.5em;
+
+    border-top:3px double black;
+    border-bottom:3px double black;
+    
+    order:2;
+}
+nav .left{
+    margin-right:1em;
+}
+nav .right{
+    margin-left: auto;
+}
+nav a{
+    font-size:20px;
+}
+/* 링크 스타일 */
+a:link, a:visited{
+    text-decoration: none;
+    color:black;
+}
+a:hover{
+    color:red;
+}
+
+
+/* 
+    화면이 작아질 경우(800px 이하)에 대한 처리 
+    1. 배치 순서 변경 및 aside 숨김
+    2. 햄버그 메뉴 구현
+
+*/
+@media screen and (max-width:800px){
+/*
+    aside{
+        order:4;
+        width:100%;
+        min-height:100px;
+        display:none;
+    }
+    main{
+        order:3;
+        width:100%;
+    }
+    .area-20, .area-30, .area-40, .area-50, .area-60, 
+    .area-70, .area-80, .area-90{
+        width:100%;
+    }
+*/
+}
+
+
+
+
+
+
+
+

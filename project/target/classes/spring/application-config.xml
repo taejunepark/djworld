@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- Uncomment and add your base-package here:
+         <context:component-scan
+            base-package="org.springframework.samples.service"/>  -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"  value ="${database.driver}"/>
+		<property name="url"  value="${database.url}"/>
+		<property name="username" value="${database.username}"/>
+		<property name="password" value="${database.password}"/>
+		
+		<property name="maxTotal"  value="${database.maxAction}"/>
+		<property name="maxIdle" value="${database.maxIdle}"/>
+		<property name="maxWaitMillis" value="${database.maxWait}"/> <!-- 대기시간 -->
+	</bean>
+	
+	<!-- 관리를 쉽게 하기 위해 properties 파일을 활용하도록 설정 -->
+	<context:property-placeholder location="/WEB-INF/property/*.properties"/>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+</beans>
