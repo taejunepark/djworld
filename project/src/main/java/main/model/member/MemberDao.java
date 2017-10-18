@@ -17,3 +17,5 @@ public interface MemberDao {
 	List<Member> memberList();
 	List<Member> search(String key);
 }
+
+//주석
