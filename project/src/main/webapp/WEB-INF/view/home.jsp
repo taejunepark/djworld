@@ -127,8 +127,8 @@ table tr:last-child td {
 								<div class="swiper-wrapper">
 									<!-- 1장의 이미지 영역 -->
 									<div class="swiper-slide">
-										<a href="myhome.html"
-											onClick="window.open(this.href, '', 'width=900, height=500, top=200, left=500'); return false;">내
+										<a href="minihome"
+											onClick="window.open(this.href, '', 'width=1000, height=600, top=200, left=500'); return false;">내
 											홈피</a>
 									</div>
 									<div class="swiper-slide">
