@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -141,24 +142,20 @@ public class MemberController {
 	@RequestMapping("/find/{key}")
 	public String search(@PathVariable String key, Model model) {
 		List<Member> list = memberDao.search(key);
-		System.out.println("검색");
 		model.addAttribute("key", key);
 		Collections.shuffle(list);
 		model.addAttribute("list", list);
 		return "member/find";
 	}
 	
-	@RequestMapping("/infofind/{code}")
-	public String infoFind(@PathVariable String code, Model model) {
-		model.addAttribute("code", code);
-		return "member/infofind";
+	@RequestMapping("/idcheck")
+	public void check(HttpServletRequest request, HttpSession session) {
+		String id = request.getParameter("check");
+		System.out.println(id);
+		boolean result = memberDao.idCheck(id);
+		System.out.println(result);
+		session.setAttribute("result", result);
 	}
-	
-//	@RequestMapping(value="/infofind", method=RequestMethod.POST)
-//	public String infoFind(String id) {
-//		
-//		return "member/infofind";
-//	}
 	
 	@RequestMapping("/goodbye")
 	public String goodbye() {

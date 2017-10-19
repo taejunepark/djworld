@@ -82,4 +82,11 @@ public class MemberDaoImpl implements MemberDao {
 				+ "order by reg";
 		return jdbcTemplate.query(sql, mapper, key, key);
 	}
+
+	@Override
+	public boolean idCheck(String id) {
+		String sql = "select count(*) member where id=?";
+		int result = jdbcTemplate.queryForObject(sql, Integer.class, id);
+		return result > 0;
+	}
 }

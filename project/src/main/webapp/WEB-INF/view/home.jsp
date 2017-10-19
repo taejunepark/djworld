@@ -115,7 +115,7 @@ table tr:last-child td {
 								</th>
 							</tr>
 							<tr class="font-small" style="height: 50px;">
-								<th colspan="3"><a href="${pageContext.request.contextPath }/member/infofind/code=id">아이디/비밀번호 찾기</a></th>
+								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind/code=id">아이디/비밀번호 찾기</a></th>
 								<th colspan="2"><a
 									href="${pageContext.request.contextPath }/member/register">회원가입</a></th>
 							</tr>

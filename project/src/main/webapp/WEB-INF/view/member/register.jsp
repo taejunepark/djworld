@@ -88,6 +88,23 @@ button {
 </style>
 
 <script>
+	$(document).ready(function(){
+		$("#id").blur(function(){
+			$.ajax({
+				 url:"${pageContext.request.ContextPath}/member/idcheck",
+				 type:"get",
+				 data:{
+					 check:$("#id").val()
+				 },
+				 success:function(res){
+					 console.log("성공");
+				 },
+				 err:function(err){
+					 console.log("실패");
+				}
+			});
+		});
+	});
 	function idCheck() {
 		var input = document.querySelector("input[name=id]");
 		var regex = /^[\w]{5,15}$/g;
@@ -195,7 +212,7 @@ button {
 				</th>
 			</tr>
 			<tr>
-				<th><input type="text" name="id" onblur="idCheck();"
+				<th><input type="text"  id= "id" name="id" onblur="idCheck();"
 					placeholder="아이디"></th>
 			</tr>
 			<tr>
