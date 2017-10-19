@@ -11,7 +11,7 @@
 
 <table class="center area-60" border="1" height="700px">
 	<c:choose>
-	<c:when test="${code==id }">
+	<c:when test="${code eq id }">
 	<tr>
 		<th>
 			<div class="font-medium row" style="text-align:left;">아이디 찾기</div>
