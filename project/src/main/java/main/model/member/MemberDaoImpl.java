@@ -84,9 +84,14 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public boolean idCheck(String id) {
-		String sql = "select count(*) member where id=?";
-		int result = jdbcTemplate.queryForObject(sql, Integer.class, id);
-		return result > 0;
+	public int idCheck(String id) {
+		String sql = "select count(*) from member where id=?";
+		return jdbcTemplate.queryForObject(sql, Integer.class, id);
+	}
+
+	@Override
+	public int emailCheck(String email) {
+		String sql = "select count(*) from member where email=?";
+		return jdbcTemplate.queryForObject(sql, Integer.class, email);
 	}
 }

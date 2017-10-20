@@ -16,5 +16,6 @@ public interface MemberDao {
 	boolean drop(String id, Member m);
 	List<Member> memberList();
 	List<Member> search(String key);
-	boolean idCheck(String id);
+	int idCheck(String id);
+	int emailCheck(String email);
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.bean.Member;
 import main.model.member.MemberDao;
@@ -33,10 +34,27 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(Member m) {
+	public String register(Member m, HttpServletRequest request) {
 		memberDao.register(m);
 		return "redirect:login";
 	}
+	
+	@RequestMapping(value = "/idcheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String idCheck(HttpServletRequest request) {
+		String id = request.getParameter("check");
+		int result = memberDao.idCheck(id);
+		return String.valueOf(result);
+	}
+	
+	@RequestMapping(value = "/mailcheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String mailCheck(HttpServletRequest request) {
+		String email = request.getParameter("check");
+		int result = memberDao.emailCheck(email);
+		return String.valueOf(result);
+	}
+	
 
 	@RequestMapping("/login")
 	public String login() {
@@ -146,15 +164,6 @@ public class MemberController {
 		Collections.shuffle(list);
 		model.addAttribute("list", list);
 		return "member/find";
-	}
-	
-	@RequestMapping("/idcheck")
-	public void check(HttpServletRequest request, HttpSession session) {
-		String id = request.getParameter("check");
-		System.out.println(id);
-		boolean result = memberDao.idCheck(id);
-		System.out.println(result);
-		session.setAttribute("result", result);
 	}
 	
 	@RequestMapping("/goodbye")
