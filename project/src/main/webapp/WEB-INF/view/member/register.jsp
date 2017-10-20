@@ -87,20 +87,20 @@ button {
 				 },
 				 success:function(data){
 					var input = document.querySelector("input[name=id]");
-					var regex = /^[\w]{5,15}$/g;
-					var regex2 = /^[\w가-힣ㄱ-ㅎ]+$/g;
+					var regex = /^[a-zA-Z0-9]{5,15}$/g;
+					var regex2 = /^[가-힣ㄱ-ㅎ]+$/g;
 					 if($.trim(data) == 0 && regex.test(input.value)){ 
 						 input.className = "correct";
 						 $('#idMSG').html('<p style="color:blue">사용 가능한 아이디입니다.</p>');
 						 idFlag = true;
 					 }
+					 else if($.trim(data) == 1){
+						 input.className = "incorrect";
+						 $('#idMSG').html('<p style="color:red">중복된 아이디가 존재합니다.</p>');
+					 }
 					 else if(input.value.length < 5 || input.value.length > 15 || regex2.test(input.value)){
 						 input.className = "incorrect";
 						 $('#idMSG').html('<p style="color:red">아이디는 5~15 영문자, 숫자로 정해주세요.</p>');
-					 }
-					 else{
-						 input.className = "incorrect";
-						 $('#idMSG').html('<p style="color:red">중복된 아이디가 존재합니다.</p>');
 					 }
 				 },
 				 err:function(err){
@@ -160,11 +160,11 @@ button {
 			return true;
 		} else if (pw.value != pw2.value) {
 			pw2.style = "border:2px solid red";
-			$('#pw2MSG').html('<p style="color:blue">비밀번호가 일치하지 않습니다.</p>');
+			$('#pw2MSG').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>');
 			return false;
 		} else if(pw.value == ""){
 			pw2.style = "border:2px solid red";
-			$('#pw2MSG').html('<p style="color:blue">필수 정보입니다.</p>');
+			$('#pw2MSG').html('<p style="color:red">필수 정보입니다.</p>');
 			pw2.value = "";
 			return false;
 		}

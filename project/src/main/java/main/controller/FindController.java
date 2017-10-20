@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import main.bean.Member;
+import main.model.find.EmailService;
 import main.model.find.FindDao;
 import main.model.member.MemberDao;
 
@@ -20,6 +21,9 @@ public class FindController {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@RequestMapping("/infofind/{code}")
 	public String infoFind(@PathVariable String code, Model model) {
@@ -39,12 +43,11 @@ public class FindController {
 	}
 
 	@RequestMapping(value = "/infofind/code=pw", method = RequestMethod.POST)
-	public String infoFind(Model model, String id, String name, String email) {
+	public String infoFind(String id, String name, String email) {
 		Member m = memberDao.info(id);
 		if (m.getName().equals(name) && m.getEmail().equals(email)) {
-			String tempPw = findDao.pwFind(id, name, email);
-			m = memberDao.info(id);
-			model.addAttribute("temp", tempPw);
+			emailService.send(id, name, email);
+			System.out.println("됨?");
 		}
 		return "infofind/pwfind";
 	}

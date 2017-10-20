@@ -16,11 +16,9 @@ public class FindDaoImpl implements FindDao {
 		return id;
 	}
 
-	public String pwFind(String id, String name, String email) {
-		String tempPW = StringUtil.createRandomString(10);
+	public void pwFind(String id, String name, String email, String tempPw) {
 		String sql = "update member set pw=? where id=? and name=? and email=?";
-		jdbcTemplate.update(sql, tempPW, id, name, email);
-		return tempPW;
+		System.out.println("업데이트 실행");
+		jdbcTemplate.update(sql, tempPw, id, name, email);
 	}
-
 }

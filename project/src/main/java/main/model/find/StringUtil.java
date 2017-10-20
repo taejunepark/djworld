@@ -22,6 +22,7 @@ public class StringUtil {
 		}
 		return buffer.toString();
 	}
+
 }
 
 
