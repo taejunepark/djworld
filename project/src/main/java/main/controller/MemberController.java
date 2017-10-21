@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import main.bean.Member;
 import main.model.member.MemberDao;
@@ -38,7 +39,7 @@ public class MemberController {
 		memberDao.register(m);
 		return "redirect:login";
 	}
-	
+
 	@RequestMapping(value = "/idcheck", method = RequestMethod.POST)
 	@ResponseBody
 	public String idCheck(HttpServletRequest request) {
@@ -46,7 +47,7 @@ public class MemberController {
 		int result = memberDao.idCheck(id);
 		return String.valueOf(result);
 	}
-	
+
 	@RequestMapping(value = "/mailcheck", method = RequestMethod.POST)
 	@ResponseBody
 	public String mailCheck(HttpServletRequest request) {
@@ -54,7 +55,6 @@ public class MemberController {
 		int result = memberDao.emailCheck(email);
 		return String.valueOf(result);
 	}
-	
 
 	@RequestMapping("/login")
 	public String login() {
@@ -63,7 +63,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Member m, @RequestParam(required = false) String save, HttpSession session,
-			HttpServletResponse response) throws IOException {
+			HttpServletResponse response, Model model) throws IOException {
 		boolean result = memberDao.login(m);
 		if (result) {
 			session.setAttribute("loginFlag", true);
@@ -73,90 +73,88 @@ public class MemberController {
 			response.addCookie(c);
 			return "redirect:/";
 		} else {
-			response.sendError(500);
-			return null;
+			model.addAttribute("result", true);
+			return "member/login";
 		}
 	}
-	
+
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping("/info")
-	public String info(Model model, HttpSession session){
-		String id = (String)session.getAttribute("userId");
-		if(id != null) {
+	public String info(Model model, HttpSession session) {
+		String id = (String) session.getAttribute("userId");
+		if (id != null) {
 			Member member = memberDao.info(id);
 			model.addAttribute("member", member);
 			return "member/myinfo";
-		}
-		else {
+		} else {
+			model.addAttribute("loginCheck", true);
 			return "redirect:login";
 		}
 	}
-	
-	@RequestMapping(value="/info", method=RequestMethod.POST)
-	public String info(Model model, HttpSession session, String pw) {
-		String id = (String)session.getAttribute("userId");
+
+	@RequestMapping(value = "/info", method = RequestMethod.POST)
+	public String info(RedirectAttributes redirect, HttpSession session, String pw) {
+		String id = (String) session.getAttribute("userId");
 		boolean result = memberDao.pwCheck(id, pw);
-		if(result) {
+		if (result) {
 			session.setAttribute("pwFlag", result);
 			return "redirect:info";
-		}
-		else {
-			return "member/pwfail";
+		} else {
+			redirect.addFlashAttribute("fail", true);
+			return "redirect:info";
 		}
 	}
-	
+
 	@RequestMapping("/edit")
 	public String edit(Model model, HttpSession session) {
-		String id = (String)session.getAttribute("userId");
+		String id = (String) session.getAttribute("userId");
 		Member member = memberDao.info(id);
 		model.addAttribute("member", member);
 		return "member/edit";
 	}
-	
-	@RequestMapping(value="/edit", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String edit(Member m) {
 		boolean result = memberDao.edit(m);
-		if(result) {
+		if (result) {
 			return "redirect:info";
-		}
-		else {
+		} else {
 			return "member/edit";
 		}
 	}
-	
+
 	@RequestMapping("/drop")
 	public String drop(Model model, HttpSession session) {
-		String id = (String)session.getAttribute("userId");
+		String id = (String) session.getAttribute("userId");
 		Member member = memberDao.info(id);
 		model.addAttribute("member", member);
 		return "member/drop";
 	}
-	
-	@RequestMapping(value="/drop", method=RequestMethod.POST)
-	public String drop(HttpSession session, Member m) {
+
+	@RequestMapping(value = "/drop", method = RequestMethod.POST)
+	public String drop(HttpSession session, Member m, RedirectAttributes redirect) {
 		String id = (String) session.getAttribute("userId");
-		if(memberDao.drop(id, m)) {
+		boolean result = memberDao.drop(id, m);
+		if(result) {
 			session.invalidate();
-			return "redirect:goodbye";
 		}
-		else
-			return "???";
+		redirect.addFlashAttribute("result", result);
+		return "redirect:goodbye";
 	}
-	
-	@RequestMapping({"/find", "/find/"})
-	public String find(Model model){
+
+	@RequestMapping({ "/find", "/find/" })
+	public String find(Model model) {
 		List<Member> list = memberDao.memberList();
-		System.out.println("전체");
 		Collections.shuffle(list);
 		model.addAttribute("list", list);
 		return "member/find";
 	}
-	
+
 	@RequestMapping("/find/{key}")
 	public String search(@PathVariable String key, Model model) {
 		List<Member> list = memberDao.search(key);
@@ -165,7 +163,7 @@ public class MemberController {
 		model.addAttribute("list", list);
 		return "member/find";
 	}
-	
+
 	@RequestMapping("/goodbye")
 	public String goodbye() {
 		return "member/goodbye";

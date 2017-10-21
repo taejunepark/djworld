@@ -9,17 +9,53 @@
 	href="${pageContext.request.contextPath }/css/swiper.css">
 
 <script>
-	function pwCheck() {
-		var input = document.querySelector("input[name=pw]");
-		var regex = /^[\w!@#$%^&*()]{6,20}$/g;
-		if (regex.test(input.value)) {
-			input.style = "border:2px solid blue";
-			return true;
-		} else {
-			input.style = "border:2px solid red";
-			return false;
-		}
-	}
+
+$(document).ready(function(){
+	$("#email").on("blur", function(){
+		$.ajax({
+			 url:"mailcheck",
+			 type:'POST',
+			 data:{
+				 check:$("#email").val()
+			 },
+			 success:function(data){
+				var input = document.querySelector("input[name=email]");
+				var regex =  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+				 if($.trim(data) == 0 && regex.test(input.value)){ 
+					 input.className = "correct";
+					 $('#mailMSG').html('<p style="color:blue">사용 가능한 이메일입니다.</p>');
+					 mailFlag = true;
+				 }
+				 else if($.trim(data) == 1){
+					 input.className = "incorrect";
+					 $('#mailMSG').html('<p style="color:red">중복된 이메일이 존재합니다.</p>');
+				 }
+				 else if(input.value.length < 5 || input.value.length > 15 || !regex.test(input.value)){
+					 input.className = "incorrect";
+					 $('#mailMSG').html('<p style="color:red">이메일 주소를 다시 한번 확인해주세요.</p>');
+				 }
+			 },
+			 err:function(err){
+				 console.log("실패");
+			}
+		});
+	});
+});
+
+function pwCheck() {
+	var input = document.querySelector("input[name=pw]");
+	var regex = /^[\w!@#$%^&*()]{6,20}$/g;
+	if(regex.test(input.value)){ 
+		 input.className = "correct";
+		 $('#pwMSG').html('<p style="color:blue">사용 가능한 비밀번호입니다.</p>');
+		 return true;
+	 }
+	 else if(input.value.length < 6 || input.value.length > 20 ){
+		 input.className = "incorrect";
+		 $('#pwMSG').html('<p style="color:red">비밀번호는 영문, 숫자, 기호 총 6~20글자로 정해주세요.</p>');
+		 return false;
+	 }
+}
 </script>
 
 <div class="empty-row"></div>
@@ -56,7 +92,7 @@
 			</tr>
 			<tr>
 				<th>이메일</th>
-				<td><input class="form-input" type="text" name="email"
+				<td><input class="form-input" type="text"  id="email" name="email"
 					placeholder="이메일" value="${member.email}"></td>
 			</tr>
 			<tr>

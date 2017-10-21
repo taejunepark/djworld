@@ -67,7 +67,19 @@ table tr:last-child td {
 		//                       
 		//                    }
 		});
+		
+		//#searchForm을 전송하지 말고 Rest 방식으로 조합하여 전송하도록 수정
+		$("#searchForm").on("submit", function(){
+			event.preventDefault();//기본 이벤트 중지
+			
+			var key = $(this).find("input[name=key]").val();
+			if(key.length > 0){
+				location.href = 
+					"${pageContext.request.contextPath}/member/find/"+key;
+			}
+		});
 	});
+		
 </script>
 
 
@@ -97,7 +109,7 @@ table tr:last-child td {
 						<c:when test="${loginFlag }">
 							<tr>
 								<th colspan="5" style="height: 100px;">
-									<h1>${userId }님환영합니다</h1>
+									<h1>${userId }님 환영합니다</h1>
 								</th>
 							</tr>
 							<tr>
@@ -110,7 +122,7 @@ table tr:last-child td {
 						<c:otherwise>
 							<tr>
 								<th colspan="5" style="height: 100px;">
-									<button class="area-40" style="height: 40px"
+									<button class="form-btn area-40" 
 										onclick="location.href='${pageContext.request.contextPath}/member/login'">로그인</button>
 								</th>
 							</tr>
@@ -132,8 +144,7 @@ table tr:last-child td {
 											홈피</a>
 									</div>
 									<div class="swiper-slide">
-										<a href="${pageContext.request.contextPath }/member/info">내
-											정보</a>
+										<a href="${pageContext.request.contextPath }/member/info">내 정보</a>
 									</div>
 									<div class="swiper-slide">
 										<a href="${pageContext.request.contextPath }/member/find">친구찾기</a>
@@ -151,21 +162,21 @@ table tr:last-child td {
 						</th>
 					</tr>
 
-					<form action="member/find" >
 						<tr>
 							<td colspan="5">
+					<form id="searchForm">
 								<div class="row inner-align-left">
 									<div style="width:100%;">
 										<input class="form-input" type="search" name="key"
-											placeholder="아이디 혹은 번호입력" value="${param.key }">
+											placeholder="아이디 혹은 번호입력" >
 									</div>
 									<div>
 										<input class="form-btn" type="submit" value="검색">
 									</div>
 								</div>
+					</form>
 							</td>
 						</tr>
-					</form>
 				</table>
 
 				<table class="friend-table" border="1">
@@ -217,18 +228,15 @@ table tr:last-child td {
 			<div class="bt1">
 				<img src="${pageContext.request.contextPath }/img/customer.png"
 					class="area-70 height-80">
-				<!--
-                    <div class="text-center center text font-small">
-                        <h1>고객센터</h1>
-                    </div>
--->
 			</div>
 			<div class="bt1">
-				<img src="${pageContext.request.contextPath }/img/idpw.jpg"
+				<a href="${pageContext.request.contextPath }/info/infofind/code=id">
+				<img src="${pageContext.request.contextPath }/img/비번.png"
 					class="area-70 height-80">
+					</a>
 			</div>
 			<div class="bt1">
-				<img src="${pageContext.request.contextPath }/img/ring.jpg"
+				<img src="${pageContext.request.contextPath }/img/미니미.png"
 					class="area-70 height-80">
 			</div>
 		</div>

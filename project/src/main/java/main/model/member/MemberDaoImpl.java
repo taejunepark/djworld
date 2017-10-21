@@ -33,7 +33,6 @@ public class MemberDaoImpl implements MemberDao {
 	public void register(Member m) {
 		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, 0, '일반', sysdate)";
 		int result = jdbcTemplate.update(sql, m.getId(), m.getPw(), m.getName(), m.getPhone(), m.getBirth(), m.getEmail(), m.getGender());
-		System.out.println(result);
 	}
 	
 	public boolean login(Member m) {

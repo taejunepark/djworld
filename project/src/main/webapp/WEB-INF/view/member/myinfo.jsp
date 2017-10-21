@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/template/header.jsp"%>
 
+<c:if test="${fail}">
+		<script>alert('비밀번호가 맞지 않습니다.');</script>
+	</c:if>
 <c:choose>
 	<c:when test="${pwFlag }" >
 		<div class="empty-row"></div>
