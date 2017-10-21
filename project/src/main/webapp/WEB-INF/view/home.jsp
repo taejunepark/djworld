@@ -27,23 +27,54 @@
 	margin-top: 40px;
 }
 
-.bt1 .text {
-	position: absolute;
-	left: 0;
-	right: 0;
-	margin-left: auto;
-	margin-right: auto;
-	top: 30px;
-	bottom: 0;
-	margin-top: auto;
-	margin-bottom: auto;
-}
+
 
 table tr:last-child td {
 	border-left: 1px solid white;
 	border-right: 1px solid white;
 	border-bottom: 1px solid white;
 }
+
+h1{
+	font-size: 25px;
+	margin: 0px;
+}
+h2{
+	font-size: 20px;
+	margin: 0px;
+}
+/* 배너 전체 */
+.banner {
+    display: flex;
+    flex-wrap: wrap;
+    height: 450px;
+}
+
+/* 배너 설명문 */
+.ba1 {
+	top: 20px;
+    width: 60%;
+}
+
+/* 배너 이미지 */
+.ba2 {
+    position: relative;
+    flex-grow: 1;
+}
+
+.ba2 img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
 </style>
 
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -209,17 +240,23 @@ table tr:last-child td {
 			<div class="ba2">
 				<img
 					src="${pageContext.request.contextPath }/img/%EB%A7%88%EC%95%BD.png"
-					class="area-70 height-80">
+					class="area-100 height-100">
 			</div>
 		</div>
-		<br>
+		<div class="empty-row"></div>
+		<hr>
+		<div class="empty-row"></div>
 		<div class="banner">
 			<div class="ba2">
-				<img src="${pageContext.request.contextPath }/img/채연.png"
-					class="area-70 height-80">
+				<img src="${pageContext.request.contextPath }/img/일기.jpg"
+					class="area-100 height-100">
 			</div>
-			<div class="ba1">
-				<h1>설명</h1>
+			<div class="ba1 text text-left">
+				<h1>나만의 공간<br></h1>
+				<h1 style="color: gray;">나만의 쉼터</h1>
+				<h1 style="color:gray;">나만의 세상</h1>
+				<h2>지금부터 만들어보세요</h2>
+				
 			</div>
 
 		</div>

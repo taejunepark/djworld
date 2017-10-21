@@ -210,53 +210,11 @@ input[type=checkbox]:checked + label > span{
 /*     background-position: 10px 10px; */
 }
 
-/* 일촌 테이블 */
-.friend-table {
-    /*        border: 1px solid black;*/
-    border-collapse: collapse;
-    width: 70%;
-}
-
-/* 배너 전체 */
-.banner {
-    display: flex;
-    flex-wrap: wrap;
-    /*        border: 1px solid black;*/
-    height: 350px;
-}
-
-/* 배너 설명문 */
-.ba1 {
-    text-align: center;
-    width: 60%;
-    border: 1px solid black;
-}
-
-/* 배너 이미지 */
-.ba2 {
-    position: relative;
-    flex-grow: 1;
-    border: 1px solid black;
-}
-
-.ba2 img {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    top: 0;
-    bottom: 0;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
 /* 홈페이지 하단 버튼 */
 .bt {
     display: flex;
     flex-direction: row-reverse;
     flex-wrap: wrap;
-    /*        border: 1px solid black;*/
     height: 350px;
 }
     
@@ -277,6 +235,15 @@ input[type=checkbox]:checked + label > span{
     margin-top: auto;
     margin-bottom: auto;
 }
+
+/* 일촌 테이블 */
+.friend-table {
+    /*        border: 1px solid black;*/
+    border-collapse: collapse;
+    width: 70%;
+}
+
+
     
  /* 라디오 버튼 */
  
