@@ -65,9 +65,11 @@ public class MemberController {
 	public String login(Member m, @RequestParam(required = false) String save, HttpSession session,
 			HttpServletResponse response, Model model) throws IOException {
 		boolean result = memberDao.login(m);
+		m = memberDao.info(m.getId());
 		if (result) {
 			session.setAttribute("loginFlag", true);
 			session.setAttribute("userId", m.getId());
+			session.setAttribute("name", m.getName());
 			Cookie c = new Cookie("save", m.getId());
 			c.setMaxAge(save == null ? 0 : 2419200);
 			response.addCookie(c);
@@ -90,7 +92,7 @@ public class MemberController {
 		if (id != null) {
 			Member member = memberDao.info(id);
 			model.addAttribute("member", member);
-			return "member/myinfo";
+			return "member/info";
 		} else {
 			model.addAttribute("loginCheck", true);
 			return "redirect:login";

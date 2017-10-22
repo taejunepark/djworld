@@ -114,7 +114,7 @@ button {
 						<input type="checkbox"> 자동로그인
 					</div>
 					<div class="col" align="right">
-						<a href="#"> 아이디(이메일)/비밀번호 찾기 &gt; </a>
+						<a href="${pageContext.request.contextPath }/info/infofind/code=id"> 아이디(이메일)/비밀번호 찾기 &gt; </a>
 					</div>
 				</div>
 				<div class="row" align="center">

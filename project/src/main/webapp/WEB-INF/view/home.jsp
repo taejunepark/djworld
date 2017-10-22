@@ -36,11 +36,12 @@ table tr:last-child td {
 }
 
 h1{
-	font-size: 25px;
+	font-size: 2.5em;
 	margin: 0px;
 }
 h2{
-	font-size: 20px;
+	color: gray;
+	font-size: 2.0em;
 	margin: 0px;
 }
 /* 배너 전체 */
@@ -52,14 +53,16 @@ h2{
 
 /* 배너 설명문 */
 .ba1 {
-	top: 20px;
+	padding-top: 100px;
     width: 60%;
+    border : 1px solid white;
 }
 
 /* 배너 이미지 */
 .ba2 {
     position: relative;
     flex-grow: 1;
+    border : 1px solid white;
 }
 
 .ba2 img {
@@ -140,7 +143,7 @@ h2{
 						<c:when test="${loginFlag }">
 							<tr>
 								<th colspan="5" style="height: 100px;">
-									<h1>${userId }님 환영합니다</h1>
+									${name }님 환영합니다
 								</th>
 							</tr>
 							<tr>
@@ -233,13 +236,23 @@ h2{
 
 		<!-- 중단 영역 -->
 		<main>
+		<div class="empty-row"></div>
+		<hr>
+		<div class="empty-row"></div>
 		<div class="banner">
-			<div class="ba1">
-				<h1>설명</h1>
+			<div class="ba1 text text-left">　　　　
+				<h1 style="color: black;">　　
+					좋은<br>
+					　　　　　　친구들과<br>
+					　　　　　　　　　동료들과<br>　
+					　　　　　　　　　　사람들과<br>
+					　　　　　　　　　　　　　　　　　함께
+				</h1><br>
+				<h2>　　　공유 다이어리를 이용하여 추억을 쌓아보아요!</h2>
 			</div>
 			<div class="ba2">
 				<img
-					src="${pageContext.request.contextPath }/img/%EB%A7%88%EC%95%BD.png"
+					src="${pageContext.request.contextPath }/img/일기.jpg"
 					class="area-100 height-100">
 			</div>
 		</div>
@@ -248,18 +261,22 @@ h2{
 		<div class="empty-row"></div>
 		<div class="banner">
 			<div class="ba2">
-				<img src="${pageContext.request.contextPath }/img/일기.jpg"
+				<img src="${pageContext.request.contextPath }/img/공간.jpg"
 					class="area-100 height-100">
 			</div>
-			<div class="ba1 text text-left">
-				<h1>나만의 공간<br></h1>
-				<h1 style="color: gray;">나만의 쉼터</h1>
-				<h1 style="color:gray;">나만의 세상</h1>
-				<h2>지금부터 만들어보세요</h2>
+			<div class="ba1 text text-left">　　　　
+				<h1 style="color: gray;">　　
+				나만의 <font color="black">공간</font><br>　　　　　　
+				　　나만의 <font color="black">쉼터</font><br>　　　　　　　　　　　　
+				　　나만의 <font color="black">세상</font></h1><br>　　　　
+				<h2>　　　　　　DJworld에서 지금부터 만들어보세요!</h2>
 				
 			</div>
 
 		</div>
+		<div class="empty-row"></div>
+		<hr>
+		<div class="empty-row"></div>
 		<div class="empty-row"></div>
 		<div class="bt">
 			<div class="bt1">
@@ -277,5 +294,6 @@ h2{
 					class="area-70 height-80">
 			</div>
 		</div>
+		<div class="empty-row"></div>
 
 		<%@ include file="/WEB-INF/view/template/footer.jsp"%>

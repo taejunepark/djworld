@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/common.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/each.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/swiper.css">
+<%@ include file="/WEB-INF/view/template/infoHeader.jsp"%>
 
 <script>
 
@@ -57,13 +51,12 @@ function pwCheck() {
 	 }
 }
 </script>
-
 <div class="empty-row"></div>
 <div class="area-60 center">
 	<form action="edit" method="post">
 		<table class="area-60 center font-small table-80">
 			<tr>
-				<th colspan="2" class="font-big">회원 정보 수정</th>
+				<th colspan="2" class="font-big"></th>
 			</tr>
 			<tr>
 				<th width="20%">이름</th>
@@ -107,4 +100,4 @@ function pwCheck() {
 		</table>
 	</form>
 </div>
-
+<%@ include file="/WEB-INF/view/template/footer.jsp"%>
