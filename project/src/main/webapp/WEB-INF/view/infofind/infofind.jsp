@@ -3,12 +3,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="/WEB-INF/view/template/infoFindHeader.jsp"%>
-<style>
-div {
-	/* 	border: 1px solid black;  */
-	
-}
-</style>
+
+<c:if test="${fail eq 'error'}">
+	<script>
+		alert("해당되는 정보가 존재하지 않습니다.");
+	</script>
+</c:if>
+
 
 <div class="empty-row"></div>
 <div class="center area-70" style="height: 600px;">
@@ -22,7 +23,7 @@ div {
 				용도로 이용 또는 저장하지 않습니다.
 			</div>
 			<div class="empty-row"></div>
-			<form action="${pageContext.request.contextPath }/info/infofind/code=id" method="post">
+			<form action="${pageContext.request.contextPath }/info/infofind/id" method="post">
 				<div class="font_medium row" style="margin: 20px; font-size: 2.0em">내 정보로 찾기</div>
 				<div>
 					<table>
@@ -57,7 +58,7 @@ div {
 				용도로 이용 또는 저장하지 않습니다.
 			</div>
 			<div class="empty-row"></div>
-			<form action="${pageContext.request.contextPath }/info/infofind/code=pw" method="post"">
+			<form action="${pageContext.request.contextPath }/info/infofind/pw" method="post"">
 				<div class="font_medium row" style="margin: 20px; font-size: 2.0em">내 정보로 찾기</div>
 				<div>
 					<table>

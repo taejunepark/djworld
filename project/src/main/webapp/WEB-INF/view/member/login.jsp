@@ -8,9 +8,6 @@
 <title>로그인 페이지</title>
 <!-- 디자인 코드를 작성하는 공간 -->
 <style>
-div {
-	/*                            border:1px solid black;*/
-}
 
 .empty-row {
 	height: 50px;
@@ -86,9 +83,11 @@ button {
 	<c:if test="${result}">
 		<script>alert('입력한 정보가 맞지 않습니다.');</script>
 	</c:if>
+	
 	<c:if test="${loginCheck}">
 		<script>alert('로그인 먼저 해주세요!');</script>
 	</c:if>
+	
 	<!-- 아래로 밀고 싶은 만큼 empty-row를 추가 -->
 	<div class="back"
 		style="background-image: url(${pageContext.request.contextPath }/img/bg1.jpg);">

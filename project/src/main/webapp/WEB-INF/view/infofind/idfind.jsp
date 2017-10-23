@@ -12,25 +12,13 @@
 		피해방지를 위하여 아이디 끝 두 자리는 ** 처리합니다.</div>
 	<div class="empty-row"></div>
 	<table>
-		<c:choose>
-			<c:when test="${empty id} ">
-				<tr>
-					<th scope="row"><label for="name" style="margin-right: 10px;">
-							<span>입력한 정보의 아이디가 존재하지 않습니다.</span>
-					</label></th>
-				</tr>
-			</c:when>
-			<c:otherwise>
-				<tr>
-					<th scope="row"><label for="name" style="margin-right: 10px;">
-							<span>아이디</span>
-					</label></th>
-					<td><label> <span> ${id} </span>
-					</label> <span>${reg}</span></td>
-				</tr>
-
-			</c:otherwise>
-		</c:choose>
+		<tr>
+			<th scope="row"><label for="name" style="margin-right: 10px;">
+					<span>아이디</span>
+			</label></th>
+			<td><label> <span> ${id} </span>
+			</label> <span>${reg}</span></td>
+		</tr>
 	</table>
 </div>
 

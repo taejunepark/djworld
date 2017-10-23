@@ -38,9 +38,9 @@
 				<c:when test="${loginFlag}">
 					<a href="${pageContext.request.contextPath}/member/info"
 						class="left"><font color="white">내 정보</font></a>
-						<a href="${pageContext.request.contextPath}/member/pwedit"
+						<a href="${pageContext.request.contextPath}/member/pwcheck/pwchange"
 						class="left"><font color="white">비밀번호 변경</font></a>
-						<a href="${pageContext.request.contextPath}/member/emailedit"
+						<a href="${pageContext.request.contextPath}/member/emailchange"
 						class="left"><font color="white">이메일 변경</font></a>
 					<a href="${pageContext.request.contextPath}/member/drop"
 						class="left"><font color="white">회원탈퇴</font></a>

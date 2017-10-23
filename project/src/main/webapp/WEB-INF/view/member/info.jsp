@@ -58,12 +58,7 @@ button {
 	width: 90%;
 }
 </style>
-<c:if test="${fail}">
-		<script>alert('비밀번호가 맞지 않습니다.');</script>
-	</c:if>
-<c:choose>
-	<c:when test="${pwFlag }" >
-		<div class="empty-row"></div>
+<div class="empty-row"></div>
 		<div class="area-70 center">
 			<table class="table">
 
@@ -152,44 +147,6 @@ button {
 			</tr>
 		</table>
 		</div>
-	</c:when>
-	<c:otherwise>
-		<div class="empty-row"></div>
-		<div class="area-100 center">
-			<form action="info" method="post">
-				<table class="pwtable area-50 center">
-					<thead>
-						<tr>
-							<th colspan="2" class="font-medium">본인 확인</th>
-						</tr>
-						<tr>
-							<th colspan="2"  style="height: 20px"> </th>
-						</tr>
-						<tr>
-							<th colspan="2" class="font-min" style="text-align:left;">개인 정보를 위해 비밀번호를 입력해주세요.</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th class="font-small">아이디</th>
-							<td class="font-small">${member.id}</td>
-						</tr>
-						<tr>
-							<th class="font-small">비밀번호</th>
-							<td><input type="password" name="pw"></td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr>
-							<th colspan="2"><input type="submit" value="확인"
-								class="form-btn">
-						</tr>
-					</tfoot>
-				</table>
-			</form>
-		</div>
-	</c:otherwise>
-</c:choose>
 
 
 <%@ include file="/WEB-INF/view/template/footer.jsp"%>

@@ -51,13 +51,6 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	@Override
-	public boolean edit(Member m) {
-		String sql = "update member set pw=?, phone=? where id=?";
-		int result = jdbcTemplate.update(sql, m.getPw(), m.getPhone(), m.getId());
-		return result > 0;
-	}
-
-	@Override
 	public boolean pwCheck(String id, String pw) {
 		String sql = "select count(*) from member where id=? and pw=?";
 		int result = jdbcTemplate.queryForObject(sql, Integer.class, id, pw);
@@ -92,5 +85,29 @@ public class MemberDaoImpl implements MemberDao {
 	public int emailCheck(String email) {
 		String sql = "select count(*) from member where email=?";
 		return jdbcTemplate.queryForObject(sql, Integer.class, email);
+	}
+
+	@Override
+	public boolean pwChange(String id, String pw) {
+		 String sql = "update member set pw=? where id=?";
+		return  jdbcTemplate.update(sql, pw, id) > 0;
+	}
+
+	@Override
+	public String idEmail(String id) {
+		String sql = "select email from member where id = ?";
+		return jdbcTemplate.queryForObject(sql, String.class, id);
+	}
+
+	@Override
+	public boolean emailChange(String nowemail, String newemail) {
+		String sql = "update member set email=? where email=?";
+		return  jdbcTemplate.update(sql, newemail, nowemail) > 0;
+	}
+
+	@Override
+	public boolean infoCheck(String id, String name, String email) {
+		String sql = "select count(*) from member where id = ? and name = ? and email = ?";
+		return jdbcTemplate.queryForObject(sql, Integer.class, id, name, email) > 0;
 	}
 }

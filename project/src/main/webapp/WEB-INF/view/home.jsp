@@ -116,6 +116,17 @@ h2{
 		
 </script>
 
+<c:if test="${pwchange }">
+	<script>alert('비밀번호 변경이 완료되었습니다.');</script>
+</c:if>
+
+<c:if test="${emailchange }">
+	<script>alert('이메일 변경이 완료되었습니다.');</script>
+</c:if>
+
+<c:if test="${findFlag eq '실패'}">
+	<script>alert('로그아웃 먼저 해주세요.');</script>
+</c:if>
 
 <body>
 	<!-- 페이지 영역 시작 -->
@@ -161,7 +172,7 @@ h2{
 								</th>
 							</tr>
 							<tr class="font-small" style="height: 50px;">
-								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind/code=id">아이디/비밀번호 찾기</a></th>
+								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind/id">아이디/비밀번호 찾기</a></th>
 								<th colspan="2"><a
 									href="${pageContext.request.contextPath }/member/register">회원가입</a></th>
 							</tr>
@@ -178,7 +189,7 @@ h2{
 											홈피</a>
 									</div>
 									<div class="swiper-slide">
-										<a href="${pageContext.request.contextPath }/member/info">내 정보</a>
+										<a href="${pageContext.request.contextPath }/member/pwcheck/info">내 정보</a>
 									</div>
 									<div class="swiper-slide">
 										<a href="${pageContext.request.contextPath }/member/find">친구찾기</a>
@@ -284,7 +295,7 @@ h2{
 					class="area-70 height-80">
 			</div>
 			<div class="bt1">
-				<a href="${pageContext.request.contextPath }/info/infofind/code=id">
+				<a href="${pageContext.request.contextPath }/info/infofind/id">
 				<img src="${pageContext.request.contextPath }/img/비번.png"
 					class="area-70 height-80">
 					</a>
