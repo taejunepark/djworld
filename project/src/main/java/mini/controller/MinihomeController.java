@@ -14,4 +14,14 @@ public class MinihomeController {
 	public String comment() {
 		return "mini/comment";
 	}
+	
+	@RequestMapping("/minihome/diary")
+	public String diary() {
+		return "mini/diary/diary";
+	}
+	
+	@RequestMapping("/minihome/diary/diary_write")
+	public String diary_write() {
+		return "mini/diary/diary_write";
+	}
 }

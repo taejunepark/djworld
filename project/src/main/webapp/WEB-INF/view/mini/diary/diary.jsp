@@ -3,11 +3,12 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>DOM 수정</title>
+        <title>???님의 미니홈피</title>
         <link rel="stylesheet" type="text/css" href="css/common.css">
         <link rel="stylesheet" type="text/css" href="css/swiper.css">
-        <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        
         <style>
             a{
                 text-decoration: none;
@@ -15,17 +16,17 @@
             }
             
             div{
-            	border:1px solid black;
-            	margin: 1px 0px;
+            	/*border:1px solid black;
+            	margin: 1px 0px;*/
             }
             
             /*전체 div class*/
             .mini{
                 display: flex;
+                flex-direction: row;
                 flex-wrap: wrap;
-                width: 850px;
-                height: 600px;
-                margin: 0px auto;
+                width: 100%;
+                height: 100%;
                 border: 1px solid black;
             }
             
@@ -34,41 +35,48 @@
                 border: 1px dotted blue;
                 text-align: right;
                 width:100%;
-                height: 20px;
+                height: 3%;
                 margin : 5px;
             }
             
-            .header_a{
+            header > a{
                 color: gray;
             }
             
-            .header_a :hover {
+            header > a :hover {
                 background-color: yellow;
                 color:red;
             }
             
-            .visit{
+            .info{
+                display:flex;
+                flex-wrap: wrap;
                 border: 1px solid black;
-                width: 20%;
-                height: 20px;
+                width: 100%;
+                height: 5%;
                 margin: 5px;
                 padding: 5px;
             }
             
-            .tmp{
-                flex-grow: 1;
-                height: 20px;
-                border: 1px solid black;
+            .visit{
+                border: 1px dotted blue;
+                width: 15%;
                 margin: 5px;
-                padding: 5px;
+            }
+            
+            .title{
+                flex-grow: 1;
+                border: 1px dotted blue;
+                margin: 5px;
             }
             
             /* 주요 Div */
             main{
                 display: flex;
+                flex-direction: row;
                 flex-wrap: wrap;
                 width: 100%;
-                height: 450px;
+                height: 100%;
                 border: 1px dotted blue;
                 margin : 5px;
             }
@@ -78,90 +86,55 @@
                 display:flex;
                 flex-wrap: wrap;
                 border: 1px solid green;
-                width: 20%;
+                width: 15%;
                 margin: 5px;
-                padding: 5px;
-            }
-            
-            .profile{
-                width: 100%;
-                border: 1px dotted black;
-                margin: 3px 0px;
-                padding: 5px;
-            }
-            
-            .hello{
-                width: 100%;
-                border: 1px dotted black;
-                margin: 3px 0px;
-                padding: 5px;
-            }
-            
-            .edit{
-                display: flex;
-                flex-direction: row-reverse;
-                width: 100%;
-                border: 1px dotted black;
-                margin: 3px 0px;
-                padding: 5px;
-            }
-            
-            .info{
-                width: 100%;
-                border: 1px dotted black;
-                margin: 3px 0px;
                 padding: 5px;
             }
             
             /* Main Div */
             .highlight{
                 display: flex;
-                flex-wrap: wrap;
-                width: 60%;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                width: 75%;
+                height: 100%;
                 margin: 5px;
+                padding: 5px;
             }
             
-            /* 새 게시물 관련 Div*/
-            .partOne{
+            .month{
+                height: 3%;
+                margin: 5px;
+                padding: 5px;
+            }
+            
+            .date{
+                height: 3%;
+                margin: 5px;
+                padding: 5px;
+            }
+            
+            .area{
+                height: 83%;
+                margin: 5px;
+                padding: 5px;
+            }
+            
+            .area textarea{
+                width:100%;
+                resize:none;
+                padding: 1em;  /*prevents text jump on Enter keypress */
+                padding-bottom: 0.2em;
+                /*line-height: 1.6;*/
+                height: 100%;
+            }
+            
+            .write{
                 display: flex;
-                border: 1px dotted blue;
-                width: 100%;
-                height: 30%;
+                height: 5%;
                 margin: 5px;
                 padding: 5px;
-            }
-            
-            .partOne .left{
-                border: 1px solid black;
-                width: 40%;
-            }
-            
-            .partOne .empty{
-                border: 1px solid black;
-                width: 10%;
-            }
-            
-            .partOne .right{
-                border: 1px solid black;
-                width: 50%;
-            }
-            
-            /* 임시 */
-            .partTwo {
-                border: 1px dotted blue;
-                width: 100%;
-                height: 40%;
-                margin: 5px;
-                padding: 5px;
-            }
-            
-            /* 일촌평 관련 Div*/
-            .partThree{
-                border: 1px dotted blue;
-                width: 100%;
-                height: 15%;
-                margin: 5px;
-                padding: 5px;
+                flex-direction: row-reverse;
             }
             
             /* 우측 메뉴 Div */
@@ -182,18 +155,8 @@
         <script src="regex04.js"></script>
         <script>
             $(document).ready(function(){
-                $("#comment_btn").click(function(){
-                    $.ajax({
-                        url:"comment",
-                        type:"get",
-                        data:{
-                        	comment:$("#comment").val(),
-                        },
-                        success:function(res){
-                            $("#addComment").prepend(res)
-                        }
-                    })
-                    $("#comment").val("")
+                $(".write_btn").click(function(){
+                    location.href='diary_write'
                 })
             })
         </script>
@@ -206,17 +169,42 @@
                 <a class="header_a" href="#">로그인</a>
             </header>
             
-            <div class="visit">
-                <span>Today 0 | </span>
-                <span>Total 1</span>
-            </div>
-            
-            <div class="tmp">
-                <span>???님의 미니 홈피</span>
+            <div class="info">
+                <div class="visit">
+                    <span>Today 0 | </span>
+                    <span>Total 1</span>
+                </div>
+
+                <div class="title">
+                    <span>???님의 미니 홈피</span>
+                </div>
             </div>
             
             <main>
+                <aside>
+                    <a href="#">미정</a>
+                </aside>
                 
+                <div class="highlight">
+                    <div class="month">
+                        <label>
+                            2017년 10월 
+                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                        </label>
+                    </div>
+                    
+                    <div class="date">
+                        1 2 3 7 10 22 30
+                    </div>
+                    
+                    <div class="area">
+                        <textarea readonly></textarea>
+                    </div>
+                    
+                    <div class="write">
+                        <button class="write_btn">등록</button>
+                    </div>
+                </div>
                 
                 <nav class="menu">
                     <ul>
@@ -224,7 +212,7 @@
                             <a href="${pageContext.request.contextPath }/minihome/">홈</a>
                         </li>
                         <li>
-                            <a href="diary">다이어리</a>
+                            <a href="${pageContext.request.contextPath }/minihome/diary/">다이어리</a>
                         </li>
                         <li>
                             <a href="#">게시판</a>
@@ -241,6 +229,28 @@
         </div>
     </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

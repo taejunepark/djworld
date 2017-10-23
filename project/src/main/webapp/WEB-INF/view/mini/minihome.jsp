@@ -226,7 +226,7 @@
             <main>
                 <aside>
                     <div class="profile">
-                        <img src="img/aaa.jpg" width="150" height="150">
+                        <img src="${pageContext.request.contextPath }/img/aaa.jpg" width="150" height="150">
                     </div>
                     
                     <div class="hello">
@@ -287,7 +287,7 @@
                             <a href="${pageContext.request.contextPath }/minihome/">홈</a>
                         </li>
                         <li>
-                            <a href="diary">다이어리</a>
+                            <a href="${pageContext.request.contextPath }/minihome/diary/">다이어리</a>
                         </li>
                         <li>
                             <a href="#">게시판</a>
