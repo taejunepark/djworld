@@ -253,11 +253,9 @@ h2{
 		<div class="banner">
 			<div class="ba1 text text-left">　　　　
 				<h1 style="color: black;">　　
-					좋은<br>
-					　　　　　　친구들과<br>
-					　　　　　　　　　동료들과<br>　
-					　　　　　　　　　　사람들과<br>
-					　　　　　　　　　　　　　　　　　함께
+					평생 함께할 친구들과 함께<br>　　
+					소중한 인연인 동료들과 함께<br>　　
+					하나밖에 없는 가족들과 함께<br>
 				</h1><br>
 				<h2>　　　공유 다이어리를 이용하여 추억을 쌓아보아요!</h2>
 			</div>

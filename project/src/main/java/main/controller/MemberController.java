@@ -123,7 +123,7 @@ public class MemberController {
 		boolean result = memberDao.pwCheck(id, pw);
 		if(result) {
 			if(path.equals("info")) {
-				return "member/info";
+				return "redirect:/member/info";
 			}
 			else if(path.equals("pwchange")) {
 				return "member/pwchange";

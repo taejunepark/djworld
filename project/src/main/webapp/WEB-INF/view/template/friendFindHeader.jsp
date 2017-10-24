@@ -38,15 +38,21 @@
 				<c:when test="${!loginFlag}">
 					<a href="${pageContext.request.contextPath}/member/register"
 						class="left"><font color="white">회원가입</font></a>
-					<a href="${pageContext.request.contextPath}/info/infofind/code=id"
-						class="left"><font color="white">아이디 찾기</font></a>
-					<a href="${pageContext.request.contextPath}/info/infofind/code=pw" 
-						class="left"><font color="white">비밀번호 찾기</font></a>
-						<a href="#" 
-						class="left"><font color="white">고객센터</font></a>
+					<a href="${pageContext.request.contextPath}/member/find" 
+						class="left"><font color="white">친구 찾기</font></a>
+					<a href="#"  class="left">
+						<font color="white">고객센터</font></a>
 					<a href="${pageContext.request.contextPath}/member/login"
 						class="right"><font color="white">로그인</font></a>
 				</c:when>
+				<c:otherwise>
+				<a href="${pageContext.request.contextPath}/member/find" 
+						class="left"><font color="white">친구 찾기</font></a>
+					<a href="#"  class="left">
+						<font color="white">고객센터</font></a>
+					<a href="${pageContext.request.contextPath}/member/logout"
+						class="right"><font color="white">로그아웃</font></a>
+				</c:otherwise>
 			</c:choose>
 		</nav>
 		<!-- 중단 영역 -->
