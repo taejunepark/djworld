@@ -173,8 +173,7 @@ h2{
 							</tr>
 							<tr class="font-small" style="height: 50px;">
 								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind/id">아이디/비밀번호 찾기</a></th>
-								<th colspan="2"><a
-									href="${pageContext.request.contextPath }/member/register">회원가입</a></th>
+								<th colspan="2"><a href="${pageContext.request.contextPath }/member/register">회원가입</a></th>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -184,9 +183,16 @@ h2{
 								<div class="swiper-wrapper">
 									<!-- 1장의 이미지 영역 -->
 									<div class="swiper-slide">
-										<a href="minihome"
-											onClick="window.open(this.href, '', 'width=1000, height=600, top=200, left=500'); return false;">내
-											홈피</a>
+										<c:choose>
+										<c:when test="${loginFlag }">
+											<a href="${pageContext.request.contextPath }/friend/list">일촌목록</a>
+										</c:when>
+										<c:otherwise>
+											<a href="minihome"
+											onClick="window.open(this.href, '', 'width=1000, height=600, top=200, left=500'); return false;"> 내 홈피 가기</a>
+										</c:otherwise>
+										</c:choose>
+										
 									</div>
 									<div class="swiper-slide">
 										<a href="${pageContext.request.contextPath }/member/pwcheck/info">내 정보</a>

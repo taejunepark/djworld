@@ -8,12 +8,16 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import main.bean.Member;
+import main.model.friend.FriendDao;
 
 @Repository(value="memberDao")
 public class MemberDaoImpl implements MemberDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private FriendDao friendDao;
 
 	private RowMapper<Member> mapper = (rs, index)->{
 			Member m = new Member();
@@ -32,6 +36,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	public void register(Member m) {
 		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, 0, '일반', sysdate)";
+		System.out.println(m);
 		int result = jdbcTemplate.update(sql, m.getId(), m.getPw(), m.getName(), m.getPhone(), m.getBirth(), m.getEmail(), m.getGender());
 	}
 	
@@ -63,16 +68,23 @@ public class MemberDaoImpl implements MemberDao {
 		return jdbcTemplate.update(sql, id, m.getPw(), m.getPhone()) > 0;
 	}
 
-	public List<Member> memberList() {
-		String sql = "select * from member where power != '관리자' order by reg";
-		return jdbcTemplate.query(sql, mapper);
+	public List<Member> memberList(String id) {
+		String sql = "select * from member where power != '관리자' and id != ?";
+		List<Member> list =  jdbcTemplate.query(sql, mapper, id);
+		for(Member m : list) {
+			String result = friendDao.requestCheck(id, m.getId());
+			if(result.equals("wait")) {
+				result = "신청 대기중";
+			}
+			m.setStatus(result);
+		}
+		return list;
 	}
-
-	public List<Member> search(String key) {
+	
+	public List<Member> search(String key, String id) {
 		String sql = "select * from member "
-				+ "where power != '관리자' and id like '%'||?||'%' or phone like '%'||?||'%' "
-				+ "order by reg";
-		return jdbcTemplate.query(sql, mapper, key, key);
+				+ "where power != '관리자' and id != ? and phone = ? or power != '관리자' and id != ? and id like '%'||?||'%'";
+		return jdbcTemplate.query(sql, mapper, id, key, id, key);
 	}
 
 	@Override
@@ -110,4 +122,7 @@ public class MemberDaoImpl implements MemberDao {
 		String sql = "select count(*) from member where id = ? and name = ? and email = ?";
 		return jdbcTemplate.queryForObject(sql, Integer.class, id, name, email) > 0;
 	}
+
+	
+	
 }

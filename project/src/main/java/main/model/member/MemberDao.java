@@ -14,8 +14,8 @@ public interface MemberDao {
 	boolean pwCheck(String id, String pw);
 	boolean pwChange(String id, String pw);
 	boolean drop(String id, Member m);
-	List<Member> memberList();
-	List<Member> search(String key);
+	List<Member> memberList(String id);
+	List<Member> search(String key, String id);
 	int idCheck(String id);
 	int emailCheck(String email);
 	String idEmail(String id);

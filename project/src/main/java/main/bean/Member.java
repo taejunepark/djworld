@@ -16,7 +16,16 @@ public class Member {
 	private String power;
 	private int bam;
 	private String reg;
+	private String status;
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Member() {
 	}
 	
@@ -67,6 +76,9 @@ public class Member {
 	}
 	public String getBirth() {
 		return birth;
+	}
+	public String getBirthPrint() {
+		return birth.substring(0, 4)+"년 "+birth.substring(4, 6)+"월 "+birth.substring(6,8)+"일";
 	}
 	public void setBirth(String birth) {
 		this.birth = birth;

@@ -2,6 +2,7 @@ package main.bean;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,11 +12,18 @@ public class Visitors {
 	private String reg;
 	private String detail;
 	private String type;
-	
-	
+	private List<Reply> reply;
 	
 	public Visitors() {
 		super();
+	}
+	
+	public List<Reply> getReply() {
+		return reply;
+	}
+
+	public void setReply(List<Reply> reply) {
+		this.reply = reply;
 	}
 
 	public Visitors(ResultSet rs) throws SQLException{
@@ -71,10 +79,10 @@ public class Visitors {
 	public void setReg(String reg) {
 		this.reg = reg;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Visitors [no=" + no + ", writer=" + writer + ", reg=" + reg + ", detail=" + detail + ", type=" + type
-				+ "]";
+				+ ", reply=" + reply + "]";
 	}
 }

@@ -47,17 +47,22 @@
 		<div class="empty-row"></div>
 		<table class="findtable center area-80">
 			<c:forEach var="member" items="${list}">
+				<c:if test="${member.status ne 'accept'}">
 				<tr>
 					<th>${member.id}</th>
 					<th>${member.name}</th>
 					<th>${member.birth}</th>
 					<th>${member.date}</th>
-					<th><a href="memberview/${member.id}"> <i
-							class="fa fa-eye" aria-hidden="true"></i>
-					</a> <a href="memberdrop/${member.id }"> <i class="fa fa-trash"
-							aria-hidden="true"></i>
-					</a></th>
+					<c:choose>
+					<c:when test="${member.status eq '일촌 신청하기' }">
+						<th><a href="${pageContext.request.contextPath }/member/friendrequest/${member.id}">${member.status }</a></th>
+					</c:when>
+					<c:otherwise>
+						<th><a href="${pageContext.request.contextPath }/member/friendcancel/${member.id}">${member.status }</a></th>
+					</c:otherwise>
+					</c:choose>
 				</tr>
+				</c:if>
 			</c:forEach>
 		</table>
 	</div>

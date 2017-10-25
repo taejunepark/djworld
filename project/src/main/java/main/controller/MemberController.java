@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import main.bean.Member;
+import main.model.friend.FriendDao;
 import main.model.member.MemberDao;
 
 @Controller
@@ -28,6 +29,9 @@ public class MemberController {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private FriendDao friendDao;
 	
 	// 로그인
 	@RequestMapping("/login")
@@ -45,7 +49,7 @@ public class MemberController {
 			session.setAttribute("loginFlag", true);
 			session.setAttribute("userId", m.getId());
 			session.setAttribute("name", m.getName());
-			Cookie c = new Cookie("save", m.getId());
+			Cookie c = new Cookie("remember", m.getId());
 			c.setMaxAge(save == null ? 0 : 2419200);
 			response.addCookie(c);
 			return "redirect:/";
@@ -90,7 +94,6 @@ public class MemberController {
 	@ResponseBody
 	public String mailCheck(HttpServletRequest request) {
 		String email = request.getParameter("check");
-		System.out.println(email);
 		int result = memberDao.emailCheck(email);
 		return String.valueOf(result);
 	}
@@ -211,8 +214,10 @@ public class MemberController {
 	
 	// 친구 찾기(전체 리스트)
 	@RequestMapping({ "/find", "/find/" })
-	public String find(Model model) {
-		List<Member> list = memberDao.memberList();
+	public String find(Model model, HttpSession session) {
+		String id = (String)session.getAttribute("userId");
+		id = id==null?" ":id;
+		List<Member> list = memberDao.memberList(id);
 		Collections.shuffle(list);
 		model.addAttribute("list", list);
 		return "member/find";
@@ -220,11 +225,27 @@ public class MemberController {
 
 	// 친구 찾기(검색)
 	@RequestMapping("/find/{key}")
-	public String search(@PathVariable String key, Model model) {
-		List<Member> list = memberDao.search(key);
+	public String search(@PathVariable String key, Model model, HttpSession session) {
+		String id = (String)session.getAttribute("userId");
+		List<Member> list = memberDao.search(key, id);
 		model.addAttribute("key", key);
-		Collections.shuffle(list);
 		model.addAttribute("list", list);
 		return "member/find";
+	}
+	
+	@RequestMapping("/friendrequest/{request}")
+	public String freind(@PathVariable String request, RedirectAttributes redirect, HttpSession session) {
+		String rqId = (String)session.getAttribute("userId");
+		String rcId = request;
+		friendDao.request(rqId, rcId);
+		return "redirect:/member/find";
+	}
+	
+	@RequestMapping("/friendcancel/{request}")
+	public String friend(@PathVariable String request, RedirectAttributes redirect, HttpSession session) {
+		String rqId = (String)session.getAttribute("userId");
+		String rcId = request;
+		friendDao.cancel(rqId, rcId);
+		return "redirect:/member/find";
 	}
 }
