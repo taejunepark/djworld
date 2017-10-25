@@ -1,5 +1,10 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -109,7 +114,7 @@
             }
             
             .date{
-                height: 3%;
+                height: 10%;
                 margin: 5px;
                 padding: 5px;
             }
@@ -120,14 +125,14 @@
                 padding: 5px;
             }
             
-            .area textarea{
+            /* .area textarea{
                 width:100%;
                 resize:none;
                 padding: 1em;  /*prevents text jump on Enter keypress */
                 padding-bottom: 0.2em;
                 /*line-height: 1.6;*/
                 height: 100%;
-            }
+            } */
             
             .write{
                 display: flex;
@@ -152,12 +157,41 @@
         </style>
         <!-- jQuery를 사용하기 위한 CDN 설정 -->
         <script src="https://code.jquery.com/jquery-latest.js"></script>
-        <script src="regex04.js"></script>
         <script>
             $(document).ready(function(){
-                $(".write_btn").click(function(){
-                    location.href='diary_write'
+            	/* $.ajax({
+                    url:"diaryInfo",
+                    data: {
+                        date : printNow()
+                    },
+                    success: function(res){
+                        if()
+                            $(".area textarea").text(res)
+                    }                    
+                }) */
+            	
+            	$(".write_btn").click(function(){
+            		var reg = printDate()
+                    location.href='diary_write/' + reg;
+                    
                 })
+                
+                function printDate(){
+            		var date = $("#calen").val()
+            		var reg = date.substr(2,2)
+            		reg += '-' + date.substr(5,2)
+            		reg += '-' + date.substr(8,2)
+            		return reg
+            	}
+                
+                function printNow(){
+            		var now = new Date()
+                    var date = now.getFullYear()
+                    date += '/' + (now.getMonth() + 1)
+                    date += '/' + now.getDate()
+                    date.substr(2,8)
+                    return date
+            	}
             })
         </script>
     </head>
@@ -181,6 +215,7 @@
             </div>
             
             <main>
+            <jsp:useBean id="toDay" class="java.util.Date"/>
                 <aside>
                     <a href="#">미정</a>
                 </aside>
@@ -188,17 +223,33 @@
                 <div class="highlight">
                     <div class="month">
                         <label>
-                            2017년 10월 
+                            <input type="date" id="calen">
                             <i class="fa fa-calendar-o" aria-hidden="true"></i>
                         </label>
                     </div>
                     
                     <div class="date">
-                        1 2 3 7 10 22 30
+                    	<c:forEach var="i" begin="1" end="31" step="1">
+                    		<a href="#">${i}</a>
+                    		<c:choose>
+                    			<c:when test="${i < 10}">
+                    				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    			</c:when>
+                    			
+                    			<c:when test="${i % 10 == 0}">
+                    				<br>
+                    			</c:when>
+                    			
+                    			<c:otherwise>
+                    				&nbsp; &nbsp; &nbsp; &nbsp;
+                    			</c:otherwise>
+                    		</c:choose>
+                    	</c:forEach>
+                        
                     </div>
                     
                     <div class="area">
-                        <textarea readonly></textarea>
+                        ${d.detail}
                     </div>
                     
                     <div class="write">
@@ -227,37 +278,9 @@
                 </nav>
             </main>
         </div>
+        
+        <script>
+            document.getElementById('calen').valueAsDate = new Date();
+        </script>
     </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
