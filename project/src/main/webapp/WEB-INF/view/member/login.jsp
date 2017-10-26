@@ -10,7 +10,6 @@
 <style>
 div {
 	/*                            border:1px solid black;*/
-	
 }
 
 .empty-row {
@@ -76,13 +75,20 @@ button {
 	position: absolute;
 	height: 100%;
 	width: 100%;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(0, 0, 0, 1);
 	z-index: 1;
 }
 </style>
 </head>
 
+
 <body>
+	<c:if test="${result}">
+		<script>alert('입력한 정보가 맞지 않습니다.');</script>
+	</c:if>
+	<c:if test="${loginCheck}">
+		<script>alert('로그인 먼저 해주세요!');</script>
+	</c:if>
 	<!-- 아래로 밀고 싶은 만큼 empty-row를 추가 -->
 	<div class="back"
 		style="background-image: url(${pageContext.request.contextPath }/img/bg1.jpg);">
@@ -108,7 +114,7 @@ button {
 						<input type="checkbox"> 자동로그인
 					</div>
 					<div class="col" align="right">
-						<a href="#"> 아이디(이메일)/비밀번호 찾기 &gt; </a>
+						<a href="${pageContext.request.contextPath }/info/infofind/code=id"> 아이디(이메일)/비밀번호 찾기 &gt; </a>
 					</div>
 				</div>
 				<div class="row" align="center">

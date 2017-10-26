@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/template/header.jsp"%>
+<%@ include file="/WEB-INF/view/template/infoHeader.jsp"%>
 <div class="empty-row"></div>
 <div class="area-100 center">
+	
 	<form action="drop" method="post">
 		<table class="pwtable area-50 center">
 			<thead>

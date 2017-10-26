@@ -19,8 +19,10 @@
 	 <mvc:resources location="/res/img/" mapping="/img/**"/>
 	 <mvc:resources location="/res/font/" mapping="/font/**"/>
 	
-	<context:component-scan base-package="main.controller"></context:component-scan>
+	<context:component-scan base-package="main.controller"/>
 	<context:component-scan base-package="main.model"/>
+	<context:component-scan base-package="mini.controller"/>
+	<context:component-scan base-package="mini.model"/>
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	        <!-- Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' -->

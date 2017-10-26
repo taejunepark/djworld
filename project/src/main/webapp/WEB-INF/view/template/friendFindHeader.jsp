@@ -1,4 +1,3 @@
-<%-- <%@page import="home.model.MemberDAO"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -11,6 +10,7 @@
 	href="${pageContext.request.contextPath }/css/common.css">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/css/each.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<!-- 페이지 영역 시작 -->
@@ -25,7 +25,7 @@
 								src="${pageContext.request.contextPath }/img/naver2.png"
 								class="img-height-1"></th>
 						</a>
-						<th class="font-big">내 정보</th>
+						<th class="font-big">친구 찾기</th>
 					</tr>
 				</table>
 			</div>
@@ -35,18 +35,17 @@
 		<nav>
 			<a href="${pageContext.request.contextPath}" class="left"><font color="white">홈</font></a>
 			<c:choose>
-				<c:when test="${loginFlag}">
-					<a href="${pageContext.request.contextPath}/member/info"
-						class="left"><font color="white">내 정보</font></a>
-					<a href="${pageContext.request.contextPath}/member/drop"
-						class="left"><font color="white">회원탈퇴</font></a>
-					<a href="#" class="left"><font color="white">고객센터</font></a>
-					<c:if test="${adminFlag}">
-						<a href="${pageContext.request.contextPath}/admin/home"
-							class="left"><font color="white">관리자 메뉴</font></a>
-					</c:if>
-					<a href="${pageContext.request.contextPath}/member/logout"
-						class="right"><font color="white">로그아웃</font></a>
+				<c:when test="${!loginFlag}">
+					<a href="${pageContext.request.contextPath}/member/register"
+						class="left"><font color="white">회원가입</font></a>
+					<a href="${pageContext.request.contextPath}/info/infofind/code=id"
+						class="left"><font color="white">아이디 찾기</font></a>
+					<a href="${pageContext.request.contextPath}/info/infofind/code=pw" 
+						class="left"><font color="white">비밀번호 찾기</font></a>
+						<a href="#" 
+						class="left"><font color="white">고객센터</font></a>
+					<a href="${pageContext.request.contextPath}/member/login"
+						class="right"><font color="white">로그인</font></a>
 				</c:when>
 			</c:choose>
 		</nav>

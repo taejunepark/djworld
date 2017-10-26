@@ -33,7 +33,6 @@ public class MemberDaoImpl implements MemberDao {
 	public void register(Member m) {
 		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, 0, '일반', sysdate)";
 		int result = jdbcTemplate.update(sql, m.getId(), m.getPw(), m.getName(), m.getPhone(), m.getBirth(), m.getEmail(), m.getGender());
-		System.out.println(result);
 	}
 	
 	public boolean login(Member m) {
@@ -81,5 +80,17 @@ public class MemberDaoImpl implements MemberDao {
 				+ "where power != '관리자' and id like '%'||?||'%' or phone like '%'||?||'%' "
 				+ "order by reg";
 		return jdbcTemplate.query(sql, mapper, key, key);
+	}
+
+	@Override
+	public int idCheck(String id) {
+		String sql = "select count(*) from member where id=?";
+		return jdbcTemplate.queryForObject(sql, Integer.class, id);
+	}
+
+	@Override
+	public int emailCheck(String email) {
+		String sql = "select count(*) from member where email=?";
+		return jdbcTemplate.queryForObject(sql, Integer.class, email);
 	}
 }

@@ -32,26 +32,12 @@ input[type=text] {
 	width: 90%;
 	font-size: 20px;
 	padding: 10px;
-	/*            padding-left: 50px;*/
-	/*
-            background-image: url('img/message.png');
-            background-size: 25px;
-            background-repeat: no-repeat;
-            background-position: 10px 10px;
-*/
 }
 
 input[type=password] {
 	width: 90%;
 	font-size: 20px;
 	padding: 10px;
-	/*
-            padding-left: 50px;
-            background-image: url('img/lock.png');
-            background-size: 25px;
-            background-repeat: no-repeat;
-            background-position: 10px 10px;
-*/
 }
 
 input[type=submit] {
@@ -86,33 +72,89 @@ button {
 	width: 90%;
 }
 </style>
-
-<script>
-	function idCheck() {
-		var input = document.querySelector("input[name=id]");
-		var regex = /^[\w]{5,15}$/g;
-		if (regex.test(input.value)) {
-			//                    input.style = "border:2px solid blue";
-			input.className = "correct"; //변경
-			//                    input.classList.add("correct");//추가
-			return true;
-		} else {
-			//                    input.style = "border:2px solid red";
-			input.className = "incorrect";
-			return false;
-		}
-	}
-
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	var idFlag = false;
+	var mailFlag = false;
+	
+	$(document).ready(function(){
+		$("#id").on("blur", function(){
+			$.ajax({
+				 url:"idcheck",
+				 type:'POST',
+				 data:{
+					 check:$("#id").val()
+				 },
+				 success:function(data){
+					var input = document.querySelector("input[name=id]");
+					var regex = /^[a-zA-Z0-9]{5,15}$/g;
+					var regex2 = /^[가-힣ㄱ-ㅎ]+$/g;
+					 if($.trim(data) == 0 && regex.test(input.value)){ 
+						 input.className = "correct";
+						 $('#idMSG').html('<p style="color:blue">사용 가능한 아이디입니다.</p>');
+						 idFlag = true;
+					 }
+					 else if($.trim(data) == 1){
+						 input.className = "incorrect";
+						 $('#idMSG').html('<p style="color:red">중복된 아이디가 존재합니다.</p>');
+					 }
+					 else if(input.value.length < 5 || input.value.length > 15 || regex2.test(input.value)){
+						 input.className = "incorrect";
+						 $('#idMSG').html('<p style="color:red">아이디는 5~15 영문자, 숫자로 정해주세요.</p>');
+					 }
+				 },
+				 err:function(err){
+					 console.log("실패");
+				}
+			});
+		});
+	});
+	
+	$(document).ready(function(){
+		$("#email").on("blur", function(){
+			$.ajax({
+				 url:"mailcheck",
+				 type:'POST',
+				 data:{
+					 check:$("#email").val()
+				 },
+				 success:function(data){
+					var input = document.querySelector("input[name=email]");
+					var regex =  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+					 if($.trim(data) == 0 && regex.test(input.value)){ 
+						 input.className = "correct";
+						 $('#mailMSG').html('<p style="color:blue">사용 가능한 이메일입니다.</p>');
+						 mailFlag = true;
+					 }
+					 else if($.trim(data) == 1){
+						 input.className = "incorrect";
+						 $('#mailMSG').html('<p style="color:red">중복된 이메일이 존재합니다.</p>');
+					 }
+					 else if(input.value.length < 5 || input.value.length > 15 || !regex.test(input.value)){
+						 input.className = "incorrect";
+						 $('#mailMSG').html('<p style="color:red">이메일 주소를 다시 한번 확인해주세요.</p>');
+					 }
+				 },
+				 err:function(err){
+					 console.log("실패");
+				}
+			});
+		});
+	});
+	
 	function pwCheck() {
 		var input = document.querySelector("input[name=pw]");
 		var regex = /^[\w!@#$%^&*()]{6,20}$/g;
-		if (regex.test(input.value)) {
-			input.style = "border:2px solid blue";
-			return true;
-		} else {
-			input.style = "border:2px solid red";
-			return false;
-		}
+		if(regex.test(input.value)){ 
+			 input.className = "correct";
+			 $('#pwMSG').html('<p style="color:blue">사용 가능한 비밀번호입니다.</p>');
+			 return true;
+		 }
+		 else if(input.value.length < 6 || input.value.length > 20 ){
+			 input.className = "incorrect";
+			 $('#pwMSG').html('<p style="color:red">비밀번호는 영문, 숫자, 기호 총 6~20글자로 정해주세요.</p>');
+			 return false;
+		 }
 	}
 
 	function pw2Check() {
@@ -121,13 +163,16 @@ button {
 
 		if (pw.value === pw2.value && pw2.value !== "") {
 			pw2.style = "border:2px solid blue";
+			$('#pw2MSG').html('<p style="color:blue">비밀번호가 일치합니다.</p>');
 			return true;
-		} else if (pw.value == "") {
+		} else if (pw.value != pw2.value) {
 			pw2.style = "border:2px solid red";
-			pw2.value = "";
+			$('#pw2MSG').html('<p style="color:red">비밀번호가 일치하지 않습니다.</p>');
 			return false;
-		} else {
+		} else if(pw.value == ""){
 			pw2.style = "border:2px solid red";
+			$('#pw2MSG').html('<p style="color:red">필수 정보입니다.</p>');
+			pw2.value = "";
 			return false;
 		}
 	}
@@ -137,9 +182,11 @@ button {
 		var regex = /^[가-힣]{2,7}$/g;
 		if (regex.test(input.value)) {
 			input.style = "border:2px solid blue";
+			$('#nameMSG').html("");
 			return true;
 		} else {
 			input.style = "border:2px solid red";
+			$('#nameMSG').html('<p style="color:red">이름은 2~7글자, 한글로만 입력해주세요.</p>');
 			return false;
 		}
 	}
@@ -151,9 +198,28 @@ button {
 		event.preventDefault();
 
 		//검사
-		var result = idCheck() && pwCheck() && pw2Check() && nameCheck();
-		if (!result)
+		var result = idFlag && pwCheck() && pw2Check() && nameCheck();
+		if (!idFlag){
+			alert("입력한 아이디를 다시 한번 확인해주세요.");
 			return;
+		}
+		else if(!pwCheck()){
+			alert("비밀번호를 다시 한번 확인해주세요.");
+			return;
+		}
+		else if(!pw2Check()){
+			alert("비밀번호가 맞지 않습니다.");
+			return;
+		}
+		else if(!nameCheck()){
+			alert("이름을 다시 한번 확인해주세요.");
+			return;
+		}
+		else if(!mailFlag){
+			alert("이메일을 다시 한번 확인해주세요.");
+			return;
+		}
+		
 
 		//전송
 		var form = document.querySelector("form");
@@ -195,16 +261,24 @@ button {
 				</th>
 			</tr>
 			<tr>
-				<th><input type="text" name="id" onblur="idCheck();"
-					placeholder="아이디"></th>
+				<th>
+				<input type="text"  id= "id" name="id" 	placeholder="아이디">
+					<div id="idMSG"  style="padding-bottom: 5px;">
+					</div>
+				</th>
+					
 			</tr>
 			<tr>
 				<th><input type="password" name="pw" onblur="pwCheck();"
-					placeholder="비밀번호"></th>
+					placeholder="비밀번호">
+					<div id="pwMSG"  style="padding-bottom: 5px;"></div>
+					</th>
 			</tr>
 			<tr>
 				<th><input type="password" id="pw2" onkeyup="pw2Check();"
-					placeholder="비밀번호 확인"></th>
+					placeholder="비밀번호 확인">
+					<div id="pw2MSG"  style="padding-bottom: 5px;"></div>
+				</th>
 			</tr>
 			<tr>
 				<th>
@@ -213,10 +287,13 @@ button {
 			</tr>
 			<tr>
 				<th><input type="text" name="name" onblur="nameCheck();"
-					placeholder="이름"></th>
+					placeholder="이름">
+					<div id="nameMSG"  style="padding-bottom: 5px;"></div>
+				</th>
 			</tr>
 			<tr>
-				<th><input type="text" name="email" placeholder="본인 확인(이메일)">
+				<th><input type="text"  id="email" name="email"  placeholder="본인 확인(이메일)">
+					<div id="mailMSG"  style="padding-bottom: 5px;"></div>
 				</th>
 			</tr>
 			<tr>

@@ -27,23 +27,57 @@
 	margin-top: 40px;
 }
 
-.bt1 .text {
-	position: absolute;
-	left: 0;
-	right: 0;
-	margin-left: auto;
-	margin-right: auto;
-	top: 30px;
-	bottom: 0;
-	margin-top: auto;
-	margin-bottom: auto;
-}
+
 
 table tr:last-child td {
 	border-left: 1px solid white;
 	border-right: 1px solid white;
 	border-bottom: 1px solid white;
 }
+
+h1{
+	font-size: 2.5em;
+	margin: 0px;
+}
+h2{
+	color: gray;
+	font-size: 2.0em;
+	margin: 0px;
+}
+/* 배너 전체 */
+.banner {
+    display: flex;
+    flex-wrap: wrap;
+    height: 450px;
+}
+
+/* 배너 설명문 */
+.ba1 {
+	padding-top: 100px;
+    width: 60%;
+    border : 1px solid white;
+}
+
+/* 배너 이미지 */
+.ba2 {
+    position: relative;
+    flex-grow: 1;
+    border : 1px solid white;
+}
+
+.ba2 img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
 </style>
 
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -67,7 +101,19 @@ table tr:last-child td {
 		//                       
 		//                    }
 		});
+		
+		//#searchForm을 전송하지 말고 Rest 방식으로 조합하여 전송하도록 수정
+		$("#searchForm").on("submit", function(){
+			event.preventDefault();//기본 이벤트 중지
+			
+			var key = $(this).find("input[name=key]").val();
+			if(key.length > 0){
+				location.href = 
+					"${pageContext.request.contextPath}/member/find/"+key;
+			}
+		});
 	});
+		
 </script>
 
 
@@ -97,7 +143,7 @@ table tr:last-child td {
 						<c:when test="${loginFlag }">
 							<tr>
 								<th colspan="5" style="height: 100px;">
-									<h1>${userId }님환영합니다</h1>
+									${name }님 환영합니다
 								</th>
 							</tr>
 							<tr>
@@ -110,12 +156,12 @@ table tr:last-child td {
 						<c:otherwise>
 							<tr>
 								<th colspan="5" style="height: 100px;">
-									<button class="area-40" style="height: 40px"
+									<button class="form-btn area-40" 
 										onclick="location.href='${pageContext.request.contextPath}/member/login'">로그인</button>
 								</th>
 							</tr>
 							<tr class="font-small" style="height: 50px;">
-								<th colspan="3"><a href="#">아이디/비밀번호 찾기</a></th>
+								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind/code=id">아이디/비밀번호 찾기</a></th>
 								<th colspan="2"><a
 									href="${pageContext.request.contextPath }/member/register">회원가입</a></th>
 							</tr>
@@ -127,13 +173,12 @@ table tr:last-child td {
 								<div class="swiper-wrapper">
 									<!-- 1장의 이미지 영역 -->
 									<div class="swiper-slide">
-										<a href="myhome.html"
-											onClick="window.open(this.href, '', 'width=900, height=500, top=200, left=500'); return false;">내
+										<a href="minihome"
+											onClick="window.open(this.href, '', 'width=1000, height=600, top=200, left=500'); return false;">내
 											홈피</a>
 									</div>
 									<div class="swiper-slide">
-										<a href="${pageContext.request.contextPath }/member/info">내
-											정보</a>
+										<a href="${pageContext.request.contextPath }/member/info">내 정보</a>
 									</div>
 									<div class="swiper-slide">
 										<a href="${pageContext.request.contextPath }/member/find">친구찾기</a>
@@ -151,21 +196,21 @@ table tr:last-child td {
 						</th>
 					</tr>
 
-					<form action="member/find" >
 						<tr>
 							<td colspan="5">
+					<form id="searchForm">
 								<div class="row inner-align-left">
 									<div style="width:100%;">
 										<input class="form-input" type="search" name="key"
-											placeholder="아이디 혹은 번호입력" value="${param.key }">
+											placeholder="아이디 혹은 번호입력" >
 									</div>
 									<div>
 										<input class="form-btn" type="submit" value="검색">
 									</div>
 								</div>
+					</form>
 							</td>
 						</tr>
-					</form>
 				</table>
 
 				<table class="friend-table" border="1">
@@ -191,46 +236,64 @@ table tr:last-child td {
 
 		<!-- 중단 영역 -->
 		<main>
+		<div class="empty-row"></div>
+		<hr>
+		<div class="empty-row"></div>
 		<div class="banner">
-			<div class="ba1">
-				<h1>설명</h1>
+			<div class="ba1 text text-left">　　　　
+				<h1 style="color: black;">　　
+					좋은<br>
+					　　　　　　친구들과<br>
+					　　　　　　　　　동료들과<br>　
+					　　　　　　　　　　사람들과<br>
+					　　　　　　　　　　　　　　　　　함께
+				</h1><br>
+				<h2>　　　공유 다이어리를 이용하여 추억을 쌓아보아요!</h2>
 			</div>
 			<div class="ba2">
 				<img
-					src="${pageContext.request.contextPath }/img/%EB%A7%88%EC%95%BD.png"
-					class="area-70 height-80">
+					src="${pageContext.request.contextPath }/img/일기.jpg"
+					class="area-100 height-100">
 			</div>
 		</div>
-		<br>
+		<div class="empty-row"></div>
+		<hr>
+		<div class="empty-row"></div>
 		<div class="banner">
 			<div class="ba2">
-				<img src="${pageContext.request.contextPath }/img/채연.png"
-					class="area-70 height-80">
+				<img src="${pageContext.request.contextPath }/img/공간.jpg"
+					class="area-100 height-100">
 			</div>
-			<div class="ba1">
-				<h1>설명</h1>
+			<div class="ba1 text text-left">　　　　
+				<h1 style="color: gray;">　　
+				나만의 <font color="black">공간</font><br>　　　　　　
+				　　나만의 <font color="black">쉼터</font><br>　　　　　　　　　　　　
+				　　나만의 <font color="black">세상</font></h1><br>　　　　
+				<h2>　　　　　　DJworld에서 지금부터 만들어보세요!</h2>
+				
 			</div>
 
 		</div>
+		<div class="empty-row"></div>
+		<hr>
+		<div class="empty-row"></div>
 		<div class="empty-row"></div>
 		<div class="bt">
 			<div class="bt1">
 				<img src="${pageContext.request.contextPath }/img/customer.png"
 					class="area-70 height-80">
-				<!--
-                    <div class="text-center center text font-small">
-                        <h1>고객센터</h1>
-                    </div>
--->
 			</div>
 			<div class="bt1">
-				<img src="${pageContext.request.contextPath }/img/idpw.jpg"
+				<a href="${pageContext.request.contextPath }/info/infofind/code=id">
+				<img src="${pageContext.request.contextPath }/img/비번.png"
 					class="area-70 height-80">
+					</a>
 			</div>
 			<div class="bt1">
-				<img src="${pageContext.request.contextPath }/img/ring.jpg"
+				<img src="${pageContext.request.contextPath }/img/미니미.png"
 					class="area-70 height-80">
 			</div>
 		</div>
+		<div class="empty-row"></div>
 
 		<%@ include file="/WEB-INF/view/template/footer.jsp"%>
