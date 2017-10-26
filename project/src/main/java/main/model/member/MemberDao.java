@@ -16,7 +16,13 @@ public interface MemberDao {
 	boolean drop(String id, Member m);
 	List<Member> memberList();
 	List<Member> search(String key);
+<<<<<<< HEAD
 	//kkkkkkkkkkkkkkkkkk1
 }
 
 //주석
+=======
+	int idCheck(String id);
+	int emailCheck(String email);
+}
+>>>>>>> branch 'master' of https://github.com/taejunepark/djworld.git
