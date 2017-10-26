@@ -73,8 +73,18 @@ public class MemberDaoImpl implements MemberDao {
 		List<Member> list =  jdbcTemplate.query(sql, mapper, id);
 		for(Member m : list) {
 			String result = friendDao.requestCheck(id, m.getId());
+			String result2 = friendDao.sendCheck(id, m.getId());
 			if(result.equals("wait")) {
 				result = "신청 대기중";
+			}
+			else if(result.equals("accept")) {
+				result = "일촌";
+			}
+			else if(result2.equals("wait")) {
+				result = "요청 대기중";
+			}
+			else if(result2.equals("accept")) {
+				result = "일촌";
 			}
 			m.setStatus(result);
 		}
@@ -82,9 +92,27 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	public List<Member> search(String key, String id) {
-		String sql = "select * from member "
-				+ "where power != '관리자' and id != ? and phone = ? or power != '관리자' and id != ? and id like '%'||?||'%'";
-		return jdbcTemplate.query(sql, mapper, id, key, id, key);
+		String sql = "select * from member where power != '관리자' and id != ? and id like '%'||?||'%' or phone = ?";
+		List<Member> list = jdbcTemplate.query(sql, mapper, id, key, key);
+		System.out.println(list);
+		for(Member m : list) {
+			String result = friendDao.requestCheck(id, m.getId());
+			String result2 = friendDao.sendCheck(id, m.getId());
+			if(result.equals("wait")) {
+				result = "신청 대기중";
+			}
+			else if(result.equals("accept")) {
+				result = "일촌";
+			}
+			else if(result2.equals("wait")) {
+				result = "요청 대기중";
+			}
+			else if(result2.equals("accept")) {
+				result = "일촌";
+			}
+			m.setStatus(result);
+		}
+		return list;
 	}
 
 	@Override

@@ -29,10 +29,10 @@ public class MemberController {
 
 	@Autowired
 	private MemberDao memberDao;
-	
+
 	@Autowired
 	private FriendDao friendDao;
-	
+
 	// 로그인
 	@RequestMapping("/login")
 	public String login() {
@@ -65,7 +65,7 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
+
 	// 회원가입
 	@RequestMapping("/register")
 	public String register() {
@@ -79,7 +79,6 @@ public class MemberController {
 		return "redirect:login";
 	}
 
-	
 	// 회원가입시 아이디 중복체크
 	@RequestMapping(value = "/idcheck", method = RequestMethod.POST)
 	@ResponseBody
@@ -97,51 +96,48 @@ public class MemberController {
 		int result = memberDao.emailCheck(email);
 		return String.valueOf(result);
 	}
-	
+
 	// 이메일 변경시 이메일 중복체크
-		@RequestMapping(value = "/idemailcheck", method = RequestMethod.POST)
-		@ResponseBody
-		public String idmailCheck(HttpServletRequest request, HttpSession session) {
-			String email = request.getParameter("check");
-			String id = (String)session.getAttribute("userId");
-			String result = memberDao.idEmail(id);
-			return String.valueOf(result.equals(email));
-		}
-	
+	@RequestMapping(value = "/idemailcheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String idmailCheck(HttpServletRequest request, HttpSession session) {
+		String email = request.getParameter("check");
+		String id = (String) session.getAttribute("userId");
+		String result = memberDao.idEmail(id);
+		return String.valueOf(result.equals(email));
+	}
+
 	@RequestMapping(value = "/pwcheck/{path}")
 	public String pwcheck(@PathVariable String path, Model model, HttpSession session, RedirectAttributes redirect) {
 		String id = (String) session.getAttribute("userId");
-		if(id == null) {
+		if (id == null) {
 			redirect.addFlashAttribute("loginCheck", true);
 			return "redirect:/member/login";
 		}
 		model.addAttribute("path", path);
 		return "member/pwcheck";
 	}
-	
+
 	// 내 정보, 변경 하기 전 비번 체크
-	@RequestMapping(value = "/pwcheck/{path}", method=RequestMethod.POST)
+	@RequestMapping(value = "/pwcheck/{path}", method = RequestMethod.POST)
 	public String pwcheck(@PathVariable String path, Model model, HttpSession session, String pw) {
 		String id = (String) session.getAttribute("userId");
 		boolean result = memberDao.pwCheck(id, pw);
-		if(result) {
-			if(path.equals("info")) {
+		if (result) {
+			if (path.equals("info")) {
 				return "redirect:/member/info";
-			}
-			else if(path.equals("pwchange")) {
+			} else if (path.equals("pwchange")) {
 				return "member/pwchange";
-			}
-			else {
-				model.addAttribute("pathError", true );
+			} else {
+				model.addAttribute("pathError", true);
 				return "member/pwcheck";
 			}
-		}
-		else {
-			model.addAttribute("pwFlag", true );
+		} else {
+			model.addAttribute("pwFlag", true);
 			return "member/pwcheck";
 		}
 	}
-	
+
 	// 내 정보
 	@RequestMapping("/info")
 	public String info(Model model, HttpSession session, RedirectAttributes redirect) {
@@ -160,23 +156,23 @@ public class MemberController {
 	@RequestMapping(value = "/pwchange", method = RequestMethod.POST)
 	public String pwchange(HttpServletRequest request, HttpSession session, RedirectAttributes redirect) {
 		String pw = request.getParameter("newpw");
-		String id = (String)session.getAttribute("userId");
+		String id = (String) session.getAttribute("userId");
 		boolean result = memberDao.pwChange(id, pw);
 		redirect.addFlashAttribute("pwchange", result);
 		return "redirect:/";
 	}
-	
+
 	// 이메일 변경
 	@RequestMapping("/emailchange")
 	public String emailedit(HttpSession session, Model model) {
-		String id = (String)session.getAttribute("userId");
+		String id = (String) session.getAttribute("userId");
 		String email = memberDao.idEmail(id);
 		model.addAttribute("email", email);
 		return "member/emailchange";
 	}
 
 	// 이메일 변경(POST)
-	@RequestMapping(value = "/emailchange", method=RequestMethod.POST)
+	@RequestMapping(value = "/emailchange", method = RequestMethod.POST)
 	public String emailedit(HttpServletRequest request, RedirectAttributes redirect) {
 		String nowemail = request.getParameter("nowemail");
 		String newemail = request.getParameter("newemail");
@@ -184,7 +180,7 @@ public class MemberController {
 		redirect.addFlashAttribute("emailchange", result);
 		return "redirect:/";
 	}
-	
+
 	// 회원탈퇴
 	@RequestMapping("/drop")
 	public String drop(Model model, HttpSession session) {
@@ -199,7 +195,7 @@ public class MemberController {
 	public String drop(HttpSession session, Member m, RedirectAttributes redirect) {
 		String id = (String) session.getAttribute("userId");
 		boolean result = memberDao.drop(id, m);
-		if(result) {
+		if (result) {
 			session.invalidate(); // 회원 정보가 맞을 경우
 		}
 		redirect.addFlashAttribute("result", result); // 회원 정보를 잘못 입력했을 경우
@@ -211,12 +207,12 @@ public class MemberController {
 	public String goodbye() {
 		return "member/goodbye";
 	}
-	
+
 	// 친구 찾기(전체 리스트)
 	@RequestMapping({ "/find", "/find/" })
 	public String find(Model model, HttpSession session) {
-		String id = (String)session.getAttribute("userId");
-		id = id==null?" ":id;
+		String id = (String) session.getAttribute("userId");
+		id = id == null ? " " : id;
 		List<Member> list = memberDao.memberList(id);
 		Collections.shuffle(list);
 		model.addAttribute("list", list);
@@ -226,24 +222,25 @@ public class MemberController {
 	// 친구 찾기(검색)
 	@RequestMapping("/find/{key}")
 	public String search(@PathVariable String key, Model model, HttpSession session) {
-		String id = (String)session.getAttribute("userId");
+		String id = (String) session.getAttribute("userId");
+		id = id == null ? " " : id;
 		List<Member> list = memberDao.search(key, id);
 		model.addAttribute("key", key);
 		model.addAttribute("list", list);
 		return "member/find";
 	}
-	
+
 	@RequestMapping("/friendrequest/{request}")
 	public String freind(@PathVariable String request, RedirectAttributes redirect, HttpSession session) {
-		String rqId = (String)session.getAttribute("userId");
+		String rqId = (String) session.getAttribute("userId");
 		String rcId = request;
 		friendDao.request(rqId, rcId);
 		return "redirect:/member/find";
 	}
-	
+
 	@RequestMapping("/friendcancel/{request}")
 	public String friend(@PathVariable String request, RedirectAttributes redirect, HttpSession session) {
-		String rqId = (String)session.getAttribute("userId");
+		String rqId = (String) session.getAttribute("userId");
 		String rcId = request;
 		friendDao.cancel(rqId, rcId);
 		return "redirect:/member/find";
