@@ -18,3 +18,5 @@ public interface MemberDao {
 	List<Member> search(String key);
 	//kkkkkkkkkkkkkkkkkk1
 }
+
+//주석
