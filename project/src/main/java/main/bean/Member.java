@@ -17,7 +17,16 @@ public class Member {
 	private int bam;
 	private String reg;
 	private String status;
+	private String profile;
 	
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -110,6 +119,7 @@ public class Member {
 		setBam(rs.getInt("bam"));
 		setPower(rs.getString("power"));
 		setReg(rs.getString("reg"));
+		setProfile(rs.getString("profile"));
 	}
 	
 	public Member(HttpServletRequest request) {
@@ -124,12 +134,13 @@ public class Member {
 		setBam(bam==null?0:Integer.parseInt(bam));
 		setPower(request.getParameter("power"));
 		setReg(request.getParameter("reg"));
+		setProfile(request.getParameter("profile"));
 	}
 
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", pw=" + pw + ", name=" + name + ", phone=" + phone + ", birth=" + birth
 				+ ", email=" + email + ", gender=" + gender + ", power=" + power + ", bam=" + bam + ", reg=" + reg
-				+ ", status=" + status + "]";
+				+ ", status=" + status + ", profile=" + profile + "]";
 	}
 }

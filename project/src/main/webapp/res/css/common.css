@@ -215,12 +215,13 @@ input[type=checkbox]:checked + label > span{
     display: flex;
     flex-direction: row-reverse;
     flex-wrap: wrap;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
     height: 350px;
 }
     
 .bt1 {
     position: relative;
-    border: 1px solid black;
     width: 33.1%;
 }
 
@@ -310,29 +311,29 @@ input[type=checkbox]:checked + label > span{
         }
         
 
-@media screen and (max-width:800px){
-    h1{font-size:1.5em;}
-    h2{font-size:0.8em;}
+/* @media screen and (max-width:800px){ */
+/*     h1{font-size:1.5em;} */
+/*     h2{font-size:0.8em;} */
     
-    .area-50{width: 30%;}
-    .area-60{width: 30%;}
-    .area-70{width: 30%;}
-    .area-80{width: 40%;}
-    .area-90{width: 40%;}
+/*     .area-50{width: 30%;} */
+/*     .area-60{width: 30%;} */
+/*     .area-70{width: 30%;} */
+/*     .area-80{width: 40%;} */
+/*     .area-90{width: 40%;} */
     
-    .height-50{height: 40%;}
-    .height-60{height: 50%;}
-    .height-70{height: 50%;}
-    .height-80{height: 60%;}
-    .height-90{height: 60%;}
+/*     .height-50{height: 40%;} */
+/*     .height-60{height: 50%;} */
+/*     .height-70{height: 50%;} */
+/*     .height-80{height: 60%;} */
+/*     .height-90{height: 60%;} */
     
-    .img-width-3{width: 130px;}
-    .img-height-2{height: 180px;}
+/*     .img-width-3{width: 130px;} */
+/*     .img-height-2{height: 180px;} */
     
-    .font-big{font-size:1.7em;}
-    .font-medium{font-size:1.2em;}
-    .font-small{font-size:1em;} 
-}
+/*     .font-big{font-size:1.7em;} */
+/*     .font-medium{font-size:1.2em;} */
+/*     .font-small{font-size:1em;}  */
+/* } */
 
 
 

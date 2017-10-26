@@ -31,11 +31,12 @@ public class MemberDaoImpl implements MemberDao {
 			m.setBam(rs.getInt("bam"));
 			m.setPower(rs.getString("power"));
 			m.setReg(rs.getString("reg"));
+			m.setProfile(rs.getString("profile"));
 			return m;
 	};
 
 	public void register(Member m) {
-		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, 0, '일반', sysdate)";
+		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, 0, '일반', sysdate, null)";
 		System.out.println(m);
 		int result = jdbcTemplate.update(sql, m.getId(), m.getPw(), m.getName(), m.getPhone(), m.getBirth(), m.getEmail(), m.getGender());
 	}
@@ -151,6 +152,12 @@ public class MemberDaoImpl implements MemberDao {
 		return jdbcTemplate.queryForObject(sql, Integer.class, id, name, email) > 0;
 	}
 
-	
-	
+	// 비로그인시 신규 가입한 멤버 3명 출력
+	@Override
+	public List<Member> allList() {
+		String sql = "select * from (select rownum rn, TMP.* from " + 
+				"(select * from member order by reg desc)TMP) " + 
+				"where rn between 1 and 3";
+		return jdbcTemplate.query(sql, mapper);
+	}
 }
