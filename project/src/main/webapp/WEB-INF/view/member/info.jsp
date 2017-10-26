@@ -2,194 +2,147 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/template/infoHeader.jsp"%>
 <style>
-.empty-row {
-	height: 30px;
+.infoTable body {
+	background: #fafafa
+		url(https://jackrugile.com/images/misc/noise-diagonal.png);
+	color: #444;
+	font: 100%/30px 'Helvetica Neue', helvetica, arial, sans-serif;
+	text-shadow: 0 1px 0 #fff;
 }
 
-.correct {
-	border: 2px solid blue;
+.infoTable strong {
+	font-weight: bold;
 }
 
-.incorrect {
-	border: 2px solid red;
+.infoTable em {
+	font-style: italic;
 }
 
-input[type=text] {
-	width: 90%;
-	font-size: 20px;
-	padding: 10px;
+.infoTable {
+	background: #f5f5f5;
+	border-collapse: separate;
+	box-shadow: inset 0 1px 0 #fff;
+	font-size: 12px;
+	line-height: 24px;
+	margin: 30px auto;
+	text-align: left;
+	width: 50%;
 }
 
-input[type=password] {
-	width: 90%;
-	font-size: 20px;
-	padding: 10px;
+.infoTable th {
+	background: url(https://jackrugile.com/images/misc/noise-diagonal.png),
+		linear-gradient(#777, #444);
+	border-left: 1px solid #555;
+	border-right: 1px solid #777;
+	border-top: 1px solid #555;
+	border-bottom: 1px solid #333;
+	box-shadow: inset 0 1px 0 #999;
+	color: #fff;
+	font-weight: bold;
+	padding: 10px 15px;
+	position: relative;
+	text-shadow: 0 1px 0 #000;
 }
 
-input[type=submit] {
-	width: 90%;
-	font-size: 20px;
-	padding: 10px;
-	background-color: black;
-	color: white;
-	outline: none;
-	border: none;
+.infoTable th:after {
+	background: linear-gradient(rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, .08));
+	content: '';
+	display: block;
+	height: 25%;
+	left: 0;
+	margin: 1px 0 0 0;
+	position: absolute;
+	top: 25%;
+	width: 100%;
 }
 
-button {
-	width: 90%;
-	font-size: 20px;
-	padding: 10px;
-	background-color: white;
-	border: 1px solid black;
-	color: black;
+.infoTable th:first-child {
+	border-left: 1px solid #777;
+	box-shadow: inset 1px 1px 0 #999;
 }
 
-.table {
-	border: 1px solid black;
-	width: 70%;
-	padding: 20px;
-	margin: auto;
-	margin-bottom: 100px;
+.infoTable th:last-child {
+	box-shadow: inset -1px 1px 0 #999;
 }
 
-.gender {
-	margin: auto;
-	width: 90%;
+.infoTable td {
+	border-right: 1px solid #fff;
+	border-left: 1px solid #e8e8e8;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #e8e8e8;
+	padding: 10px 15px;
+	position: relative;
+	transition: all 300ms;
 }
+
+.infoTable td:first-child {
+	box-shadow: inset 1px 0 0 #fff;
+}
+
+.infoTable td:last-child {
+	border-right: 1px solid #e8e8e8;
+	box-shadow: inset -1px 0 0 #fff;
+}
+
+.infoTable tr {
+	background: url(https://jackrugile.com/images/misc/noise-diagonal.png);
+}
+
+.infoTable tr:nth-child(odd) td {
+	background: #f1f1f1
+		url(https://jackrugile.com/images/misc/noise-diagonal.png);
+}
+
+.infoTable tr:last-of-type td {
+	box-shadow: inset 0 -1px 0 #fff;
+}
+
+.infoTable tr:last-of-type td:first-child {
+	box-shadow: inset 1px -1px 0 #fff;
+}
+
+.infoTable tr:last-of-type td:last-child {
+	box-shadow: inset -1px -1px 0 #fff;
+}
+
 </style>
-<c:if test="${fail}">
-		<script>alert('비밀번호가 맞지 않습니다.');</script>
-	</c:if>
-<c:choose>
-	<c:when test="${pwFlag }" >
-		<div class="empty-row"></div>
-		<div class="area-70 center">
-			<table class="table">
-
+<div class="empty-row"></div>
+<div class="area-70 center">
+	<table class="infoTable">
+		<thead>
 			<tr>
-				<th style="border-bottom: 1px solid black" colspan="2"><div class="font-big">내 정보</div></th>
+				<th colspan="2"><div class="font-medium row text-center">내 정보</div></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><strong>아이디</strong></td>
+				<td>${member.id }</td>
 			</tr>
 			<tr>
-				<th>
-					<div class="empty-row"></div>
-				</th>
+				<td><strong>이름</strong></td>
+				<td>${member.name }</td>
 			</tr>
 			<tr>
-				<th width="30%">
-					아이디
-				</th>
-				<th>
-					${member.id }
-				</th>
+				<td><strong>생년월일</strong></td>
+				<td>${member.birth }</td>
 			</tr>
 			<tr>
-				<th><input type="password" name="pw" onblur="pwCheck();"
-					placeholder="비밀번호">
-					<div id="pwMSG"  style="padding-bottom: 5px;"></div>
-					</th>
+				<td><strong>이메일</strong></td>
+				<td>${member.email }</td>
 			</tr>
 			<tr>
-				<th><input type="password" id="pw2" onkeyup="pw2Check();"
-					placeholder="비밀번호 확인">
-					<div id="pw2MSG"  style="padding-bottom: 5px;"></div>
-				</th>
+				<td><strong>밤</strong></td>
+				<td>${member.bam }</td>
 			</tr>
 			<tr>
-				<th>
-					<div class="empty-row"></div>
-				</th>
+				<td><strong>가입일</strong></td>
+				<td>${member.date }</td>
 			</tr>
-			<tr>
-				<th><input type="text" name="name" onblur="nameCheck();"
-					placeholder="이름">
-					<div id="nameMSG"  style="padding-bottom: 5px;"></div>
-				</th>
-			</tr>
-			<tr>
-				<th><input type="text"  id="email" name="email"  placeholder="본인 확인(이메일)">
-					<div id="mailMSG"  style="padding-bottom: 5px;"></div>
-				</th>
-			</tr>
-			<tr>
-				<th>
-			<tr>
-				<td>
-					<div class="gender">
-						<div style="float: left; width: 50%;">
-							<span class="lt-radio-wrapper"> <input class="lt-radio"
-								type="radio" name="gender" id="form-gender-0" value="남자" /> <label
-								for="form-gender-0" class="lt-radio-label"></label> <label
-								for="form-gender-0">남자</label>
-							</span>
-						</div>
-						<div style="float: left; width: 50%;">
-							<span class="lt-radio-wrapper"> <input class="lt-radio"
-								type="radio" name="gender" id="form-gender-1" value="여자" /> <label
-								for="form-gender-1" class="lt-radio-label"></label> <label
-								for="form-gender-1">여자</label>
-							</span>
-						</div>
-					</div>
-				</td>
-			</tr>
-			</th>
-			</tr>
-			<tr>
-				<th><input type="text" name="birth"
-					placeholder="생년월일(ex)19931105"></th>
-			</tr>
-			<tr>
-				<th><input type="text" name="phone" placeholder="휴대폰 번호(11자리)">
-				</th>
-			</tr>
-			<tr>
-				<th>
-					<div class="empty-row"></div>
-				</th>
-			<tr>
-				<th><input type="submit" value="가입하기"></th>
-			</tr>
-		</table>
-		</div>
-	</c:when>
-	<c:otherwise>
-		<div class="empty-row"></div>
-		<div class="area-100 center">
-			<form action="info" method="post">
-				<table class="pwtable area-50 center">
-					<thead>
-						<tr>
-							<th colspan="2" class="font-medium">본인 확인</th>
-						</tr>
-						<tr>
-							<th colspan="2"  style="height: 20px"> </th>
-						</tr>
-						<tr>
-							<th colspan="2" class="font-min" style="text-align:left;">개인 정보를 위해 비밀번호를 입력해주세요.</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th class="font-small">아이디</th>
-							<td class="font-small">${member.id}</td>
-						</tr>
-						<tr>
-							<th class="font-small">비밀번호</th>
-							<td><input type="password" name="pw"></td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr>
-							<th colspan="2"><input type="submit" value="확인"
-								class="form-btn">
-						</tr>
-					</tfoot>
-				</table>
-			</form>
-		</div>
-	</c:otherwise>
-</c:choose>
+		</tbody>
+	</table>
+</div>
 
 
 <%@ include file="/WEB-INF/view/template/footer.jsp"%>

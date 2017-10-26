@@ -20,7 +20,6 @@ public class GmailService implements EmailService {
 		String tempPw = StringUtil.createRandomString(10);
 		
 		findDao.pwFind(id, name, email, tempPw);
-		System.out.println("변경 실행됨?");
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email);
 		message.setSubject("DJWorld 임시 비밀번호 메일입니다." );
@@ -29,7 +28,6 @@ public class GmailService implements EmailService {
 //		buffer.append(인증토큰이 들어간 링크)
 		message.setText(buffer.toString()); // 내용
 		sender.send(message);
-		System.out.println(message);
 	}
 
 }

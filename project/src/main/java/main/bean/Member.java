@@ -16,7 +16,16 @@ public class Member {
 	private String power;
 	private int bam;
 	private String reg;
+	private String status;
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Member() {
 	}
 	
@@ -68,6 +77,9 @@ public class Member {
 	public String getBirth() {
 		return birth;
 	}
+	public String getBirthPrint() {
+		return birth.substring(0, 4)+"년 "+birth.substring(4, 6)+"월 "+birth.substring(6,8)+"일";
+	}
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
@@ -99,13 +111,6 @@ public class Member {
 		setPower(rs.getString("power"));
 		setReg(rs.getString("reg"));
 	}
-
-	@Override
-	public String toString() {
-		return "Member [id=" + id + ", pw=" + pw + ", name=" + name + ", phone=" + phone + ", birth=" + birth
-				+ ", email=" + email + ", gender=" + gender + ", power=" + power + ", bam=" + bam + ", reg=" + reg
-				+ "]";
-	}
 	
 	public Member(HttpServletRequest request) {
 		setId(request.getParameter("id"));
@@ -119,5 +124,12 @@ public class Member {
 		setBam(bam==null?0:Integer.parseInt(bam));
 		setPower(request.getParameter("power"));
 		setReg(request.getParameter("reg"));
+	}
+
+	@Override
+	public String toString() {
+		return "Member [id=" + id + ", pw=" + pw + ", name=" + name + ", phone=" + phone + ", birth=" + birth
+				+ ", email=" + email + ", gender=" + gender + ", power=" + power + ", bam=" + bam + ", reg=" + reg
+				+ ", status=" + status + "]";
 	}
 }

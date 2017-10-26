@@ -116,6 +116,17 @@ h2{
 		
 </script>
 
+<c:if test="${pwchange }">
+	<script>alert('비밀번호 변경이 완료되었습니다.');</script>
+</c:if>
+
+<c:if test="${emailchange }">
+	<script>alert('이메일 변경이 완료되었습니다.');</script>
+</c:if>
+
+<c:if test="${findFlag eq '실패'}">
+	<script>alert('로그아웃 먼저 해주세요.');</script>
+</c:if>
 
 <body>
 	<!-- 페이지 영역 시작 -->
@@ -161,9 +172,8 @@ h2{
 								</th>
 							</tr>
 							<tr class="font-small" style="height: 50px;">
-								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind/code=id">아이디/비밀번호 찾기</a></th>
-								<th colspan="2"><a
-									href="${pageContext.request.contextPath }/member/register">회원가입</a></th>
+								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind/id">아이디/비밀번호 찾기</a></th>
+								<th colspan="2"><a href="${pageContext.request.contextPath }/member/register">회원가입</a></th>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -173,12 +183,19 @@ h2{
 								<div class="swiper-wrapper">
 									<!-- 1장의 이미지 영역 -->
 									<div class="swiper-slide">
-										<a href="minihome"
-											onClick="window.open(this.href, '', 'width=1000, height=600, top=200, left=500'); return false;">내
-											홈피</a>
+										<c:choose>
+										<c:when test="${loginFlag }">
+											<a href="${pageContext.request.contextPath }/friend/list">일촌목록</a>
+										</c:when>
+										<c:otherwise>
+											<a href="minihome"
+											onClick="window.open(this.href, '', 'width=1000, height=600, top=200, left=500'); return false;"> 내 홈피 가기</a>
+										</c:otherwise>
+										</c:choose>
+										
 									</div>
 									<div class="swiper-slide">
-										<a href="${pageContext.request.contextPath }/member/info">내 정보</a>
+										<a href="${pageContext.request.contextPath }/member/pwcheck/info">내 정보</a>
 									</div>
 									<div class="swiper-slide">
 										<a href="${pageContext.request.contextPath }/member/find">친구찾기</a>
@@ -242,11 +259,9 @@ h2{
 		<div class="banner">
 			<div class="ba1 text text-left">　　　　
 				<h1 style="color: black;">　　
-					좋은<br>
-					　　　　　　친구들과<br>
-					　　　　　　　　　동료들과<br>　
-					　　　　　　　　　　사람들과<br>
-					　　　　　　　　　　　　　　　　　함께
+					평생 함께할 친구들과 함께<br>　　
+					소중한 인연인 동료들과 함께<br>　　
+					하나밖에 없는 가족들과 함께<br>
 				</h1><br>
 				<h2>　　　공유 다이어리를 이용하여 추억을 쌓아보아요!</h2>
 			</div>
@@ -284,7 +299,7 @@ h2{
 					class="area-70 height-80">
 			</div>
 			<div class="bt1">
-				<a href="${pageContext.request.contextPath }/info/infofind/code=id">
+				<a href="${pageContext.request.contextPath }/info/infofind/id">
 				<img src="${pageContext.request.contextPath }/img/비번.png"
 					class="area-70 height-80">
 					</a>
