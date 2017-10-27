@@ -114,7 +114,7 @@
             }
             
             .date{
-                height: 10%;
+                height: 15%;
                 margin: 5px;
                 padding: 5px;
             }
@@ -159,39 +159,34 @@
         <script src="https://code.jquery.com/jquery-latest.js"></script>
         <script>
             $(document).ready(function(){
-            	/* $.ajax({
-                    url:"diaryInfo",
-                    data: {
-                        date : printNow()
-                    },
-                    success: function(res){
-                        if()
-                            $(".area textarea").text(res)
-                    }                    
-                }) */
+                /* var now = new Date()
+                var day = ("0" + now.getDate()).slice(-2)
+                var month = ("0" + (now.getMonth() + 1)).slice(-2)
+                var today = now.getFullYear()+"-"+(month)+"-"+(day)
+                $('#now').val(today); */
             	
             	$(".write_btn").click(function(){
             		var reg = printDate()
                     location.href='diary_write/' + reg;
-                    
                 })
+               
+				$(".alterDay").click(function(){
+					var partDate = $("#now").val().substr(0,8)
+					var btn = $(this).text()
+					var day = (btn.length)===1?("0"+btn):btn
+					var date = partDate+day
+					$("#now").val(date)
+					location.href=$("#now").val();
+				})
                 
                 function printDate(){
-            		var date = $("#calen").val()
+            		var date = $("#now").val()
             		var reg = date.substr(2,2)
             		reg += '-' + date.substr(5,2)
             		reg += '-' + date.substr(8,2)
             		return reg
             	}
                 
-                function printNow(){
-            		var now = new Date()
-                    var date = now.getFullYear()
-                    date += '/' + (now.getMonth() + 1)
-                    date += '/' + now.getDate()
-                    date.substr(2,8)
-                    return date
-            	}
             })
         </script>
     </head>
@@ -223,14 +218,14 @@
                 <div class="highlight">
                     <div class="month">
                         <label>
-                            <input type="date" id="calen">
+                            <input type="date" id="now" value="${inputVal }">
                             <i class="fa fa-calendar-o" aria-hidden="true"></i>
                         </label>
                     </div>
                     
                     <div class="date">
-                    	<c:forEach var="i" begin="1" end="31" step="1">
-                    		<a href="#">${i}</a>
+                    	<c:forEach var="i" begin="1" end="${final_day}" step="1">
+                    		<button class="alterDay">${i}</button>
                     		<c:choose>
                     			<c:when test="${i < 10}">
                     				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -278,9 +273,5 @@
                 </nav>
             </main>
         </div>
-        
-        <script>
-            document.getElementById('calen').valueAsDate = new Date();
-        </script>
     </body>
 </html>
