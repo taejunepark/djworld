@@ -1,9 +1,12 @@
 package main.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,16 +20,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import main.bean.Member;
 import main.model.friend.FriendDao;
+import main.model.image.ImageBoardDao;
 import main.model.member.MemberDao;
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-
+	
+	@Autowired
+	private ImageBoardDao imageBoardDao;
+	
+	@Autowired
+	private ServletContext servletContext;
+	
 	@Autowired
 	private MemberDao memberDao;
 
@@ -64,6 +76,11 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/agreement")
+	public String agreement() {
+		return "member/agreement";
 	}
 
 	// 회원가입
@@ -244,5 +261,27 @@ public class MemberController {
 		String rcId = request;
 		friendDao.cancel(rqId, rcId);
 		return "redirect:/member/find";
+	}
+	
+	@RequestMapping("/upload")
+	public String upload() {
+		return "member/upload";
+	}
+	
+	@RequestMapping(value="/upload", method=RequestMethod.POST)
+	public String upload(MultipartHttpServletRequest mRequest, RedirectAttributes redirect, Model model, HttpSession session) throws IllegalStateException, IOException {
+		String id = (String)session.getAttribute("userId");
+		MultipartFile mf = mRequest.getFile("file");
+		String ip = mRequest.getRemoteAddr();
+		long time = System.currentTimeMillis();
+		UUID uuid = UUID.randomUUID();
+		String savename = ip+"_"+time+"_"+uuid.toString();
+		
+		boolean result = imageBoardDao.insert(id, savename);
+		String path = servletContext.getRealPath("/upload");
+		File target = new File(path, savename);
+		mf.transferTo(target);
+		redirect.addFlashAttribute("result", result);
+		return "redirect:upload";
 	}
 }

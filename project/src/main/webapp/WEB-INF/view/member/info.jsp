@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/template/infoHeader.jsp"%>
-
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath }/css/common.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath }/css/each.css">
+	
 <div class="empty-row"></div>
 <div class="area-70 center">
 	<table class="infoTable">

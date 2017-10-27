@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/template/registerHeader.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<html>
 
+<html>
 <head>
 <meta charset="UTF-8">
 <title>회원가입 검사</title>
@@ -243,8 +244,6 @@ button {
 
 <body>
 	<div class="empty-row"></div>
-	<div class="empty-row"></div>
-	<div class="empty-row"></div>
 
 	<form action="register" method="post" onsubmit="sendCheck();">
 		<table class="table">
@@ -337,7 +336,4 @@ button {
 			</tr>
 		</table>
 	</form>
-</body>
-
-</html>
-
+<%@ include file="/WEB-INF/view/template/footer.jsp"%>

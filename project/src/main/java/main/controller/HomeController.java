@@ -63,4 +63,9 @@ public class HomeController {
 		model.addAttribute("friend", list);
 		return "home";
 	}
+	
+	@RequestMapping("/minime")
+	public String minime() {
+		return "ready";
+	}
 }

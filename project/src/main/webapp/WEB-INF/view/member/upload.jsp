@@ -30,7 +30,7 @@
 			<h1>프로필 설정</h1>
 		</div>
 		<div class="empty-row"></div>
-		<form action="upload" method="post" enctype="multipart/form-data" name="form" onsubmit="goOpener()">
+		<form action="${pageContext.request.contextPath }/member/upload" method="post" enctype="multipart/form-data" name="form" onsubmit="goOpener()">
 			<div class="row center">
 				<input type="file" id="file" name="file" required	class="user-input fill">
 			</div>

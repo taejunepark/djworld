@@ -2,18 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
 <html>
 
 <head>
 <title></title>
 <!-- 디자인 코드를 작성하는 공간 -->
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/common.css">
+	href="${pageContext.request.contextPath }/css/common.css?ver=1">
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/each.css">
+	href="${pageContext.request.contextPath }/css/each.css?ver=1">
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/swiper.css">
+	href="${pageContext.request.contextPath }/css/swiper.css?ver=1">
 </head>
 <style>
 /* 로그인 테이블 하단 메뉴 */
@@ -125,7 +124,7 @@ h2 {
 		//새창의 위치 
 		open_x = (screen_width - window_with) / 2;
 		open_y = (screen_height - window_height) / 2;
-		window.open("${pageContext.request.contextPath}/upload", "Window_open",
+		window.open("${pageContext.request.contextPath}/member/upload", "Window_open",
 				"height=350; width=530; left=" + open_x + ", top=" + open_y);
 	}
 </script>
@@ -158,7 +157,7 @@ h2 {
 			<div class="title">
 				<table>
 					<tr>
-						<th><a href="${pageContext.request.contextPath}"> <img
+						<th><a href="${pageContext.request.contextPath}/"> <img
 								src="${pageContext.request.contextPath }/img/naver2.png"
 								class="img-height-1"></a></th>
 
@@ -193,7 +192,7 @@ h2 {
 											</a>
 										</div>
 										<div class="area-60" style="padding-left: 15px;">
-											<h3>${name }님환영합니다</h3>
+											<h3>${name }님 환영합니다</h3>
 											<!-- 										<form action="upload" method="post" enctype="multipart/form-data" -->
 											<!-- 										 onClick="window.open(this.href, '', 'width=300, height=300, top=10%, left=200'); return false;"> -->
 											<button onClick="window_open()">프로필 설정</button>
@@ -222,7 +221,7 @@ h2 {
 									href="${pageContext.request.contextPath }/info/infofind/id">아이디/비밀번호
 										찾기</a></th>
 								<th colspan="2"><a
-									href="${pageContext.request.contextPath }/member/register">회원가입</a></th>
+									href="${pageContext.request.contextPath }/member/agreement">회원가입</a></th>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -278,11 +277,11 @@ h2 {
 						</td>
 					</tr>
 				</table>
-				<table class="friend-table" border="1">
+				<table class="friend-table" >
 					<c:choose>
 						<c:when test="${friend == null }">
 							<tr style="height: 50px">
-								<th colspan="3">친구를 추가해보세요!</th>
+								<td colspan="3"><strong>친구를 추가해보세요!</strong></td>
 							</tr>
 							<tr style="height: 250px">
 								<th></th>
@@ -291,38 +290,38 @@ h2 {
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<tr style="height: 50px">
+							<c:if test="${!loginFlag }">
+								<tr><th colspan="3">신규 가입자</th></tr>
+							</c:if>
+							<c:if test="${loginFlag }">
+								<tr><th colspan="3">일촌 목록</th></tr>
+							</c:if>
+							<tr style="height: 50px;">
 								<c:forEach var="friend" items="${friend }">
-									<th>${friend.name }</th>
+									<th style="border: 1px solid black; color: white; background-color: black;">${friend.name }</th>
 								</c:forEach>
 							</tr>
 							<tr style="height: 250px">
 								<c:forEach var="friend" items="${friend }">
-									<c:choose>
-										<c:when test="${friend.profile != null}">
-											<th>
-												<div>
-													<img 	src="${pageContext.request.contextPath }/file/${friend.profile}"
-														width="300" height="200">
+											<td  style="border: 1px solid black; width: 300">
+												<div class="text-center">
+													<c:choose>
+														<c:when test="${friend.profile != null}">
+														 	<img class=" image-hover img-square-round" src="${pageContext.request.contextPath }/file/${friend.profile}" 
+														 		width="300" height="200">
+														</c:when>
+														<c:otherwise>
+															<img src="${pageContext.request.contextPath }/img/프로필.jpg"
+																width="300" height="200">
+														</c:otherwise>
+													</c:choose>
 												</div>
-											</th>
-										</c:when>
-										<c:otherwise>
-											<th>
-												<div>
-													<img src="${pageContext.request.contextPath }/img/프로필.jpg"
-														width="300" height="200">
-												</div>
-											</th>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-							</tr>
-						</c:otherwise>
-					</c:choose>
-
+											</td>
+										</c:forEach>
+									</tr>
+								</c:otherwise>
+							</c:choose>
 				</table>
-
 				<br>
 			</div>
 		</aside>
@@ -382,8 +381,10 @@ h2 {
 				</a>
 			</div>
 			<div class="bt1">
-				<img src="${pageContext.request.contextPath }/img/미니미.png"
-					class="area-70 height-80">
+				<a href="${pageContext.request.contextPath }/minime">
+					<img src="${pageContext.request.contextPath }/img/미니미.png"
+						class="area-70 height-80">
+				</a>
 			</div>
 		</div>
 		<div class="empty-row"></div>
