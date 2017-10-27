@@ -107,13 +107,13 @@
                 padding: 5px;
             }
             
-            .month{
+            .dateArea{
                 height: 3%;
                 margin: 5px;
                 padding: 5px;
             }
             
-            .date{
+            .dayArea{
                 height: 15%;
                 margin: 5px;
                 padding: 5px;
@@ -159,34 +159,58 @@
         <script src="https://code.jquery.com/jquery-latest.js"></script>
         <script>
             $(document).ready(function(){
-                /* var now = new Date()
-                var day = ("0" + now.getDate()).slice(-2)
-                var month = ("0" + (now.getMonth() + 1)).slice(-2)
-                var today = now.getFullYear()+"-"+(month)+"-"+(day)
-                $('#now').val(today); */
-            	
-            	$(".write_btn").click(function(){
-            		var reg = printDate()
-                    location.href='diary_write/' + reg;
+                init()
+                $("select").change(function(){
+                    $(".dayArea").empty()
+                    change()
                 })
-               
-				$(".alterDay").click(function(){
-					var partDate = $("#now").val().substr(0,8)
-					var btn = $(this).text()
-					var day = (btn.length)===1?("0"+btn):btn
-					var date = partDate+day
-					$("#now").val(date)
-					location.href=$("#now").val();
-				})
                 
-                function printDate(){
-            		var date = $("#now").val()
-            		var reg = date.substr(2,2)
-            		reg += '-' + date.substr(5,2)
-            		reg += '-' + date.substr(8,2)
-            		return reg
-            	}
+                $(".write_btn").click(function(){
+            		/*var year = $("#year").val().substr(2,2)
+            		var month = $("#month").val().substr(0,2)
+            		var day = $(".dayArea").find()
+                    location.href='diary_write/' + reg;*/
+                })
                 
+                function init(){
+                	var today = new Date()
+                	var year = today.getFullYear()
+                    var month = today.getMonth()+1 < 10?"0" + today.getMonth()+1:today.getMonth()+1
+                    var lastDay = ( new Date(year, month, 0) ).getDate();
+                    addDayarea(lastDay)
+                    $("#year").find("#"+year).attr("selected", true)
+                    $("#month").find("#"+month).attr("selected", true)
+                }
+                
+                function change(){
+                	var year = $("#year").val().substr(0,4)
+                    var month = $("#month").val().substr(0,2)
+                    var lastDay = ( new Date(year, month, 0) ).getDate();
+                	addDayarea(lastDay)
+                }
+                
+                function addDayarea(lastDay) {
+                	for(var i = 1; i <= lastDay; i++){
+                        $(".dayArea").append(createBtn(i))
+                        
+                        if(i % 10 == 0)
+                            $(".dayArea").append(createGap())
+                    }
+                }
+                
+                function createBtn(i){
+                	var btn = $("<button/>")
+                	btn.text(i)
+                	btn.css('width',30)
+                	btn.click(function(){
+                		
+                	})
+                	return btn
+                }
+                
+                function createGap(){
+                	return "<br><br>"
+                }
             })
         </script>
     </head>
@@ -210,36 +234,36 @@
             </div>
             
             <main>
-            <jsp:useBean id="toDay" class="java.util.Date"/>
                 <aside>
                     <a href="#">미정</a>
                 </aside>
                 
                 <div class="highlight">
-                    <div class="month">
-                        <label>
-                            <input type="date" id="now" value="${inputVal }">
-                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                        </label>
+                    <div class="dateArea">
+                        <select id="year">
+					        <c:forEach var="year" begin="1900" end="2017">
+					            <option id="${year}">${year}년</option>
+					        </c:forEach>
+					    </select>
+				                            
+					    <select id="month">
+					        <c:forEach var="month" begin="1" end="12">
+					            
+					            <c:choose>
+					            	<c:when test="${month < 10}">
+					            		<c:set var="transMonth" value="0${month}"/>
+					            		<option id="${transMonth }">${transMonth}월</option>
+					            	</c:when>
+					            	<c:otherwise>
+					            		<option id="${month }">${month}월</option>
+					            	</c:otherwise>
+					            </c:choose>
+					            
+					        </c:forEach>
+					    </select>
                     </div>
                     
-                    <div class="date">
-                    	<c:forEach var="i" begin="1" end="${final_day}" step="1">
-                    		<button class="alterDay">${i}</button>
-                    		<c:choose>
-                    			<c:when test="${i < 10}">
-                    				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                    			</c:when>
-                    			
-                    			<c:when test="${i % 10 == 0}">
-                    				<br>
-                    			</c:when>
-                    			
-                    			<c:otherwise>
-                    				&nbsp; &nbsp; &nbsp; &nbsp;
-                    			</c:otherwise>
-                    		</c:choose>
-                    	</c:forEach>
+                    <div class="dayArea">
                         
                     </div>
                     
@@ -255,10 +279,10 @@
                 <nav class="menu">
                     <ul>
                         <li>
-                            <a href="${pageContext.request.contextPath }/minihome/">홈</a>
+                            <a href="${pageContext.request.contextPath }/minihome/${id}">홈</a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath }/minihome/diary/">다이어리</a>
+                            <a href="${pageContext.request.contextPath }/minihome/${id}/diary/">다이어리</a>
                         </li>
                         <li>
                             <a href="#">게시판</a>

@@ -145,7 +145,7 @@ button {
 			<div class="row" align="center">
 				<!--                <input type="button" value="회원가입">-->
 				<button type="button"
-					onclick="location.href='${pageContext.request.contextPath}/member/register'">회원가입</button>
+					onclick="location.href='${pageContext.request.contextPath}/member/agreement'">회원가입</button>
 			</div>
 			<div class="row" align="center">
 				<h3>&copy; DJWorld Corp.</h3>

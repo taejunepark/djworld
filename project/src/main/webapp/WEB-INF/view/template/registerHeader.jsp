@@ -25,7 +25,7 @@
 								src="${pageContext.request.contextPath }/img/naver2.png"
 								class="img-height-1"></th>
 						</a>
-						<th class="font-big">내 정보</th>
+						<th class="font-big">회원가입</th>
 					</tr>
 				</table>
 			</div>

@@ -25,6 +25,7 @@ public class MinihomeController {
 	
 	@RequestMapping(value= {"/minihome/{id}"})
 	public String home(@PathVariable String id, Model model) {
+		model.addAttribute("id", id);
 		return "mini/minihome";
 	}
 	
@@ -57,6 +58,19 @@ public class MinihomeController {
 	
 	@RequestMapping("/minihome/{id}/diary/{reg}")
 	public String select_diary(@PathVariable String id,@PathVariable String reg, Model model) {
+		// 현재 월의 마지막 요일을 구하여 Forward
+		Calendar cal = Calendar.getInstance();
+		int year = Integer.parseInt(reg.substring(0, 4));
+		System.out.println("year : " + year);
+		int month = Integer.parseInt(reg.substring(5,7));
+		System.out.println("month : " + month);
+		int date = Integer.parseInt(reg.substring(8, 10));
+		System.out.println("date : " + date);
+		cal.set(year, month - 1, date);
+		int final_day = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		System.out.println("마지막 일 : " + final_day);
+		model.addAttribute("final_day", final_day);
+		
 		model.addAttribute("inputVal", reg);
 		reg = reg.substring(2).replace('-', '/');
 		System.out.println(reg);
@@ -65,13 +79,7 @@ public class MinihomeController {
 		Diary d = diaryDao.info(reg, "rlaeodnjs");
 		model.addAttribute("d", d);
 		
-		// 현재 월의 마지막 요일을 구하여 Forward
 		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
-		int final_day = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		System.out.println("마지막 일 : " + final_day);
-		model.addAttribute("final_day", final_day);
 		return "mini/diary/diary";
 	}
 	

@@ -267,17 +267,6 @@
                 </aside>
                 
                 <div class="highlight">
-                    <div class="month">
-                        <label>
-                            2017년 10월 
-                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                        </label>
-                    </div>
-                    
-                    <div class="date">
-                        1 2 3 7 10 22 30
-                    </div>
-                    
                     <div class="area">
                         <!-- SE2 Markup Start -->	
                         <div id="smart_editor2">
@@ -1045,10 +1034,10 @@
                 <nav class="menu">
                     <ul>
                         <li>
-                            <a href="${pageContext.request.contextPath }/minihome/">홈</a>
+                            <a href="${pageContext.request.contextPath }/minihome/${id}">홈</a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath }/minihome/diary/">다이어리</a>
+                            <a href="${pageContext.request.contextPath }/minihome/${id}/diary/">다이어리</a>
                         </li>
                         <li>
                             <a href="#">게시판</a>
