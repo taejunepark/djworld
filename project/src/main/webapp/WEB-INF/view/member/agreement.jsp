@@ -25,14 +25,16 @@
 </head>
 <body>
 	<div class="empty-row"></div>
-	<div class="center">
+	<div class="center text-center area-70">
 		<form name="form">
-			<table width="1400" height="400">
+			<table width="100%">
 				<tr>
 					<td width="100%" height="50%" align="center">
 						<p align="left">
-							<span style="padding-left: 160px"> DJWorld 약관동의</span>
-						</p> <br> <textarea rows="20" cols="150">가. 수집하는 개인정보의 항목첫째, 회사는 회원가 입, 원활한 고객상담, 각종 서비스의 제공을 위해 최초 회원가입 당시 아래와 같은 최소한의 개인정보를 필수항목으로 수집하고 있습니다.
+							<h1>DJWorld 약관동의</h1>
+						</p> <br> 
+						<textarea rows="20" cols="150">첫째. 수집하는 개인정보의 항목첫째, 회사는 회원가 입, 원활한 고객상담, 각종 서비스의 제공을 위해 최초 회원가입 당시 아래와 같은 최소한의
+	개인정보를 필수항목으로 수집하고 있습니다.
 회원가입
 - 이름, 생년월일, 성별, 아이디, 비밀번호, 별명, 연락처(메일주소, 휴대폰 번호 중 선택), 가입인증정보
 만14세 미만 아동 회원가입 
@@ -54,14 +56,13 @@
 - 홈페이지, 서면양식, 팩스, 전화, 상담 게시판, 이메일, 이벤트 응모, 배송요청
 - 협력회사로부터의 제공 
 - 생성정보 수집 툴을 통한 수집
-   </textarea> <br> <input type="checkbox" name="req"> 개인정보 수집 및 이용에
-						동의합니다.
+   </textarea> <br> <input type="checkbox" name="req"> 개인정보 수집 및 이용에 동의합니다.
 					</td>
 				</tr>
 				<tr>
-					<td align="center" valign="top"><input type="button"
-						value="동의" onclick="chk()" />&nbsp;&nbsp;&nbsp; <input
-						type="button" value="동의하지 않습니다" onclick="nochk()" /></td>
+					<td align="center" valign="top">
+						<input class="form-btn" type="button" value="동의" onclick="chk()" />&nbsp;&nbsp;&nbsp;
+						<input	class="form-btn"  type="button" value="취소" onclick="location.href=${pageContext.request.contextPath}/" /></td>
 				</tr>
 			</table>
 		</form>

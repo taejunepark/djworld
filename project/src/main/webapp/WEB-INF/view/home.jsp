@@ -202,7 +202,7 @@ h2 {
 								</th>
 							</tr>
 							<tr>
-								<th colspan="3" style="height: 50px;"><a href="minihome"
+								<th colspan="3" style="height: 50px;"><a href="minihome/${userId }"
 									onClick="window.open(this.href, '', 'width=900, height=600, top=10%, left=200'); return false;">내
 										홈피 가기</a></th>
 								<th colspan="2"><a
@@ -217,11 +217,8 @@ h2 {
 								</th>
 							</tr>
 							<tr class="font-small" style="height: 50px;">
-								<th colspan="3"><a
-									href="${pageContext.request.contextPath }/info/infofind/id">아이디/비밀번호
-										찾기</a></th>
-								<th colspan="2"><a
-									href="${pageContext.request.contextPath }/member/agreement">회원가입</a></th>
+								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind/id">아이디/비밀번호										찾기</a></th>
+								<th colspan="2"><a href="${pageContext.request.contextPath }/member/agreement">회원가입</a></th>
 							</tr>
 						</c:otherwise>
 					</c:choose>
