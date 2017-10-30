@@ -4,10 +4,6 @@
     <head>
         <meta charset="UTF-8">
         <title>???님의 미니홈피</title>
-        <link rel="stylesheet" type="text/css" href="css/common.css">
-        <link rel="stylesheet" type="text/css" href="css/swiper.css">
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link href="${pageContext.request.contextPath }/css/ko_KR/smart_editor2.css" rel="stylesheet" type="text/css">
         <style type="text/css">
             body { margin: 10px; }
@@ -1022,7 +1018,7 @@
                             </div>
                             
                             <!-- /diary 뒤에 날짜 추가 해줘야됨 -->
-                            <form action="${pageContext.request.contextPath }/minihome/diary/diary_write" method="post">
+                            <form action="${pageContext.request.contextPath }/minihome/${id }/diary/diary_write/${reg}" method="post">
                             <input type="hidden" name="reg" value="${reg}">
                                 <textarea name="ir1" id="ir1" rows="10" cols="100" style="width:100%;resize:none;
                                 padding: 1em;padding-bottom: 0.2em;height: 100%; display:none;"></textarea>
@@ -1037,7 +1033,7 @@
                             <a href="${pageContext.request.contextPath }/minihome/${id}">홈</a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath }/minihome/${id}/diary/">다이어리</a>
+                            <a href="${pageContext.request.contextPath }/minihome/${id}/diary">다이어리</a>
                         </li>
                         <li>
                             <a href="#">게시판</a>

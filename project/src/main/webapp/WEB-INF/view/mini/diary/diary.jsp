@@ -9,10 +9,6 @@
     <head>
         <meta charset="UTF-8">
         <title>???님의 미니홈피</title>
-        <link rel="stylesheet" type="text/css" href="css/common.css">
-        <link rel="stylesheet" type="text/css" href="css/swiper.css">
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         
         <style>
             a{
@@ -166,20 +162,39 @@
                 })
                 
                 $(".write_btn").click(function(){
-            		/*var year = $("#year").val().substr(2,2)
+            		var year = $("#year").val().substr(2,2)
             		var month = $("#month").val().substr(0,2)
-            		var day = $(".dayArea").find()
-                    location.href='diary_write/' + reg;*/
+            		var day
+                    var btns = $(".dayArea").find("button")
+                    $.each(btns, function(){
+                        var flag = $(this).css("background-color") === 'rgb(255, 0, 0)'
+                        if(flag)
+                            day = $(this).text()
+                    })
+                    var date = year + '-' + month + '-' + day
+                    console.log("일 : " + date)
+                    
+                    location.href=$(location).attr('href') + '/diary_write/'+date
                 })
                 
                 function init(){
                 	var today = new Date()
                 	var year = today.getFullYear()
                     var month = today.getMonth()+1 < 10?"0" + today.getMonth()+1:today.getMonth()+1
+                	var day = today.getDate()
                     var lastDay = ( new Date(year, month, 0) ).getDate();
                     addDayarea(lastDay)
                     $("#year").find("#"+year).attr("selected", true)
                     $("#month").find("#"+month).attr("selected", true)
+                    
+                    var btns = $(".dayArea").find("button")
+                    $.each(btns, function(){
+                        var flag = $(this).text() === day.toString()
+                        if(flag)
+                            $(this).css("background", "red")
+                    })
+                    var date = year + '-' + month + '-' + day
+                    printDetail(date)
                 }
                 
                 function change(){
@@ -200,12 +215,30 @@
                 
                 function createBtn(i){
                 	var btn = $("<button/>")
-                	btn.text(i)
-                	btn.css('width',30)
+                	if(i < 10)
+                		i = "0" + i
+               		btn.text(i)
+                   	btn.css('width',30).css('background', 'none')
                 	btn.click(function(){
-                		
+                		$("button").css("background", "none")
+                		$(this).css("background", "red")
+                		var year = $("#year").val().substr(0,4)
+                		var month = $("#month").val().substr(0,2)
+                		var day = $(this).text()
+                		var date = year + '-' + month + '-' + day
+                		//ajax로 가져온 데이터 추가
+                		printDetail(date)
                 	})
                 	return btn
+                }
+                
+                function printDetail(date){
+                	$.ajax({
+            			url: $(location).attr('href') + '/' + date,
+            			success : function(res){
+            				$(".area").html(res)
+            			}
+            		})
                 }
                 
                 function createGap(){
@@ -268,7 +301,7 @@
                     </div>
                     
                     <div class="area">
-                        ${d.detail}
+                        ${text}
                     </div>
                     
                     <div class="write">
@@ -282,7 +315,7 @@
                             <a href="${pageContext.request.contextPath }/minihome/${id}">홈</a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath }/minihome/${id}/diary/">다이어리</a>
+                            <a href="${pageContext.request.contextPath }/minihome/${id}/diary">다이어리</a>
                         </li>
                         <li>
                             <a href="#">게시판</a>

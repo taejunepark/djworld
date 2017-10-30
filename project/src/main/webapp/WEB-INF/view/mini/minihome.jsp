@@ -289,7 +289,7 @@
                             <a href="${pageContext.request.contextPath }/minihome/${id}">홈</a>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath }/minihome/${id}/diary/">다이어리</a>
+                            <a href="${pageContext.request.contextPath }/minihome/${id}/diary">다이어리</a>
                         </li>
                         <li>
                             <a href="#">게시판</a>
