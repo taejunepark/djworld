@@ -41,6 +41,7 @@ public class HomeController {
 					for (int i = 0; i < 3; i++) {
 						list.add(temp.get(i));
 					}
+					model.addAttribute("full", true);
 				} 
 				else {
 					for (int i = 0; i < temp.size(); i++) {

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.runners.Parameterized.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import mini.bean.Diary;
 import mini.model.diary.DiaryDao;
@@ -55,29 +57,48 @@ public class MinihomeController {
 	/** Ajax 사용 
 	 * @throws IOException */
 	@RequestMapping("/minihome/{id}/diary/{reg}")
-	public void select_diary(@PathVariable String id,@PathVariable String reg, HttpServletResponse response, Model model) throws IOException {
-		PrintWriter pw = response.getWriter();
+	@ResponseBody
+	public String select_diary(HttpServletResponse response , @PathVariable String id,@PathVariable String reg, Model model) throws IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		Diary d = diaryDao.info(reg, id);
 		String text = d==null?"":d.getDetail();
-		pw.write(text);
-		pw.flush();
-		pw.close();
+		System.out.println(text);
+		return text;
 	}
 	
-	@RequestMapping("/minihome/{id}/diary/diary_write/{reg}")
-	public String diary_write(@PathVariable String id,@PathVariable String reg, Model model) {
-		model.addAttribute("id", id);
-		model.addAttribute("reg", reg);
-		return "mini/diary/diary_write";
+	@RequestMapping(value="/minihome/{id}/diary_write", method=RequestMethod.POST)
+	public String diary_write(@PathVariable String id, Model model, @RequestParam Map<String,Object> map) {
+		String path = "";
+		if(map.get("ir1") == null) {
+			model.addAttribute("reg", map.get("reg"));
+			path = "mini/diary/diary_write";
+		}else {
+			Diary d = new Diary();
+			d.setReg((String)map.get("reg"));
+			d.setDetail((String)map.get("ir1"));
+			d.setSeparate(id);
+			diaryDao.insert(d);
+			path = "redirect:/minihome/"+id+"/diary";
+		}
+		return path;
 	}
 	
-	@RequestMapping(value="/minihome/{id}/diary/diary_write/{reg}", method=RequestMethod.POST)
-	public String diary_write(@PathVariable String id, @PathVariable String reg, @RequestParam Map<String,Object> map) {
-		Diary d = new Diary();
-		d.setReg((String)map.get("reg"));
-		d.setDetail((String)map.get("ir1"));
-		d.setSeparate("rlaeodnjs");
-		diaryDao.insert(d);
-		return "redirect:/minihome/"+id+"/diary";
+	@RequestMapping(value="/minihome/{id}/diary_edit", method=RequestMethod.POST)
+	public String diary_edit(@PathVariable String id, Model model, @RequestParam Map<String,Object> map) {
+		String path = "";
+		if(map.get("ir1") == null) {
+			model.addAttribute("reg", map.get("reg"));
+			model.addAttribute("detail", map.get("detail"));
+			path = "mini/diary/diary_edit";
+		}else {
+			Diary d = new Diary();
+			d.setReg((String)map.get("reg"));
+			d.setDetail((String)map.get("ir1"));
+			d.setSeparate(id);
+			diaryDao.edit(d);
+			path = "redirect:/minihome/"+id+"/diary";
+		}
+		return path;
 	}
 }

@@ -130,7 +130,7 @@
                 height: 100%;
             } */
             
-            .write{
+            .btnArea{
                 display: flex;
                 height: 5%;
                 margin: 5px;
@@ -158,11 +158,43 @@
                 init()
                 $("select").change(function(){
                     $(".dayArea").empty()
-                    change()
+                    dateChange()
                 })
                 
                 $(".write_btn").click(function(){
-            		var year = $("#year").val().substr(2,2)
+                	var date = select_date()
+                	$("input[name=reg]").val(date)
+                	$("#transfer").attr("action", "diary_write")
+                })
+                
+                $(".edit_btn").click(function(){
+                	var date = select_date()
+                	$("input[name=reg]").val(date)
+                	$("input[name=detail]").val($(".area").html())
+                	$("#transfer").attr("action", "diary_edit")
+                })
+                
+                function btnChange() {
+                	var test = $(".area").html()
+                	if(test === null || test === ""){
+                		showWrite()
+                	}else{
+                		showEdit()
+                	}
+                }
+                
+                function showWrite() {
+                	$(".write_btn").css("display","none");
+                	$(".edit_btn").css("display","block");
+                }
+                
+                function showEdit() {
+                	$(".write_btn").css("display","block");
+                	$(".edit_btn").css("display","none");
+                }
+                
+                function select_date() {
+                	var year = $("#year").val().substr(2,2)
             		var month = $("#month").val().substr(0,2)
             		var day
                     var btns = $(".dayArea").find("button")
@@ -172,10 +204,8 @@
                             day = $(this).text()
                     })
                     var date = year + '-' + month + '-' + day
-                    console.log("일 : " + date)
-                    
-                    location.href=$(location).attr('href') + '/diary_write/'+date
-                })
+                    return date
+                }
                 
                 function init(){
                 	var today = new Date()
@@ -197,11 +227,19 @@
                     printDetail(date)
                 }
                 
-                function change(){
+                function dateChange(){
                 	var year = $("#year").val().substr(0,4)
                     var month = $("#month").val().substr(0,2)
                     var lastDay = ( new Date(year, month, 0) ).getDate();
                 	addDayarea(lastDay)
+                	var btns = $(".dayArea").find("button")
+                    $.each(btns, function(){
+                        var flag = $(this).text() === lastDay.toString()
+                        if(flag)
+                            $(this).css("background", "red")
+                    })
+                    var date = year + '-' + month + '-' + lastDay
+                    printDetail(date)
                 }
                 
                 function addDayarea(lastDay) {
@@ -226,7 +264,6 @@
                 		var month = $("#month").val().substr(0,2)
                 		var day = $(this).text()
                 		var date = year + '-' + month + '-' + day
-                		//ajax로 가져온 데이터 추가
                 		printDetail(date)
                 	})
                 	return btn
@@ -235,8 +272,15 @@
                 function printDetail(date){
                 	$.ajax({
             			url: $(location).attr('href') + '/' + date,
+            			contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
             			success : function(res){
+            				console.log(res);
             				$(".area").html(res)
+            				var isData = $(".area").html();
+		                	if(isData === null || isData === "")
+		                		showEdit()
+		               		else
+		               			showWrite()
             			}
             		})
                 }
@@ -300,13 +344,18 @@
                         
                     </div>
                     
-                    <div class="area">
-                        ${text}
-                    </div>
-                    
-                    <div class="write">
-                        <button class="write_btn">등록</button>
-                    </div>
+                    <form action="#" id="transfer" method="post">
+                    	<input type="hidden" id="reg" name="reg">
+                    	<input type="hidden" id="detail" name="detail">
+                    	<div class="area">
+                        
+	                    </div>
+	                    
+	                    <div class="btnArea">
+	                        <button class="write_btn">등록</button>
+	                        <button class="edit_btn">수정</button>
+	                    </div>
+                    </form>
                 </div>
                 
                 <nav class="menu">

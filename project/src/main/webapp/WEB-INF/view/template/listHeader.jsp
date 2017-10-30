@@ -7,9 +7,10 @@
 <title>홈페이지 팝니다.</title>
 <!-- 디자인 코드를 작성하는 공간 -->
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/common.css">
+	href="${pageContext.request.contextPath }/css/common.css?ver=4">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/css/each.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<!-- 페이지 영역 시작 -->

@@ -8,7 +8,7 @@
 <title></title>
 <!-- 디자인 코드를 작성하는 공간 -->
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/common.css?ver=1">
+	href="${pageContext.request.contextPath }/css/common.css?ver=2">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/css/each.css?ver=1">
 <link rel="stylesheet" type="text/css"
@@ -125,7 +125,7 @@ h2 {
 		open_x = (screen_width - window_with) / 2;
 		open_y = (screen_height - window_height) / 2;
 		window.open("${pageContext.request.contextPath}/member/upload", "Window_open",
-				"height=350; width=530; left=" + open_x + ", top=" + open_y);
+				"height=250; width=450; left=" + open_x + ", top=" + open_y);
 	}
 </script>
 
@@ -217,11 +217,8 @@ h2 {
 								</th>
 							</tr>
 							<tr class="font-small" style="height: 50px;">
-								<th colspan="3"><a
-									href="${pageContext.request.contextPath }/info/infofind/id">아이디/비밀번호
-										찾기</a></th>
-								<th colspan="2"><a
-									href="${pageContext.request.contextPath }/member/agreement">회원가입</a></th>
+								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind/id">아이디/비밀번호										찾기</a></th>
+								<th colspan="2"><a href="${pageContext.request.contextPath }/member/agreement">회원가입</a></th>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -266,7 +263,7 @@ h2 {
 							<form id="searchForm">
 								<div class="row inner-align-left">
 									<div style="width: 100%;">
-										<input class="form-input" type="search" name="key"
+										<input style="height: 49px;" class="form-input" type="search" name="key"
 											placeholder="아이디 혹은 번호입력">
 									</div>
 									<div>
@@ -278,49 +275,35 @@ h2 {
 					</tr>
 				</table>
 				<table class="friend-table" >
-					<c:choose>
-						<c:when test="${friend == null }">
-							<tr style="height: 50px">
-								<td colspan="3"><strong>친구를 추가해보세요!</strong></td>
-							</tr>
-							<tr style="height: 250px">
-								<th></th>
-								<th></th>
-								<th></th>
-							</tr>
-						</c:when>
-						<c:otherwise>
-							<c:if test="${!loginFlag }">
-								<tr><th colspan="3">신규 가입자</th></tr>
-							</c:if>
-							<c:if test="${loginFlag }">
-								<tr><th colspan="3">일촌 목록</th></tr>
-							</c:if>
-							<tr style="height: 50px;">
-								<c:forEach var="friend" items="${friend }">
-									<th style="border: 1px solid black; color: white; background-color: black;">${friend.name }</th>
-								</c:forEach>
-							</tr>
-							<tr style="height: 250px">
-								<c:forEach var="friend" items="${friend }">
-											<td  style="border: 1px solid black; width: 300">
-												<div class="text-center">
-													<c:choose>
-														<c:when test="${friend.profile != null}">
-														 	<img class=" image-hover img-square-round" src="${pageContext.request.contextPath }/file/${friend.profile}" 
-														 		width="300" height="200">
-														</c:when>
-														<c:otherwise>
-															<img src="${pageContext.request.contextPath }/img/프로필.jpg"
-																width="300" height="200">
-														</c:otherwise>
-													</c:choose>
-												</div>
-											</td>
-										</c:forEach>
-									</tr>
-								</c:otherwise>
-							</c:choose>
+					<c:if test="${!loginFlag || empty full}">
+						<tr ><td align="center" colspan="3"><h3>신규 가입자</h3></td></tr>
+					</c:if>
+					<c:if test="${loginFlag && full}">
+						<tr><td colspan="3"><h3>일촌 목록</h3></td></tr>
+					</c:if>
+					<tr style="height: 50px;">
+						<c:forEach var="friend" items="${friend }">
+							<th >${friend.name }</th>
+						</c:forEach>
+					</tr>
+					<tr style="height: 250px">
+						<c:forEach var="friend" items="${friend }">
+							<td  style="border: 1px solid black; width: 300">
+								<div class="text-center">
+									<c:choose>
+										<c:when test="${friend.profile != null}">
+										 	<img class=" image-hover img-square-round" src="${pageContext.request.contextPath }/file/${friend.profile}" 
+										 		width="300" height="200">
+										</c:when>
+										<c:otherwise>
+											<img src="${pageContext.request.contextPath }/img/프로필.jpg"
+												width="300" height="200">
+										</c:otherwise>
+									</c:choose>
+								</div>
+							</td>
+						</c:forEach>
+					</tr>
 				</table>
 				<br>
 			</div>

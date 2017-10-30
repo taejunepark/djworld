@@ -32,8 +32,16 @@ public interface FriendDao {
 	// 수락
 	void agree(String rqid, String rcid);
 
+	// 거절
+	void disagree(String rqid, String rcid);
+	
 	// 일촌이 있는지
 	boolean listCheck(String id);
 
+	// 일촌 끊기
 	void drop(String myid, String id);
+
+	// 일촌 신청 끊기
+	void sendCancel(String rqid, String rcid);
+
 }

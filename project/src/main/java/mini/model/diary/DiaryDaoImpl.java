@@ -48,4 +48,13 @@ public class DiaryDaoImpl implements DiaryDao {
 		};
 		jdbctemplate.update(sql, obj);
 	}
+
+	@Override
+	public void edit(Diary d) {
+		String sql = "update diary set detail = ? where reg = ? and separate = ?";
+		Object[] obj = {
+				d.getDetail(), d.getReg(), d.getSeparate()
+		};
+		jdbctemplate.update(sql, obj);
+	}
 }

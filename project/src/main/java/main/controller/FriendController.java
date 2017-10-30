@@ -2,6 +2,7 @@ package main.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,13 @@ public class FriendController {
 		return "friend/sendlist";
 	}
 	
+	@RequestMapping("/sendcancel/{rcid}")
+	public String sendCancel(@PathVariable String rcid, HttpSession session) {
+		String rqid = (String)session.getAttribute("userId");
+		friendDao.sendCancel(rqid, rcid);
+		return "redirect:/friend/sendlist";
+	}
+	
 	@RequestMapping("/agree/{rqid}")
 	public String agree(@PathVariable String rqid, HttpSession session) {
 		String rcid = (String)session.getAttribute("userId");
@@ -55,10 +63,18 @@ public class FriendController {
 		return "redirect:/friend/requestlist";
 	}
 	
+	@RequestMapping("/disagree/{rqid}")
+	public String disagree(@PathVariable String rqid, HttpSession session) {
+		String rcid = (String)session.getAttribute("userId");
+		friendDao.disagree(rqid, rcid);
+		return "redirect:/friend/requestlist";
+	}
+	
 	@RequestMapping("/drop/{id}")
-	public String drop(@PathVariable String id, HttpSession session) {
+	public String drop(@PathVariable String id, HttpSession session, HttpServletRequest request) {
 		String myid = (String)session.getAttribute("userId");
 		friendDao.drop(myid, id);
-		return "redirect:/member/find";
+		String referer = request.getHeader("Referer");
+		return "redirect:"+referer;
 	}
 }

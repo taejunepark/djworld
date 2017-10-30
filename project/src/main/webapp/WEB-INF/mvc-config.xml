@@ -18,7 +18,6 @@
 	 <mvc:resources location="/res/js/" mapping="/js/**"/>
 	 <mvc:resources location="/res/img/" mapping="/img/**"/>
 	 <mvc:resources location="/res/font/" mapping="/font/**"/>
-	 <mvc:resources location="/res/se2/" mapping="/se2/**"/>
 	<mvc:resources location="/upload/" mapping="/file/**"/>
 	
 	<context:component-scan base-package="main.controller"/>
