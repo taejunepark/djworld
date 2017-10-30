@@ -79,6 +79,7 @@ h2 {
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="${pageContext.request.contextPath }/js/swiper.js"></script>
 <script>
+
 	$(document)
 			.ready(
 					function() {

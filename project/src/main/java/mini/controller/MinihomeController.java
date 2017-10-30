@@ -24,6 +24,7 @@ import mini.model.diary.DiaryDao;
 @Controller
 public class MinihomeController {
 	
+	int count = 0;
 	@Autowired
 	private DiaryDao diaryDao;
 	
