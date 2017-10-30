@@ -3,6 +3,7 @@ package main.model.member;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -38,7 +39,7 @@ public class MemberDaoImpl implements MemberDao {
 	public void register(Member m) {
 		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, 0, '일반', sysdate, null)";
 		System.out.println(m);
-		int result = jdbcTemplate.update(sql, m.getId(), m.getPw(), m.getName(), m.getPhone(), m.getBirth(), m.getEmail(), m.getGender());
+		jdbcTemplate.update(sql, m.getId(), m.getPw(), m.getName(), m.getPhone(), m.getBirth(), m.getEmail(), m.getGender());
 	}
 	
 	public boolean login(Member m) {
@@ -49,10 +50,14 @@ public class MemberDaoImpl implements MemberDao {
 	
 	public Member info(String id) {
 		String sql = "select * from member where id=?";
-		// List<Member> list = jdbcTemplate.query(sql, mapper, id);
-		// log.debug(list.toString());
-		Object[] args = { id };
-		Member member = jdbcTemplate.queryForObject(sql, args, mapper);
+		Object[] args = {id};
+		Member member;
+		try {
+			member = jdbcTemplate.queryForObject(sql, args, mapper);
+		}
+		catch(EmptyResultDataAccessException e) {
+			member = null;
+		}
 		return member;
 	}
 	

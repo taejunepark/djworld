@@ -202,7 +202,8 @@ h2 {
 								</th>
 							</tr>
 							<tr>
-								<th colspan="3" style="height: 50px;"><a href="minihome/${userId }"
+								<th colspan="3" style="height: 50px;">
+									<a href="${pageContext.request.contextPath }/minihome/${userId }"
 									onClick="window.open(this.href, '', 'width=900, height=600, top=10%, left=200'); return false;">내
 										홈피 가기</a></th>
 								<th colspan="2"><a

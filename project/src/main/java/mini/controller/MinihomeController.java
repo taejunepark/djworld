@@ -1,17 +1,12 @@
 package mini.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.runners.Parameterized.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,17 +16,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import main.bean.Member;
+import main.model.member.MemberDao;
 import mini.bean.Diary;
 import mini.model.diary.DiaryDao;
 
 @Controller
 public class MinihomeController {
+	
 	@Autowired
 	private DiaryDao diaryDao;
 	
+	@Autowired
+	private MemberDao memberDao;
+	
 	@RequestMapping(value= {"/minihome/{id}"})
 	public String home(@PathVariable String id, Model model) {
+		Member m = memberDao.info(id);
+		System.out.println("뭐지?");
+		System.out.println(m);
 		model.addAttribute("id", id);
+		model.addAttribute("member", m);
 		return "mini/minihome";
 	}
 	

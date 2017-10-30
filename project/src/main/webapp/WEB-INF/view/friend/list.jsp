@@ -78,7 +78,11 @@
 						onMouseOut="this.innerHTML='일촌'"
 						href="${pageContext.request.contextPath }/friend/drop/${member.id}">일촌</a>
 					</td>
-					<td><a href="#"> <i class="fa fa-home" aria-hidden="true"></i></a>&nbsp;&nbsp;</td>
+					<td>
+						<a onClick="window.open('${pageContext.request.contextPath }/minihome/${member.id}', '', 'width=900, height=600, top=10%, left=200'); return false;">
+							 <i class="fa fa-home" aria-hidden="true"></i>
+						</a>&nbsp;&nbsp;
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -6,8 +6,8 @@
     <head>
         <meta charset="UTF-8">
         <title>DOM 수정</title>
-        <link rel="stylesheet" type="text/css" href="css/common.css">
-        <link rel="stylesheet" type="text/css" href="css/swiper.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/common.css?ver=5">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/swiper.css">
         <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
         <style>
@@ -221,14 +221,14 @@
                 </div>
 
                 <div class="title">
-                    <span>???님의 미니 홈피</span>
+                    <span>${member.name }님의 미니 홈피</span>
                 </div>
             </div>
             
             <main>
                 <aside>
                     <div class="profile">
-                        <img src="${pageContext.request.contextPath }/img/aaa.jpg" width="150" height="150">
+                        <img src="${pageContext.request.contextPath }/file/${member.profile}" width="150" height="150">
                     </div>
                     
                     <div class="hello">
@@ -273,7 +273,7 @@
                     </div>
                     
                     <div class="partTwo">
-                        미정
+                        <img src="${pageContext.request.contextPath }/img/miniroom.gif" width="100%" height="100%">
                     </div>
                     
                     <div class="partThree">
