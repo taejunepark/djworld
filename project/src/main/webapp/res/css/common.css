@@ -3,12 +3,12 @@
 
 /* 글꼴 설정 */
 @font-face {
-	font-family: gothic;
-	src: url(../font/NanumGothic.ttf);
+	font-family: Daum;
+	src: url(../font/Binggrae.ttf);
 }
 
 * {
-	font-family: gothic;
+	font-famfily: Daum;
 }
 
 /* 영역 비율 */
@@ -344,6 +344,47 @@ input[type=checkbox]:checked+label>span {
 /* 일촌 테이블 */
 .friend-table {
 	width: 70%;
+	border-collapse: collapse;
+}
+
+.friend-table th{
+	border: 1px solid black;
+	 color: white; 
+	 background-color: black;
+}
+
+.friend-table .img-square-round {
+	width: 250px;
+	height: 200px
+}
+
+/* 친구 찾기 테이블 */
+.find-table {
+	width: 70%;
+	border-collapse: collapse;
+}
+
+.find-table tr{
+	border-left: 2px solid black;
+	border-right: 2px solid black;
+	border-bottom: 2px solid black;
+}
+
+.find-table th{
+	 color: white; 
+	 background-color: black;
+}
+
+.find-table td{
+	text-align: center;
+	width: 150px;
+	border: 1px solid white;
+	font-size: 1.3em;
+}
+
+.find-table .img-square-round {
+	width: 100px;
+	height: 100px;
 }
 
 /* 라디오 버튼 */
@@ -525,10 +566,7 @@ input[type=checkbox]:checked+label>span {
 	text-shadow: 0 1px 0 #fff;
 }
 
-.img-square-round {
-	width: 250px;
-	height: 200px
-}
+
 
 .img-square-round:hover {
 	-moz-border-radius: 50%;

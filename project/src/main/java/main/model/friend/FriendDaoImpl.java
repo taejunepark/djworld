@@ -126,6 +126,13 @@ public class FriendDaoImpl implements FriendDao {
 	}
 
 	@Override
+	public void disagree(String rqid, String rcid) {
+		String sql = "delete friend where rqid = ? and rcid = ? and status = 'wait'";
+		jdbcTemplate.update(sql, rqid, rcid);
+	}
+
+	
+	@Override
 	public boolean listCheck(String id) {
 		String sql = "select count(*) from friend where rqid=? and status='accept' or rcid=? and status='accept'";
 		return jdbcTemplate.queryForObject(sql, Integer.class, id, id) > 0;
@@ -137,5 +144,10 @@ public class FriendDaoImpl implements FriendDao {
 		jdbcTemplate.update(sql, myid, id, id, myid);
 	}
 
+	@Override
+	public void sendCancel(String rqid, String rcid) {
+		String sql = "delete friend where rqid = ? and rcid = ? and status = 'wait'";
+		jdbcTemplate.update(sql, rqid, rcid);
+	}
 	
 }

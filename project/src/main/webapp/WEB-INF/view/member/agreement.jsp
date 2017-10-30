@@ -24,10 +24,9 @@
 <title>회원가입 창</title>
 </head>
 <body>
-	<div class="empty-row"></div>
 	<div class="center text-center area-70">
 		<form name="form">
-			<table width="100%">
+			<table class="area-100">
 				<tr>
 					<td width="100%" height="50%" align="center">
 						<p align="left">
