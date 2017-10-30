@@ -213,6 +213,7 @@ public class MemberController {
 		String id = (String) session.getAttribute("userId");
 		boolean result = memberDao.drop(id, m);
 		if (result) {
+			friendDao.delete(id);
 			session.invalidate(); // 회원 정보가 맞을 경우
 		}
 		redirect.addFlashAttribute("result", result); // 회원 정보를 잘못 입력했을 경우

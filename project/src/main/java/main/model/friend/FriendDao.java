@@ -44,4 +44,7 @@ public interface FriendDao {
 	// 일촌 신청 끊기
 	void sendCancel(String rqid, String rcid);
 
+	// 회원 탈퇴시 친구 삭제
+	void delete(String id);
+
 }

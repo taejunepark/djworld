@@ -165,4 +165,11 @@ public class MemberDaoImpl implements MemberDao {
 				"where rn between 1 and 3";
 		return jdbcTemplate.query(sql, mapper);
 	}
+
+	// 결제
+	@Override
+	public void payMent(String id, int bam) {
+		String sql = "update member set bam=bam+? where id=?";
+		jdbcTemplate.update(sql, bam, id);
+	}
 }

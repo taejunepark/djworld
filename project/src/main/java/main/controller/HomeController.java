@@ -40,18 +40,27 @@ public class HomeController {
 				if (temp.size() >= 3) {
 					for (int i = 0; i < 3; i++) {
 						list.add(temp.get(i));
+						if(list.get(i).getId().equals(id)) {
+							list.remove(i);
+						}
 					}
 					model.addAttribute("full", true);
 				} 
 				else {
 					for (int i = 0; i < temp.size(); i++) {
 						list.add(temp.get(i));
+						if(list.get(i).getId().equals(id)) {
+							list.remove(i);
+						}
 					}
 					int t = 3 - temp.size();
 					temp = memberDao.allList();
 					Collections.shuffle(temp);
 					for(int i = 0; i < t; i++) {
 						list.add(temp.get(i));
+						if(list.get(i).getId().equals(id)) {
+							list.remove(i);
+						}
 					}
 				}
 			} catch (IndexOutOfBoundsException e) {
@@ -67,6 +76,6 @@ public class HomeController {
 	
 	@RequestMapping("/minime")
 	public String minime() {
-		return "ready";
+		return "notice/ready";
 	}
 }

@@ -6,18 +6,15 @@
 <script>
 	var IMP = window.IMP; // 생략가능
 	IMP.init('imp28107780'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-
+	var result = false;
 	IMP.request_pay({
 		pg : 'inicis', // version 1.1.0부터 지원.
 		pay_method : 'card',
 		merchant_uid : 'merchant_' + new Date().getTime(),
-		name : '주문명:결제테스트',
-		amount : 1000,
-		buyer_email : 'xowns0595@naver.com',
-		buyer_name : '박태준',
-		buyer_tel : '010-4456-4320',
-		buyer_addr : '경기도 부천시 소사구',
-		buyer_postcode : '123-456',
+		name : 'DJWorld 밤 구매',
+		amount : '${money}',
+		buyer_email : '${email}',
+		buyer_name : '${name}',
 	}, function(rsp) {
 		if (rsp.success) {
 			var msg = '결제가 완료되었습니다.';
@@ -25,11 +22,15 @@
 			msg += '상점 거래ID : ' + rsp.merchant_uid;
 			msg += '결제 금액 : ' + rsp.paid_amount;
 			msg += '카드 승인번호 : ' + rsp.apply_num;
+			result = true;
 		} else {
 			var msg = '결제에 실패하였습니다.';
 			msg += '에러내용 : ' + rsp.error_msg;
 		}
 		alert(msg);
+		if(result){
+			window.open('', '_self').close();
+		}
 	});
 </script>
 <html>

@@ -128,6 +128,18 @@ h2 {
 		window.open("${pageContext.request.contextPath}/member/upload", "Window_open",
 				"height=250; width=450; left=" + open_x + ", top=" + open_y);
 	}
+	
+	function pay_open(){
+		window_with = 700; //새창의 너비 
+		window_height = 500; //새창의 높이 
+		screen_width = screen.availWidth; //화면 너비 (해상도) 
+		screen_height = screen.availHeight; //화면 높이 (해상도) 
+		//새창의 위치 
+		open_x = (screen_width - window_with) / 2;
+		open_y = (screen_height - window_height) / 2;
+		window.open("${pageContext.request.contextPath }/pay", "Window_open",
+				"height=500; width=700; left=" + open_x + ", top=" + open_y);
+	}
 </script>
 
 <c:set var="friend" value="${friend}"/>
@@ -241,6 +253,9 @@ h2 {
 									</div>
 									<div class="swiper-slide">
 										<a href="${pageContext.request.contextPath }/member/find">회원찾기</a>
+									</div>
+									<div class="swiper-slide">
+										<a onclick="pay_open()">결제</a>
 									</div>
 									<div class="swiper-slide">
 										<a href="#">고객센터</a>

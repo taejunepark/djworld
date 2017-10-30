@@ -149,5 +149,11 @@ public class FriendDaoImpl implements FriendDao {
 		String sql = "delete friend where rqid = ? and rcid = ? and status = 'wait'";
 		jdbcTemplate.update(sql, rqid, rcid);
 	}
+
+	@Override
+	public void delete(String id) {
+		String sql = "delete friend where rqid =? or rcid=?";
+		jdbcTemplate.update(sql, id, id);
+	}
 	
 }
