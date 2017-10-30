@@ -8,7 +8,7 @@
 <title>홈페이지 팝니다.</title>
 <!-- 디자인 코드를 작성하는 공간 -->
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/common.css?ver=2">
+	href="${pageContext.request.contextPath }/css/common.css?ver=5">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/css/each.css?ver=2">
 </head>

@@ -217,7 +217,7 @@ h2 {
 								</th>
 							</tr>
 							<tr class="font-small" style="height: 50px;">
-								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind/id">아이디/비밀번호										찾기</a></th>
+								<th colspan="3"><a href="${pageContext.request.contextPath }/info/infofind">아이디/비밀번호										찾기</a></th>
 								<th colspan="2"><a href="${pageContext.request.contextPath }/member/agreement">회원가입</a></th>
 							</tr>
 						</c:otherwise>
@@ -238,7 +238,7 @@ h2 {
 											정보</a>
 									</div>
 									<div class="swiper-slide">
-										<a href="${pageContext.request.contextPath }/member/find">친구찾기</a>
+										<a href="${pageContext.request.contextPath }/member/find">회원찾기</a>
 									</div>
 									<div class="swiper-slide">
 										<a href="#">고객센터</a>
@@ -358,7 +358,7 @@ h2 {
 					class="area-70 height-80">
 			</div>
 			<div class="bt1" style="border-left: 1px solid gray; border-right: 1px solid gray;">
-				<a href="${pageContext.request.contextPath }/info/infofind/id">
+				<a href="${pageContext.request.contextPath }/info/infofind">
 					<img src="${pageContext.request.contextPath }/img/비번.png"
 					class="area-70 height-80">
 				</a>

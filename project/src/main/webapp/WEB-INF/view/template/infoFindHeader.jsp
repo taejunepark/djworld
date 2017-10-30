@@ -22,8 +22,8 @@
 						<th><a href="${pageContext.request.contextPath}"> 
 						<img
 								src="${pageContext.request.contextPath }/img/naver2.png"
-								class="img-height-1"></th>
-						</a>
+								class="img-height-1"></a></th>
+
 						<th class="font-big">정보 찾기</th>
 					</tr>
 				</table>
@@ -35,12 +35,10 @@
 			<a href="${pageContext.request.contextPath}" class="left"><font color="white">홈</font></a>
 			<c:choose>
 				<c:when test="${!loginFlag}">
-					<a href="${pageContext.request.contextPath}/member/register"
+					<a href="${pageContext.request.contextPath}/member/agreement"
 						class="left"><font color="white">회원가입</font></a>
-					<a href="${pageContext.request.contextPath}/info/infofind/id"
-						class="left"><font color="white">아이디 찾기</font></a>
-					<a href="${pageContext.request.contextPath}/info/infofind/pw" 
-						class="left"><font color="white">비밀번호 찾기</font></a>
+					<a href="${pageContext.request.contextPath}/info/infofind"
+						class="left"><font color="white">정보 찾기</font></a>
 						<a href="#" 
 						class="left"><font color="white">고객센터</font></a>
 					<a href="${pageContext.request.contextPath}/member/login"

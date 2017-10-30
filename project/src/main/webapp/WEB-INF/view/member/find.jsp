@@ -101,7 +101,7 @@
 					</c:when>
 				</c:choose>
 			</c:if>
-			<td><a href="#"> <i class="fa fa-home" aria-hidden="true"></i></a>&nbsp;&nbsp;</td>
+			<td style="border-right: 2px solid black;"><a href="#"> <i class="fa fa-home" aria-hidden="true"></i></a>&nbsp;&nbsp;</td>
 		</tr>
 	</c:forEach>
 </table>

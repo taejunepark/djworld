@@ -25,7 +25,7 @@
 								src="${pageContext.request.contextPath }/img/naver2.png"
 								class="img-height-1"></a></th>
 						
-						<th class="font-big">친구 찾기</th>
+						<th class="font-big">일촌 찾기</th>
 					</tr>
 				</table>
 			</div>
@@ -46,8 +46,10 @@
 						class="right"><font color="white">로그인</font></a>
 				</c:when>
 				<c:otherwise>
-				<a href="${pageContext.request.contextPath}/member/find" 
-						class="left"><font color="white">친구 찾기</font></a>
+					<a href="${pageContext.request.contextPath}/member/find" 
+							class="left"><font color="white">일촌 찾기</font></a>
+					<a href="${pageContext.request.contextPath}/friend/list" 
+						class="left"><font color="white">일촌 목록</font></a>
 					<a href="#"  class="left">
 						<font color="white">고객센터</font></a>
 					<a href="${pageContext.request.contextPath}/member/logout"
