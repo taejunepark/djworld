@@ -1017,11 +1017,10 @@
                                 <button id="cancle_btn">취소</button>
                             </div>
                             
-                            <!-- /diary 뒤에 날짜 추가 해줘야됨 -->
-                            <form action="${pageContext.request.contextPath }/minihome/${id }/diary_write" method="post">
+                            <form action="${pageContext.request.contextPath }/minihome/${id }/diary_edit" method="post">
                             <input type="hidden" name="reg" value="${reg}">
                                 <textarea name="ir1" id="ir1" rows="10" cols="100" style="width:100%;resize:none;
-                                padding: 1em;padding-bottom: 0.2em;height: 100%; display:none;"></textarea>
+                                padding: 1em;padding-bottom: 0.2em;height: 100%; display:none;">${detail }</textarea>
                             </form>
                         </div>
                     </div>
