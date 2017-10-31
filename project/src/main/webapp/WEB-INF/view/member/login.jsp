@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+
 <html>
 <head>
 <title>로그인 페이지</title>
@@ -76,9 +77,21 @@ button {
 }
 </style>
 </head>
-
-
 <body>
+	<script src="https://code.jquery.com/jquery-latest.js"></script>
+	<script src="${pageContext.request.contextPath }/js/sha256.js"></script>
+	<script type="text/javascript">
+		function sendCheck() {
+			event.preventDefault();
+			console.log($("input[type=password]").val());
+			var pw = $("input[type=password]").val();
+			var encrypt = SHA256(pw);
+			$("input[id=pw]").val(encrypt);
+
+			var form = document.querySelector("form");
+			form.submit();
+		}
+	</script>
 	<c:if test="${result}">
 		<script>
 			alert('입력한 정보가 맞지 않습니다.');
@@ -97,7 +110,8 @@ button {
 		<div class="img-cover"></div>
 		<div class=empty-row></div>
 		<div class=empty-row></div>
-		<form action="login" method="post">
+		<form action="${pageContext.request.contextPath }/member/login"
+			method="post" onsubmit="sendCheck();">
 			<div class="page">
 				<div class="row" align="center">
 					<a href="${pageContext.request.contextPath }"> <img
@@ -111,25 +125,27 @@ button {
 							<input type="text" name="id" placeholder="아이디" required>
 						</div>
 						<div class="row" align="center">
-							<input type="password" name="pw" placeholder="비밀번호" required>
+							<input id="pw" type="password" name="pw" placeholder="비밀번호"
+								required>
 						</div>
 						<div class="row">
 							<div class="col" align="left">
-								<input type="checkbox" name="save" value="remember" > 아이디
+								<input type="checkbox" name="save" value="remember"> 아이디
 								저장
 							</div>
 					</c:when>
 					<c:otherwise>
 						<div class="row" align="center">
-							<input type="text" name="id" placeholder="아이디" value="${cookie.remember.value }" required>
+							<input type="text" name="id" placeholder="아이디"
+								value="${cookie.remember.value }" required>
 						</div>
 						<div class="row" align="center">
 							<input type="password" name="pw" placeholder="비밀번호" required>
 						</div>
 						<div class="row">
 							<div class="col" align="left">
-								<input type="checkbox" name="save" value="remember" checked> 아이디
-								저장
+								<input type="checkbox" name="save" value="remember" checked>
+								아이디 저장
 							</div>
 					</c:otherwise>
 				</c:choose>
@@ -150,8 +166,7 @@ button {
 			<div class="row" align="center">
 				<h3>&copy; DJWorld Corp.</h3>
 			</div>
-	</div>
-	</form>
+		</form>
 	</div>
 </body>
 </html>

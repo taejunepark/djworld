@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/template/registerHeader.jsp"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <html>
 <head>
@@ -197,7 +195,9 @@ button {
 
 		//기본 이벤트를 중지시키는 명령
 		event.preventDefault();
-
+		
+		
+         
 		//검사
 		var result = idFlag && pwCheck() && pw2Check() && nameCheck();
 		if (!idFlag){
@@ -221,7 +221,10 @@ button {
 			return;
 		}
 		
-
+		var pw = $("input[name=pw]").val();
+        var encrypt = SHA256(pw);
+        $("input[name=pw]").val(encrypt);
+		
 		//전송
 		var form = document.querySelector("form");
 		form.submit();

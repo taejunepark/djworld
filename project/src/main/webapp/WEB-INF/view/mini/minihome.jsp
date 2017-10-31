@@ -228,7 +228,17 @@
             <main>
                 <aside>
                     <div class="profile">
-                        <img src="${pageContext.request.contextPath }/file/${member.profile}" width="150" height="150">
+                    <c:choose>
+                        <c:when test="${member.profile != null}">
+							<img
+								src="${pageContext.request.contextPath }/file/${member.profile}"
+								width="150" height="150">
+						</c:when>
+						<c:otherwise>
+							<img src="${pageContext.request.contextPath }/img/프로필.jpg"
+								width="150" height="150">
+						</c:otherwise>
+					</c:choose>
                     </div>
                     
                     <div class="hello">

@@ -34,8 +34,6 @@ public class MinihomeController {
 	@RequestMapping(value= {"/minihome/{id}"})
 	public String home(@PathVariable String id, Model model) {
 		Member m = memberDao.info(id);
-		System.out.println("뭐지?");
-		System.out.println(m);
 		model.addAttribute("id", id);
 		model.addAttribute("member", m);
 		return "mini/minihome";

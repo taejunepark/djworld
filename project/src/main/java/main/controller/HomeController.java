@@ -37,36 +37,35 @@ public class HomeController {
 			List<Member> temp = friendDao.allList(id);
 			try {
 				Collections.shuffle(temp);
+				// 일촌이 있는경우
 				if (temp.size() >= 3) {
 					for (int i = 0; i < 3; i++) {
 						list.add(temp.get(i));
-						if(list.get(i).getId().equals(id)) {
-							list.remove(i);
-						}
 					}
 					model.addAttribute("full", true);
 				} 
+				
+				// 일촌이 없는 경우
 				else {
-					for (int i = 0; i < temp.size(); i++) {
-						list.add(temp.get(i));
-						if(list.get(i).getId().equals(id)) {
-							list.remove(i);
+					temp = memberDao.allList();
+					for(int i = 0; i < temp.size(); i++) {
+						if(temp.get(i).getId().equals(id)){
+							temp.remove(i);
 						}
 					}
-					int t = 3 - temp.size();
-					temp = memberDao.allList();
-					Collections.shuffle(temp);
-					for(int i = 0; i < t; i++) {
-						list.add(temp.get(i));
-						if(list.get(i).getId().equals(id)) {
-							list.remove(i);
+					for (int i = 0; i < temp.size(); i++) {
+						if(i == 3) {
+							break;
 						}
+						list.add(temp.get(i));
 					}
 				}
 			} catch (IndexOutOfBoundsException e) {
 				list = null;
 			}
 		}
+		
+		// 로그인 하지 않았을 경우
 		else {
 			list = memberDao.allList();
 		}

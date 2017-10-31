@@ -241,11 +241,6 @@ h2 {
 							<div class="swiper-container">
 								<div class="swiper-wrapper">
 									<!-- 1장의 이미지 영역 -->
-									<c:if test="${loginFlag }">
-										<div class="swiper-slide">
-											<a href="${pageContext.request.contextPath }/friend/list">일촌목록</a>
-										</div>
-									</c:if>
 									<div class="swiper-slide">
 										<a
 											href="${pageContext.request.contextPath }/member/pwcheck/info">내
@@ -254,9 +249,14 @@ h2 {
 									<div class="swiper-slide">
 										<a href="${pageContext.request.contextPath }/member/find">회원찾기</a>
 									</div>
-									<div class="swiper-slide">
-										<a onclick="pay_open()">결제</a>
-									</div>
+									<c:if test="${loginFlag }">
+										<div class="swiper-slide">
+											<a href="${pageContext.request.contextPath }/friend/list">일촌목록</a>
+										</div>
+										<div class="swiper-slide">
+											<a onclick="pay_open()">결제</a>
+										</div>
+									</c:if>
 									<div class="swiper-slide">
 										<a href="#">고객센터</a>
 									</div>
