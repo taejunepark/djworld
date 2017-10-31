@@ -230,8 +230,7 @@
                     <div class="profile">
                     <c:choose>
                         <c:when test="${member.profile != null}">
-							<img
-								src="${pageContext.request.contextPath }/file/${member.profile}"
+							<img src="${pageContext.request.contextPath }/file/${member.profile}"
 								width="150" height="150">
 						</c:when>
 						<c:otherwise>

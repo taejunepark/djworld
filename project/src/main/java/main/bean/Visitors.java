@@ -14,11 +14,17 @@ public class Visitors {
 	private String type;
 	private String friend;
 	private List<Reply> reply;
+	private String profile;
 	
 	public Visitors() {
 		super();
 	}
-	
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 	public List<Reply> getReply() {
 		return reply;
 	}
@@ -26,26 +32,6 @@ public class Visitors {
 	public void setReply(List<Reply> reply) {
 		this.reply = reply;
 	}
-
-	public Visitors(ResultSet rs) throws SQLException{
-		setNo(rs.getInt("no"));
-		setWriter(rs.getString("writer"));
-		setReg(rs.getString("reg"));
-		setDetail(rs.getString("detail"));
-		setType(rs.getString("type"));
-		setFriend(rs.getString("friend"));
-	}
-	
-	public Visitors(HttpServletRequest request) {
-		String no = request.getParameter("no");
-		setNo(no==null?0:Integer.parseInt(no));
-		setWriter(request.getParameter("writer"));
-		setReg(request.getParameter("reg"));
-		setDetail(request.getParameter("detail"));
-		setType(request.getParameter("type"));
-		setFriend(request.getParameter("friend"));
-	}
-	
 
 	public String getFriend() {
 		return friend;
@@ -91,10 +77,29 @@ public class Visitors {
 	public void setReg(String reg) {
 		this.reg = reg;
 	}
-
+	
+	public Visitors(ResultSet rs) throws SQLException{
+		setNo(rs.getInt("no"));
+		setWriter(rs.getString("writer"));
+		setReg(rs.getString("reg"));
+		setDetail(rs.getString("detail"));
+		setType(rs.getString("type"));
+		setFriend(rs.getString("friend"));
+	}
+	
+	public Visitors(HttpServletRequest request) {
+		String no = request.getParameter("no");
+		setNo(no==null?0:Integer.parseInt(no));
+		setWriter(request.getParameter("writer"));
+		setReg(request.getParameter("reg"));
+		setDetail(request.getParameter("detail"));
+		setType(request.getParameter("type"));
+		setFriend(request.getParameter("friend"));
+	}
+	
 	@Override
 	public String toString() {
 		return "Visitors [no=" + no + ", writer=" + writer + ", reg=" + reg + ", detail=" + detail + ", type=" + type
-				+ ", friend=" + friend + ", reply=" + reply + "]";
+				+ ", friend=" + friend + ", reply=" + reply + ", profile=" + profile + "]";
 	}
 }

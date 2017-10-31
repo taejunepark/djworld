@@ -69,11 +69,20 @@ public class MinihomeController {
 	}
 	
 	@RequestMapping("/minihome/{id}/visitors")
-	public String visitors(@PathVariable String id,Model model) {
+	public String visitors(@PathVariable String id,Model model, HttpSession session) {
+		// id의 미니홈피
 		List<Visitors> list = visitorsDao.list(id);
-		Member m = memberDao.info(id);
+		Member owner = memberDao.info(id);
 		model.addAttribute("list", list);
-		model.addAttribute("member", m);
+		model.addAttribute("owner", owner);
+
+		System.out.println(list);
+		
+		// 접속한 계정의 정보
+		String  userId = (String)session.getAttribute("userId");
+		Member user = memberDao.info(userId);
+		model.addAttribute("user", user);
+		
 		return "mini/visitors/visitors";
 	}
 	
@@ -82,12 +91,6 @@ public class MinihomeController {
 		visitorsDao.write(v.getWriter(), v.getDetail(), id);
 		return "redirect:/minihome/"+id+"/visitors";
 	}
-	
-//	@RequestMapping(value="/visitors/reply", method=RequestMethod.POST)
-//	public String visitorsReply(Reply r, Model m) {
-//		replyDao.insert(r.getWriter(), r.getDetail(), r.getParent());
-//		return "redirect:/visitors";
-//	}
 	
 	/** Ajax 사용 
 	 * @throws IOException */

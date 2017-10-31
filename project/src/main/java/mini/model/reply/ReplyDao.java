@@ -9,7 +9,7 @@ import main.bean.Reply;
 @Repository
 public interface ReplyDao {
 
-	void insert(String writer, String detail, int parent);
-	List<Reply> list(int parent);
+	void insert(String writer, String detail, int parent, String friend);
+	List<Reply> list(int parent, String friend);
 	
 }

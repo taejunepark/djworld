@@ -7,14 +7,23 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import main.bean.Member;
 import main.bean.Reply;
 import main.bean.Visitors;
+import main.model.member.MemberDao;
+import mini.model.reply.ReplyDao;
 
 @Repository(value = "visitorsDao")
 public class VisitorsImpl implements VisitorsDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	private MemberDao memberDao;
+
+	@Autowired
+	private ReplyDao replyDao;
 
 	private RowMapper<Visitors> mapper = (rs, index) -> {
 		Visitors v = new Visitors();
@@ -33,12 +42,13 @@ public class VisitorsImpl implements VisitorsDao {
 		r.setDetail(rs.getString("detail"));
 		r.setReg(rs.getString("reg"));
 		r.setParent(rs.getInt("parent"));
+		r.setFriend(rs.getString("friend"));
 		return r;
 	};
 
 	@Override
 	public void write(String writer, String detail, String id) {
-		String sql = "insert into visitors values("+id+".nextval, ?, ?, sysdate, '방명록', ?)";
+		String sql = "insert into visitors values(" + id + ".nextval, ?, ?, sysdate, '방명록', ?)";
 		jdbcTemplate.update(sql, writer, detail, id);
 	}
 
@@ -46,16 +56,12 @@ public class VisitorsImpl implements VisitorsDao {
 	public List<Visitors> list(String id) {
 		String sql = "select * from visitors where friend=? order by no desc";
 		List<Visitors> list = jdbcTemplate.query(sql, mapper, id);
-		for(Visitors visitor : list) {
-			List<Reply> list2 = list(visitor.getNo());
+		for (Visitors visitor : list) {
+			Member m = memberDao.info(visitor.getWriter());
+			List<Reply> list2 = replyDao.list(visitor.getNo(), id);
 			visitor.setReply(list2);
+			visitor.setProfile(m.getProfile());
 		}
 		return list;
-	}
-
-	@Override
-	public List<Reply> list(int parent) {
-		String sql = "select * from visitorsreply where parent=? order by no";
-		return jdbcTemplate.query(sql, mapper2, parent);
 	}
 }

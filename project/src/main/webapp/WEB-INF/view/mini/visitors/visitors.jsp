@@ -196,7 +196,7 @@ textarea {
 			</div>
 
 			<div class="title">
-				<span>${member.name }님의 미니 홈피</span>
+				<span>${owner.name }님의 미니 홈피</span>
 			</div>
 		</div>
 
@@ -205,15 +205,23 @@ textarea {
 			<a href="#">미정</a>
 		</aside>
 		<div class="highlight">
-			<form action="${pageContext.request.contextPath }/minihome/${member.id }/visitors"
+			<form action="${pageContext.request.contextPath }/minihome/${owner.id }/visitors"
 				method="post" onsubmit="sendCheck()">
 				<input type="hidden" name="writer" value="${userId }">
 				<table class="visitorTable">
 					<tr>
 						<td class="center area-40">
 							<div class="text-center">
-								<img src="${pageContext.request.contextPath }/img/customer.jpg"
-									width="80%" height="180px">
+								<c:choose>
+			                        <c:when test="${user.profile != null}">
+										<img src="${pageContext.request.contextPath }/file/${user.profile}"
+											width="180" height="180">
+									</c:when>
+									<c:otherwise>
+										<img src="${pageContext.request.contextPath }/img/프로필.jpg"
+											width="180" height="180">
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</td>
 						<td class="center">
@@ -243,14 +251,14 @@ textarea {
 								<c:choose>
 									<c:when test="${list.writer eq userId }">
 										<a href="#">비밀로 하기</a>&nbsp;&nbsp;|
-								<a href="#">수정</a>&nbsp;&nbsp;|
-								<a href="#">삭제</a>&nbsp;&nbsp;
-							</c:when>
+										<a href="#">수정</a>&nbsp;&nbsp;|
+										<a href="#">삭제</a>&nbsp;&nbsp;
+									</c:when>
 									<c:otherwise>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<a href="#">삭제</a>&nbsp;&nbsp;
-					 	<a href="#">신고</a>&nbsp;&nbsp;
-					 </c:otherwise>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<a href="#">삭제</a>&nbsp;&nbsp;
+								 		<a href="#">신고</a>&nbsp;&nbsp;
+									 </c:otherwise>
 								</c:choose>
 							</div>
 						</td>
@@ -258,8 +266,16 @@ textarea {
 					<tr>
 						<td width="200px">
 							<div class="text-left">
-								<img src="${pageContext.request.contextPath }/img/customer.jpg"
-									width="200px" height="180px">
+								<c:choose>
+			                        <c:when test="${list.profile != null}">
+										<img src="${pageContext.request.contextPath }/file/${list.profile}"
+											width="200" height="180">
+									</c:when>
+									<c:otherwise>
+										<img src="${pageContext.request.contextPath }/img/프로필.jpg"
+											width="200" height="180">
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</td>
 						<td class="center">
@@ -280,7 +296,7 @@ textarea {
 											<td>
 												<div class="inner-align-left">
 													<div>
-														${reply.web}&nbsp;&nbsp;<font color="gray" size="1.7em">(${reply.reg})</font>&nbsp;&nbsp;
+														${reply.web}&nbsp;&nbsp;<font color="gray" size="1.7em">(${reply.time})</font>&nbsp;&nbsp;
 													</div>
 													<c:if test="${loginFlag && userId eq reply.writer}">
 														<div class="text-right right">
@@ -297,10 +313,11 @@ textarea {
 					</tr>
 					<tr style="background-color: lightgray;">
 						<td colspan="2" style="height: 100%; padding-top: 5px;">
-							<form action="visitors/reply" method="post"
+							<form action="${pageContext.request.contextPath }/reply" method="post"
 								style="margin-bottom: 5px;">
-								<input type="hidden" name="writer" value="${userId}"> <input
-									type="hidden" name="parent" value="${list.no}">
+								<input type="hidden" name="writer" value="${userId}">
+								<input	type="hidden" name="parent" value="${list.no}">
+								<input type= "hidden" name="friend" value="${owner.id }">
 								<div class="inner-align-left">
 									<div class="area-100" style="padding-left: 20px;">
 										<c:choose>

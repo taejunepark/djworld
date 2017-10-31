@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import main.bean.Reply;
 
 @Repository(value="replyDao")
-public class ReplyImpl implements ReplyDao {
+public class ReplyDaoImpl implements ReplyDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -22,18 +22,19 @@ public class ReplyImpl implements ReplyDao {
 		r.setDetail(rs.getString("detail"));
 		r.setReg(rs.getString("reg"));
 		r.setParent(rs.getInt("parent"));
+		r.setFriend(rs.getString("friend"));
 		return r;
 	};
 	
 	@Override
-	public void insert(String writer, String detail, int parent) {
-		String sql = "insert into visitorsreply values(visitorsreply_seq.nextval, ?, ?, sysdate, ?)";
-		jdbcTemplate.update(sql, writer, detail, parent);
+	public void insert(String writer, String detail, int parent, String friend) {
+		String sql = "insert into reply values(reply_seq.nextval, ?, ?, sysdate, ?, ?)";
+		jdbcTemplate.update(sql, writer, detail, parent, friend);
 	}
 
 	@Override
-	public List<Reply> list(int parent) {
-		String sql = "select * from visitorsreply where parent=? order by no";
-		return jdbcTemplate.query(sql, mapper);
+	public List<Reply> list(int parent, String friend) {
+		String sql = "select * from reply where parent=? and friend = ? order by no";
+		return jdbcTemplate.query(sql, mapper, parent, friend);
 	}
 }

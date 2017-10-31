@@ -11,6 +11,7 @@ public class Reply {
 	private String detail;
 	private String reg;
 	private int parent;
+	private String friend;
 	
 	public Reply(HttpServletRequest request) {
 			String no = request.getParameter("no");
@@ -20,6 +21,7 @@ public class Reply {
 			setReg(request.getParameter("reg"));
 			String parent = request.getParameter("parent");
 			setParent(parent==null?0:Integer.parseInt(parent));
+			setFriend(request.getParameter("friend"));
 	}
 
 	public Reply(ResultSet rs) throws SQLException {
@@ -28,10 +30,19 @@ public class Reply {
 		setDetail(rs.getString("detail"));
 		setReg(rs.getString("reg"));
 		setParent(rs.getInt("parent"));
+		setFriend(rs.getString("friend"));
 }
 	
 	public Reply() {
 		super();
+	}
+
+	public String getFriend() {
+		return friend;
+	}
+
+	public void setFriend(String friend) {
+		this.friend = friend;
 	}
 
 	public int getNo() {
@@ -61,7 +72,12 @@ public class Reply {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
-
+	public String getTime() {
+		return reg.substring(0, 16);
+	}
+	public String getDate() {
+		return reg.substring(0, 10);
+	}
 	public String getReg() {
 		return reg;
 	}
@@ -80,7 +96,7 @@ public class Reply {
 
 	@Override
 	public String toString() {
-		return "Reply [no=" + no + ", writer=" + writer + ", detail=" + detail + ", reg=" + reg
-				+ ", parent=" + parent + "]";
+		return "Reply [no=" + no + ", writer=" + writer + ", detail=" + detail + ", reg=" + reg + ", parent=" + parent
+				+ ", friend=" + friend + "]";
 	}
 }
