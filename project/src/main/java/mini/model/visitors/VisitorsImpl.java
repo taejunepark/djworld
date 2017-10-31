@@ -37,15 +37,15 @@ public class VisitorsImpl implements VisitorsDao {
 	};
 
 	@Override
-	public void write(String detail, String writer) {
-		String sql = "insert into visitors values(visitors_seq.nextval, ?, sysdate, '방명록', ?)";
-		jdbcTemplate.update(sql, detail, writer);
+	public void write(String writer, String detail, String id) {
+		String sql = "insert into visitors values("+id+".nextval, ?, ?, sysdate, '방명록', ?)";
+		jdbcTemplate.update(sql, writer, detail, id);
 	}
 
 	@Override
-	public List<Visitors> list() {
-		String sql = "select * from visitors order by no desc";
-		List<Visitors> list = jdbcTemplate.query(sql, mapper);
+	public List<Visitors> list(String id) {
+		String sql = "select * from visitors where friend=? order by no desc";
+		List<Visitors> list = jdbcTemplate.query(sql, mapper, id);
 		for(Visitors visitor : list) {
 			List<Reply> list2 = list(visitor.getNo());
 			visitor.setReply(list2);

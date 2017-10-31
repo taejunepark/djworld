@@ -3,9 +3,11 @@ package mini.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,16 +19,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.bean.Member;
+import main.bean.Visitors;
 import main.model.member.MemberDao;
 import mini.bean.Diary;
 import mini.model.diary.DiaryDao;
+import mini.model.reply.ReplyDao;
+import mini.model.visitors.VisitorsDao;
 
 @Controller
 public class MinihomeController {
 	
-	int count = 0;
 	@Autowired
 	private DiaryDao diaryDao;
+	
+	@Autowired
+	private VisitorsDao visitorsDao;
+	
+	@Autowired
+	public ReplyDao replyDao;
 	
 	@Autowired
 	private MemberDao memberDao;
@@ -57,6 +67,27 @@ public class MinihomeController {
 		
 		return "mini/diary/diary";
 	}
+	
+	@RequestMapping("/minihome/{id}/visitors")
+	public String visitors(@PathVariable String id,Model model) {
+		List<Visitors> list = visitorsDao.list(id);
+		Member m = memberDao.info(id);
+		model.addAttribute("list", list);
+		model.addAttribute("member", m);
+		return "mini/visitors/visitors";
+	}
+	
+	@RequestMapping(value="/minihome/{id}/visitors", method=RequestMethod.POST)
+	public String visitors(@PathVariable String id, Model model, Visitors v, HttpSession session) {
+		visitorsDao.write(v.getWriter(), v.getDetail(), id);
+		return "redirect:/minihome/"+id+"/visitors";
+	}
+	
+//	@RequestMapping(value="/visitors/reply", method=RequestMethod.POST)
+//	public String visitorsReply(Reply r, Model m) {
+//		replyDao.insert(r.getWriter(), r.getDetail(), r.getParent());
+//		return "redirect:/visitors";
+//	}
 	
 	/** Ajax 사용 
 	 * @throws IOException */

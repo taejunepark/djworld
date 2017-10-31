@@ -12,6 +12,7 @@ public class Visitors {
 	private String reg;
 	private String detail;
 	private String type;
+	private String friend;
 	private List<Reply> reply;
 	
 	public Visitors() {
@@ -32,6 +33,7 @@ public class Visitors {
 		setReg(rs.getString("reg"));
 		setDetail(rs.getString("detail"));
 		setType(rs.getString("type"));
+		setFriend(rs.getString("friend"));
 	}
 	
 	public Visitors(HttpServletRequest request) {
@@ -41,8 +43,18 @@ public class Visitors {
 		setReg(request.getParameter("reg"));
 		setDetail(request.getParameter("detail"));
 		setType(request.getParameter("type"));
+		setFriend(request.getParameter("friend"));
 	}
 	
+
+	public String getFriend() {
+		return friend;
+	}
+
+	public void setFriend(String friend) {
+		this.friend = friend;
+	}
+
 	public int getNo() {
 		return no;
 	}
@@ -83,6 +95,6 @@ public class Visitors {
 	@Override
 	public String toString() {
 		return "Visitors [no=" + no + ", writer=" + writer + ", reg=" + reg + ", detail=" + detail + ", type=" + type
-				+ ", reply=" + reply + "]";
+				+ ", friend=" + friend + ", reply=" + reply + "]";
 	}
 }

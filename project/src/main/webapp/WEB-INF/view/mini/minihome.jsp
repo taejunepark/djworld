@@ -278,7 +278,7 @@
                             <br><br>
                             <a href="#">다이어리 0/0</a> &nbsp;&nbsp; <a href="#">사진첩 0/0</a><br>
                             <a href="#">공유 다이어리</a>&nbsp;&nbsp; <a href="#">게시판 0/0</a><br>
-                            <a href="#">방명록 0/0</a>
+                            <a href="${pageContext.request.contextPath }/minihome/${member.id}/visitors">방명록 0/0</a>
                         </div>
                     </div>
                     

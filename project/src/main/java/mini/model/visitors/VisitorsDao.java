@@ -10,8 +10,8 @@ import main.bean.Visitors;
 @Repository
 public interface VisitorsDao {
 
-	void write(String detail, String writer);
+	void write(String writer, String detail, String id);
 
-	List<Visitors> list();
+	List<Visitors> list(String id);
 	List<Reply> list(int parent);
 }
