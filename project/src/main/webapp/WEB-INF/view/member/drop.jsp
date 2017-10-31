@@ -2,15 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/template/infoHeader.jsp"%>
 <div class="empty-row"></div>
-<div class="area-60 center">
+<div class="area-70 center">
 	<form action="${pageContext.request.contextPath }/member/drop" method="post">
-		<table class="area-60 center"
+		<table class="area-70 center"
 			style="height: 700px;">
 			<tr>
 				<th colspan="2" style="background-color: black;">
 					<div class="font-medium text-cetner"
 						style="color: white; margin-bottom: 20px">회원 탈퇴</div>
-					
 				</th>
 			</tr>
 			<tr>

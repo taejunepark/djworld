@@ -22,6 +22,5 @@ public interface MemberDao {
 	boolean emailChange(String nowemail, String newemail);
 	boolean infoCheck(String id, String name, String email);
 	List<Member> allList();
-	void payMent(String id, int bam);
 }
 

@@ -137,7 +137,7 @@ h2 {
 		//새창의 위치 
 		open_x = (screen_width - window_with) / 2;
 		open_y = (screen_height - window_height) / 2;
-		window.open("${pageContext.request.contextPath }/pay", "Window_open",
+		window.open("${pageContext.request.contextPath }/payments/try", "Window_open",
 				"height=500; width=700; left=" + open_x + ", top=" + open_y);
 	}
 </script>

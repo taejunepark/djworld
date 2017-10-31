@@ -38,7 +38,6 @@ public class MemberDaoImpl implements MemberDao {
 
 	public void register(Member m) {
 		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, 0, '일반', sysdate, null)";
-		System.out.println(m);
 		jdbcTemplate.update(sql, m.getId(), m.getPw(), m.getName(), m.getPhone(), m.getBirth(), m.getEmail(), m.getGender());
 	}
 	
@@ -166,10 +165,5 @@ public class MemberDaoImpl implements MemberDao {
 		return jdbcTemplate.query(sql, mapper);
 	}
 
-	// 결제
-	@Override
-	public void payMent(String id, int bam) {
-		String sql = "update member set bam=bam+? where id=?";
-		jdbcTemplate.update(sql, bam, id);
-	}
+	
 }

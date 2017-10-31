@@ -88,7 +88,7 @@
         <div style="margin: auto; padding-top: 30px; height: 30px; text-align: left; width: 70%;">
             밤 충전(밤은 10개 단위로 충전 가능합니다.)
         </div>
-        <form action="pay" method="post">
+        <form action="${pageContext.request.contextPath }/payments/try" method="post">
             <div style="margin: auto;text-align: left; width: 70%;">
                 <table width=100%; style="padding-left: 40px; padding-top: 10px; background: lightgray;">
                     <tr>

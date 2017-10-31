@@ -45,6 +45,9 @@
 					<a href="${pageContext.request.contextPath}/friend/sendlist"  class="left">
 						<font color="white">요청 전송</font>
 					</a>
+					<a href="${pageContext.request.contextPath}/member/find"  class="left">
+						<font color="white">회원 찾기</font>
+					</a>
 					<a href="#" class="left"><font color="white">고객센터</font></a>
 					<a href="${pageContext.request.contextPath}/member/logout" class="right">
 						<font color="white">로그아웃</font>
