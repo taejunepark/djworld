@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.bean.Member;
-import main.bean.Visitors;
 import main.model.member.MemberDao;
 import mini.bean.Diary;
+import mini.bean.Visitors;
 import mini.model.diary.DiaryDao;
 import mini.model.reply.ReplyDao;
 import mini.model.visitors.VisitorsDao;
@@ -42,10 +42,14 @@ public class MinihomeController {
 	private MemberDao memberDao;
 	
 	@RequestMapping(value= {"/minihome/{id}"})
-	public String home(@PathVariable String id, Model model) {
-		Member m = memberDao.info(id);
+	public String home(@PathVariable String id, Model model, HttpSession session) {
+		// id의 미니홈피
+		List<Visitors> list = visitorsDao.list(id);
+		Member owner = memberDao.info(id);
+		model.addAttribute("list", list);
+		model.addAttribute("owner", owner);
 		model.addAttribute("id", id);
-		model.addAttribute("member", m);
+	
 		return "mini/minihome";
 	}
 	
@@ -57,56 +61,47 @@ public class MinihomeController {
 	@RequestMapping("/minihome/{id}/diary")
 	public String init_diary(@PathVariable String id,Model model) {
 		Date date = new Date();
+		List<Visitors> list = visitorsDao.list(id);
+		Member owner = memberDao.info(id);
+		model.addAttribute("list", list);
+		model.addAttribute("owner", owner);
+		model.addAttribute("id", id);
 		
 		// 현재 날짜를 input 태그의 형식에 맞게 변경
 		String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
 
 		// Dao에서 해당 날짜의 데이터를 가져와서 Forward
-		Diary d = diaryDao.info(time, "rlaeodnjs");
+		Diary d = diaryDao.info(time, id);
 		model.addAttribute("d", d);
-		
 		return "mini/diary/diary";
-	}
-	
-	@RequestMapping("/minihome/{id}/visitors")
-	public String visitors(@PathVariable String id,Model model, HttpSession session) {
-		// id의 미니홈피
-		List<Visitors> list = visitorsDao.list(id);
-		Member owner = memberDao.info(id);
-		model.addAttribute("list", list);
-		model.addAttribute("owner", owner);
-
-		System.out.println(list);
-		
-		// 접속한 계정의 정보
-		String  userId = (String)session.getAttribute("userId");
-		Member user = memberDao.info(userId);
-		model.addAttribute("user", user);
-		
-		return "mini/visitors/visitors";
-	}
-	
-	@RequestMapping(value="/minihome/{id}/visitors", method=RequestMethod.POST)
-	public String visitors(@PathVariable String id, Model model, Visitors v, HttpSession session) {
-		visitorsDao.write(v.getWriter(), v.getDetail(), id);
-		return "redirect:/minihome/"+id+"/visitors";
 	}
 	
 	/** Ajax 사용 
 	 * @throws IOException */
-	@RequestMapping("/minihome/{id}/diary/{reg}")
+	@RequestMapping(value = "/minihome/{id}/diary/{reg}", produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String select_diary(HttpServletResponse response , @PathVariable String id,@PathVariable String reg, Model model) throws IOException {
+		List<Visitors> list = visitorsDao.list(id);
+		Member owner = memberDao.info(id);
+		model.addAttribute("list", list);
+		model.addAttribute("owner", owner);
+		model.addAttribute("id", id);
+		
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		Diary d = diaryDao.info(reg, id);
 		String text = d==null?"":d.getDetail();
-		System.out.println(text);
 		return text;
 	}
 	
 	@RequestMapping(value="/minihome/{id}/diary_write", method=RequestMethod.POST)
 	public String diary_write(@PathVariable String id, Model model, @RequestParam Map<String,Object> map) {
+		List<Visitors> list = visitorsDao.list(id);
+		Member owner = memberDao.info(id);
+		model.addAttribute("list", list);
+		model.addAttribute("owner", owner);
+		model.addAttribute("id", id);
+		
 		String path = "";
 		if(map.get("ir1") == null) {
 			model.addAttribute("reg", map.get("reg"));
@@ -114,7 +109,9 @@ public class MinihomeController {
 		}else {
 			Diary d = new Diary();
 			d.setReg((String)map.get("reg"));
-			d.setDetail((String)map.get("ir1"));
+			String detail = (String)map.get("ir1");
+			detail = detail.substring(3, detail.length() - 4);
+			d.setDetail(detail);
 			d.setSeparate(id);
 			diaryDao.insert(d);
 			path = "redirect:/minihome/"+id+"/diary";
@@ -124,6 +121,12 @@ public class MinihomeController {
 	
 	@RequestMapping(value="/minihome/{id}/diary_edit", method=RequestMethod.POST)
 	public String diary_edit(@PathVariable String id, Model model, @RequestParam Map<String,Object> map) {
+		List<Visitors> list = visitorsDao.list(id);
+		Member owner = memberDao.info(id);
+		model.addAttribute("list", list);
+		model.addAttribute("owner", owner);
+		model.addAttribute("id", id);
+		
 		String path = "";
 		if(map.get("ir1") == null) {
 			model.addAttribute("reg", map.get("reg"));
@@ -138,5 +141,29 @@ public class MinihomeController {
 			path = "redirect:/minihome/"+id+"/diary";
 		}
 		return path;
+	}
+	
+	
+	// 방명록
+	@RequestMapping("/minihome/{id}/visitors")
+	public String visitors(@PathVariable String id,Model model, HttpSession session) {
+		// id의 미니홈피
+		List<Visitors> list = visitorsDao.list(id);
+		Member owner = memberDao.info(id);
+		model.addAttribute("list", list);
+		model.addAttribute("owner", owner);
+
+		// 접속한 계정의 정보
+		String  userId = (String)session.getAttribute("userId");
+		Member user = memberDao.info(userId);
+		model.addAttribute("user", user);
+		
+		return "mini/visitors/visitors";
+	}
+	
+	@RequestMapping(value="/minihome/{id}/visitors", method=RequestMethod.POST)
+	public String visitors(@PathVariable String id, Model model, Visitors v, HttpSession session) {
+		visitorsDao.write(v.getWriter(), v.getDetail(), id);
+		return "redirect:/minihome/"+id+"/visitors";
 	}
 }

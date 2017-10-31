@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import main.bean.Reply;
+import mini.bean.Reply;
 import mini.model.reply.ReplyDao;
 
 @Controller

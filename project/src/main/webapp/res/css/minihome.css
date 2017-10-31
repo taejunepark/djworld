@@ -1,0 +1,239 @@
+@charset "UTF-8";
+
+body {
+	overflow: hidden;
+	margin: 10px;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+div {
+	/*border:1px solid black;
+            	margin: 1px 0px;*/
+	
+}
+
+/*전체 div class*/
+.mini {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+	height: 100%;
+	border: 1px solid black;
+}
+
+/* Header div*/
+header {
+	text-align: right;
+	width: 100%;
+	height: 3%;
+	margin: 5px;
+}
+
+header>a {
+	color: gray;
+}
+
+header>a :hover {
+	background-color: yellow;
+	color: red;
+}
+
+.info {
+	display: flex;
+	flex-wrap: wrap;
+	border: 1px solid black;
+	width: 100%;
+	height: 5%;
+	margin: 5px;
+	padding: 5px;
+}
+
+.visit {
+	text-align: center;
+	width: 15%;
+	margin: 5px;
+	margin-right: 20px;
+}
+
+.title {
+	flex-grow: 1;
+	margin: 5px;
+}
+
+.profile {
+	margin: 0 auto;
+}
+/* 주요 Div */
+main {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+	height: 80%;
+	margin: 5px;
+}
+
+/* 사이드 Div */
+aside {
+	display: flex;
+	flex-wrap: wrap;
+	border: 1px solid green;
+	width: 15%;
+	padding: 5px;
+}
+
+/* Main Div */
+.highlight {
+	overflow: scroll;
+	overflow-x: hidden; display : flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	width: 70%;
+	height: 100%;
+	margin: 0 5px;
+	display: flex; flex-direction : column; flex-wrap : nowrap; width : 70%;
+	height : 100%; margin : 0 5px;
+	padding: 5px;
+}
+
+.month {
+	height: 3%;
+	margin: 5px;
+	padding: 5px;
+}
+
+.date {
+	height: 3%;
+	margin: 5px;
+	padding: 5px;
+}
+
+.dateArea {
+	height: 3%;
+	margin: 5px;
+	padding: 5px;
+}
+
+.dayArea {
+	height: 15%;
+	margin: 5px;
+	padding: 5px;
+}
+
+.area {
+	height: 83%;
+	margin: 5px;
+	padding: 5px;
+}
+
+.btnArea{
+    display: flex;
+    height: 5%;
+    margin: 5px;
+    padding: 5px;
+    flex-direction: row-reverse;
+}
+
+.btns {
+	display: flex;
+	flex-direction: row;
+	height: 5%;
+	margin: 5px;
+}
+
+/* 우측 메뉴 Div */
+.menu {
+	border: 1px solid blue;
+	flex-grow: 1;
+	margin: 5px;
+	padding: 5px;
+}
+
+.menu ul {
+	list-style: none;
+	margin: 2px -40px;
+}
+
+.visitorTable {
+	width: 75%;
+	margin: auto;
+	height: 150px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 10px;
+	background-color: lightgray;
+}
+
+.visitorListTable {
+	width: 75%;
+	margin: 0 auto;
+}
+
+textarea {
+	resize: none;
+}
+
+img {
+	border: 1px solid gray;
+}
+
+/* 새 게시물 관련 Div*/
+.partOne {
+	width: 100%;
+	height: 30%;
+	margin: 0 5px;
+}
+
+.partOne .left {
+	float: left;
+	border: 1px solid black;
+	width: 47.5%;
+	height: 160px;
+	padding: 5px;
+}
+
+.partOne .right {
+	display: inline-block;
+	border: 1px solid black;
+	width: 47.5%;
+	height: 160px;
+	padding: 5px;
+}
+
+/* 임시 */
+.partTwo {
+	width: 98%;
+	height: 40%;
+	margin: 5px;
+}
+
+/* 일촌평 관련 Div*/
+.partThree {
+	background-color: #F2F2F2;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray; width : 97%;
+	height: 30px;
+	margin: 5px;
+	padding: 5px;
+	width: 97%;
+}
+
+.addComment {
+	width: 97%;
+	height: 30px;
+	margin: 5px;
+	padding: 5px;
+}
+
+.friend-input {
+	width: 90%;
+	font-size: 13px;
+	padding: 5px;
+	border: 1px solid black;
+	outline: none;
+}

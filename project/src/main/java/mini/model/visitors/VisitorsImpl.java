@@ -8,9 +8,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import main.bean.Member;
-import main.bean.Reply;
-import main.bean.Visitors;
 import main.model.member.MemberDao;
+import mini.bean.Reply;
+import mini.bean.Visitors;
 import mini.model.reply.ReplyDao;
 
 @Repository(value = "visitorsDao")
@@ -61,6 +61,7 @@ public class VisitorsImpl implements VisitorsDao {
 			List<Reply> list2 = replyDao.list(visitor.getNo(), id);
 			visitor.setReply(list2);
 			visitor.setProfile(m.getProfile());
+			visitor.setName(m.getName());
 		}
 		return list;
 	}

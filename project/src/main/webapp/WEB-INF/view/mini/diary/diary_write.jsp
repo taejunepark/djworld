@@ -1,235 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>???님의 미니홈피</title>
-        <link href="${pageContext.request.contextPath }/css/ko_KR/smart_editor2.css" rel="stylesheet" type="text/css">
-        <style type="text/css">
-            body { margin: 10px; }
-        </style>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/lib/jindo2.all.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/lib/jindo_component.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/service/SE2M_Configuration.js" charset="utf-8"></script>	<!-- 설정 파일 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/service/SE2BasicCreator.js" charset="utf-8"></script>
-        <!--HuskyApp JS Start-->
-        <!-- 허스키 프레임웍 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/husky_framework/HuskyCore.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/husky_framework/HuskyRange.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/husky_framework/hp_CorePlugin.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/husky_framework/hp_HuskyRangeManager.js" charset="utf-8"></script>
-        <!-- 공통 : 기본 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/common/base/hp_SE2M_Toolbar.js" charset="utf-8"></script>
-        <!-- 편집 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/editing/hp_SE_EditingAreaManager.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/editing/hp_SE_EditingArea_WYSIWYG.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/editing/hp_SE_EditingArea_HTMLSrc.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/editing/hp_SE_EditingArea_TEXT.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/editing/hp_SE_EditingAreaVerticalResizer.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/editing/hp_SE_WYSIWYGEnterKey.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/editing/hp_SE2M_EditingModeChanger.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/editing/hp_SE_PasteHandler.js" charset="utf-8"></script>
-        <!-- 1단 툴바 : 기본 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_ExecCommand.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE_WYSIWYGStyler.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE_WYSIWYGStyleGetter.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_FontSizeWithLayerUI.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_LineStyler.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_LineHeightWithLayerUI.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_ColorPalette.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_FontColor.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_BGColor.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_Hyperlink.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_FontNameWithLayerUI.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/colorpicker.js" charset="utf-8"></script> 
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_Accessibility.js" charset="utf-8"></script>
-        <!-- 1단 툴바 : 확장 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_SCharacter.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_FindReplacePlugin.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_Quote.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_TableCreator.js" charset="utf-8"></script>		
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_TableBlockStyler.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_StyleRemover.js" charset="utf-8"></script>	
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_TableEditor.js" charset="utf-8"></script>
-        <!-- 퀵에디터 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/quick_editor/hp_SE2M_QuickEditor_Common.js" charset="utf-8"></script>
-        <!-- 단축키 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/shortcut/shortcut.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/shortcut/hp_Hotkey.js" charset="utf-8"></script>
-        <!-- Undo/Redo -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/undo_redo/hp_SE_UndoRedo.js" charset="utf-8"></script>
-        <!-- 유틸 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/hp_Utils.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/hp_DialogLayerManager.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/hp_ActiveLayerManager.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/hp_StringConverterManager.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/hp_MessageManager.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/hp_LazyLoader.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/hp_PopupManager.js" charset="utf-8"></script>	 
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/hp_SE2M_Utils.js"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/hp_SE2B_CSSLoader.js" charset="utf-8"></script>		<!-- Basic 버전에서 사용하지 않는 메시지를 제거한 버전 -->
-        <!-- SE2.0 Open 전용 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/service/husky_SE2B_Lang_ko_KR.js" charset="utf-8"></script><!-- Basic 버전에서 사용하는 알림 메시지 -->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/service/husky_SE2B_Lang_en_US.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/service/husky_SE2B_Lang_ja_JP.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/service/husky_SE2B_Lang_zh_CN.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/service/husky_SE2B_Lang_zh_TW.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/service/hp_SE_OuterIFrameControl.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/service/hp_SE_ToolbarToggler.js" charset="utf-8"></script>
-        <!--HuskyApp JS End-->
-        <!--Remove Start-->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_FindReplacePlugin$Lazy.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_Quote$Lazy.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_SCharacter$Lazy.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_TableCreator$Lazy.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/hp_SE2M_TableEditor$Lazy.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_BGColor$Lazy.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_FontColor$Lazy.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_Hyperlink$Lazy.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/base/hp_SE2M_LineHeightWithLayerUI$Lazy.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/quick_editor/hp_SE2M_QuickEditor_Common$Lazy.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/hp_DialogLayerManager$Lazy.js" charset="utf-8"></script>
-
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/N_FindReplace.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/fundamental/advanced/SE2M_TableTemplate.js" charset="utf-8"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/util/N_DraggableLayer.js" charset="utf-8"></script>
-        <!--Remove End-->
-        <script type="text/javascript" src="${pageContext.request.contextPath }/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-        
-        <style>
-            a{
-                text-decoration: none;
-                color:black;
-            }
-            
-            div{
-            	/*border:1px solid black;
-            	margin: 1px 0px;*/
-            }
-            
-            /*전체 div class*/
-            .mini{
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                width: 100%;
-                height: 100%;
-                border: 1px solid black;
-            }
-            
-            /* Header div*/
-            header{
-                border: 1px dotted blue;
-                text-align: right;
-                width:100%;
-                height: 3%;
-                margin : 5px;
-            }
-            
-            header > a{
-                color: gray;
-            }
-            
-            header > a :hover {
-                background-color: yellow;
-                color:red;
-            }
-            
-            .info{
-                display:flex;
-                flex-wrap: wrap;
-                border: 1px solid black;
-                width: 100%;
-                height: 5%;
-                margin: 5px;
-                padding: 5px;
-            }
-            
-            .visit{
-                border: 1px dotted blue;
-                width: 15%;
-                margin: 5px;
-            }
-            
-            .title{
-                flex-grow: 1;
-                border: 1px dotted blue;
-                margin: 5px;
-            }
-            
-            /* 주요 Div */
-            main{
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                width: 100%;
-                height: 100%;
-                border: 1px dotted blue;
-                margin : 5px;
-            }
-            
-            /* 사이드 Div */
-            aside{
-                display:flex;
-                flex-wrap: wrap;
-                border: 1px solid green;
-                width: 15%;
-                margin: 5px;
-                padding: 5px;
-            }
-            
-            /* Main Div */
-            .highlight{
-                display: flex;
-                flex-direction: column;
-                flex-wrap: nowrap;
-                width: 75%;
-                height: 100%;
-                margin: 5px;
-                padding: 5px;
-            }
-            
-            .month{
-                height: 3%;
-                margin: 5px;
-                padding: 5px;
-            }
-            
-            .date{
-                height: 3%;
-                margin: 5px;
-                padding: 5px;
-            }
-            
-            .area{
-                height: 83%;
-                margin: 5px;
-                padding: 5px;
-            }
-            
-            .btns{
-                display: flex;
-                flex-direction: row;
-                height: 5%;
-                margin: 5px;
-            }
-            
-            /* 우측 메뉴 Div */
-            .menu{
-                border: 1px dotted blue;
-                flex-grow: 1;
-                margin: 5px;
-                padding: 5px;
-            }
-            
-            .menu ul{
-                list-style: none;
-                margin: 2px -40px;
-            }
-        </style>
-        <!-- jQuery를 사용하기 위한 CDN 설정 -->
-        <script src="https://code.jquery.com/jquery-latest.js"></script>
-        <script src="regex04.js"></script>
+<%@ include file = "/WEB-INF/view/mini_template/header.jsp" %>    
+<%@ include file = "/WEB-INF/view/mini_template/script.jsp" %>
+<style>
+	body {
+		overflow: hidden;
+		margin: 10px;
+	}
+</style>      
         <script>
             $(document).ready(function(){
                 $("#cancle_btn").click(function(){
@@ -237,27 +15,6 @@
                 })
             })
         </script>
-    </head>
-    <body>
-        <div class="mini">
-            <header>
-                <a class="header_a" href="#">내 홈피</a>
-                <a class="header_a" href="#">바로 가기</a>
-                <a class="header_a" href="#">로그인</a>
-            </header>
-            
-            <div class="info">
-                <div class="visit">
-                    <span>Today 0 | </span>
-                    <span>Total 1</span>
-                </div>
-
-                <div class="title">
-                    <span>???님의 미니 홈피</span>
-                </div>
-            </div>
-            
-            <main>
                 <aside>
                     <a href="#">미정</a>
                 </aside>
@@ -1026,29 +783,7 @@
                         </div>
                     </div>
                 </div>
-                
-                <nav class="menu">
-                    <ul>
-                        <li>
-                            <a href="${pageContext.request.contextPath }/minihome/${id}">홈</a>
-                        </li>
-                        <li>
-                            <a href="${pageContext.request.contextPath }/minihome/${id}/diary">다이어리</a>
-                        </li>
-                        <li>
-                            <a href="#">게시판</a>
-                        </li>
-                        <li>
-                            <a href="#">사진첩</a>
-                        </li>
-                        <li>
-                            <a href="#">게시판</a>
-                        </li>
-                    </ul>
-                </nav>
-            </main>
-        </div>
-        
+          <%@ include file = "/WEB-INF/view/mini_template/footer.jsp" %>
     <script type="text/javascript">
         if(window.frameElement){
             jindo.$("se2_sample").style.display = "none";
@@ -1095,10 +830,7 @@
                 oEditor.setDefaultFont(sDefaultFont, nFontSize);
             }
         }
-    </script>
-    </body>
-</html>
-
+</script>        
 
 
 

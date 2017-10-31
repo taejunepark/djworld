@@ -1,4 +1,4 @@
-package main.bean;
+package mini.bean;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Visitors {
 	private int no;
+	private String name;
 	private String writer;
 	private String reg;
 	private String detail;
@@ -77,7 +78,12 @@ public class Visitors {
 	public void setReg(String reg) {
 		this.reg = reg;
 	}
-	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public Visitors(ResultSet rs) throws SQLException{
 		setNo(rs.getInt("no"));
 		setWriter(rs.getString("writer"));

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import main.bean.Reply;
+import mini.bean.Reply;
 
 @Repository
 public interface ReplyDao {

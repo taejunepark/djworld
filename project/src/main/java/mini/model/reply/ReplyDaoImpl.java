@@ -7,13 +7,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import main.bean.Reply;
+import main.bean.Member;
+import main.model.member.MemberDao;
+import mini.bean.Reply;
 
 @Repository(value="replyDao")
 public class ReplyDaoImpl implements ReplyDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private MemberDao memberDao;
 	
 	private RowMapper<Reply> mapper = (rs, index)->{
 		Reply r = new Reply();
@@ -35,6 +40,11 @@ public class ReplyDaoImpl implements ReplyDao {
 	@Override
 	public List<Reply> list(int parent, String friend) {
 		String sql = "select * from reply where parent=? and friend = ? order by no";
-		return jdbcTemplate.query(sql, mapper, parent, friend);
+		List<Reply> list = jdbcTemplate.query(sql, mapper, parent, friend);
+		for(Reply r : list) {
+			Member m = memberDao.info(r.getWriter());
+			r.setName(m.getName());
+		}
+		return list;
 	}
 }

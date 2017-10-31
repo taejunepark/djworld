@@ -1,4 +1,4 @@
-package main.bean;
+package mini.bean;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Reply {
 	private int no;
+	private String name;
 	private String writer;
 	private String detail;
 	private String reg;
@@ -35,6 +36,14 @@ public class Reply {
 	
 	public Reply() {
 		super();
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getFriend() {
