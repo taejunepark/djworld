@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>TJWorld</title>
+<<<<<<< HEAD
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/common.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/minihome.css?ver=1">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+=======
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath }/css/common.css">
 	<link rel="stylesheet" type="text/css"
