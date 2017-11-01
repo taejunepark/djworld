@@ -80,8 +80,6 @@ main {
 
 /* 사이드 Div */
 aside {
-	display: flex;
-	flex-wrap: wrap;
 	border: 1px solid green;
 	width: 15%;
 	padding: 5px;

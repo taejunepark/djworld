@@ -13,7 +13,7 @@ public class Visitors {
 	private String reg;
 	private String detail;
 	private String type;
-	private String friend;
+	private String owner;
 	private List<Reply> reply;
 	private String profile;
 	
@@ -34,12 +34,12 @@ public class Visitors {
 		this.reply = reply;
 	}
 
-	public String getFriend() {
-		return friend;
+	public String getOwner() {
+		return owner;
 	}
 
-	public void setFriend(String friend) {
-		this.friend = friend;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
 	public int getNo() {
@@ -90,7 +90,7 @@ public class Visitors {
 		setReg(rs.getString("reg"));
 		setDetail(rs.getString("detail"));
 		setType(rs.getString("type"));
-		setFriend(rs.getString("friend"));
+		setOwner(rs.getString("owner"));
 	}
 	
 	public Visitors(HttpServletRequest request) {
@@ -100,12 +100,12 @@ public class Visitors {
 		setReg(request.getParameter("reg"));
 		setDetail(request.getParameter("detail"));
 		setType(request.getParameter("type"));
-		setFriend(request.getParameter("friend"));
+		setOwner(request.getParameter("owner"));
 	}
 	
 	@Override
 	public String toString() {
 		return "Visitors [no=" + no + ", writer=" + writer + ", reg=" + reg + ", detail=" + detail + ", type=" + type
-				+ ", friend=" + friend + ", reply=" + reply + ", profile=" + profile + "]";
+				+ ", owner=" + owner + ", reply=" + reply + ", profile=" + profile + "]";
 	}
 }
