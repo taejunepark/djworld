@@ -103,7 +103,6 @@ public class MinihomeController {
 		model.addAttribute("owner", owner);
 		model.addAttribute("id", id);
 		
-		// 현재 날짜를 input 태그의 형식에 맞게 변경
 		String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
 
 		// Dao에서 해당 날짜의 데이터를 가져와서 Forward
@@ -130,48 +129,62 @@ public class MinihomeController {
 		return text;
 	}
 	
+	
+	
 	@RequestMapping(value="/minihome/{id}/diary_write", method=RequestMethod.POST)
-	public String diary_write(@PathVariable String id, Model model, @RequestParam Map<String,Object> map) {
+	public String diary_write(@PathVariable String id, Model model,RedirectAttributes redirect, @RequestParam Map<String,Object> map) {
 		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
-		model.addAttribute("list", list);
-		model.addAttribute("owner", owner);
-		model.addAttribute("id", id);
 		
 		String path = "";
-		if(map.get("ir1") == null) {
-			model.addAttribute("reg", map.get("reg"));
+		String detail = (String)map.get("detail");
+		String reg = (String)map.get("reg");
+		if(detail == null || detail.equals("")) {
+			model.addAttribute("list", list);
+			model.addAttribute("owner", owner);
+			model.addAttribute("id", id);
+			model.addAttribute("reg", reg);
 			path = "mini/diary/diary_write";
 		}else {
+			redirect.addFlashAttribute("list", list);
+			redirect.addFlashAttribute("owner", owner);
+			redirect.addFlashAttribute("id", id);
 			Diary d = new Diary();
-			d.setReg((String)map.get("reg"));
-			String detail = (String)map.get("ir1");
-			detail = detail.substring(3, detail.length() - 4);
+			d.setReg(reg);
+			//detail = detail.substring(3, detail.length() - 4);
 			d.setDetail(detail);
 			d.setSeparate(id);
 			diaryDao.insert(d);
-			path = "redirect:/minihome/"+id+"/diary";
+			path = "redirect:/minihome/" + id + "/diary";
 		}
 		return path;
 	}
 	
 	@RequestMapping(value="/minihome/{id}/diary_edit", method=RequestMethod.POST)
-	public String diary_edit(@PathVariable String id, Model model, @RequestParam Map<String,Object> map) {
+	public String diary_edit(@PathVariable String id, Model model, RedirectAttributes redirect, @RequestParam Map<String,Object> map) {
 		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
-		model.addAttribute("list", list);
-		model.addAttribute("owner", owner);
-		model.addAttribute("id", id);
 		
 		String path = "";
-		if(map.get("ir1") == null) {
-			model.addAttribute("reg", map.get("reg"));
-			model.addAttribute("detail", map.get("detail"));
+		String editFlag = (String)map.get("editFlag");
+		String detail = (String)map.get("detail");
+		String reg = (String)map.get("reg");
+		
+		if(editFlag.equalsIgnoreCase("true")) {
+			model.addAttribute("list", list);
+			model.addAttribute("owner", owner);
+			model.addAttribute("id", id);
+			model.addAttribute("reg", reg);
+			model.addAttribute("detail", detail);
+			model.addAttribute("editFlag", "false");
 			path = "mini/diary/diary_edit";
 		}else {
+			redirect.addFlashAttribute("list", list);
+			redirect.addFlashAttribute("owner", owner);
+			redirect.addFlashAttribute("id", id);
 			Diary d = new Diary();
-			d.setReg((String)map.get("reg"));
-			d.setDetail((String)map.get("ir1"));
+			d.setReg(reg);
+			d.setDetail(detail);
 			d.setSeparate(id);
 			diaryDao.edit(d);
 			path = "redirect:/minihome/"+id+"/diary";

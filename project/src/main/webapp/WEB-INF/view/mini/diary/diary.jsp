@@ -9,9 +9,7 @@ body {
 }
 </style>
 <script>
-	$(document)
-			.ready(
-					function() {
+	$(document).ready(function() {
 						init()
 						$("select").change(function() {
 							$(".dayArea").empty()
@@ -74,7 +72,6 @@ body {
 							var month = today.getMonth() + 1 < 10 ? "0"
 									+ today.getMonth() + 1
 									: today.getMonth() + 1
-							var day = today.getDate()
 							var lastDay = (new Date(year, month, 0)).getDate();
 							addDayarea(lastDay)
 							$("#year").find("#" + year).attr("selected", true)
@@ -82,6 +79,8 @@ body {
 									.attr("selected", true)
 
 							var btns = $(".dayArea").find("button")
+							var tmp = today.getDate()
+							var day = tmp < 10 ? '0' + tmp : '' + tmp
 							$.each(btns, function() {
 								var flag = $(this).text() === day.toString()
 								if (flag)
@@ -111,7 +110,7 @@ body {
 							for (var i = 1; i <= lastDay; i++) {
 								$(".dayArea").append(createBtn(i))
 
-								if (i % 10 == 0)
+								if (i % 15 == 0)
 									$(".dayArea").append(createGap())
 							}
 						}
@@ -138,9 +137,8 @@ body {
 							$.ajax({
 										url : $(location).attr('href') + '/'
 												+ date,
-										contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+										//contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 										success : function(res) {
-											console.log($.trim(res));
 											$(".area").html(res)
 											var isData = $(".area").html();
 											if (isData === null
@@ -187,8 +185,9 @@ body {
 	<div class="dayArea"></div>
 
 	<form action="#" id="transfer" method="post">
-		<input type="hidden" id="reg" name="reg"> <input type="hidden"
-			id="detail" name="detail">
+		<input type="hidden" name="editFlag" value="true">
+		<input type="hidden" id="reg" name="reg">
+		<input type="hidden" id="detail" name="detail">
 		<div class="area"></div>
 
 		<div class="btnArea">

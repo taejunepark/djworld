@@ -14,6 +14,8 @@
     <mvc:annotation-driven />
     
     <mvc:annotation-driven/>
+	 <mvc:resources location="/S.E/" mapping="/S.E/**"/>
+	 <mvc:resources location="/S.E2/" mapping="/S.E2/**"/>
 	 <mvc:resources location="/res/css/" mapping="/css/**"/>
 	 <mvc:resources location="/res/js/" mapping="/js/**"/>
 	 <mvc:resources location="/res/img/" mapping="/img/**"/>
@@ -36,7 +38,7 @@
 		<!-- 기본적인 업로드 옵션을 지정할 수 있다 -->
 		<property name="defaultEncoding" value="UTF-8"/>
 		<property name="maxUploadSize" value="10000000"/>
-<!-- 		<property name="maxInMemorySize" value="메모리크기(byte)"/> -->
+		<property name="maxInMemorySize" value="10000000"/>
 	</bean>
 	
 </beans>
