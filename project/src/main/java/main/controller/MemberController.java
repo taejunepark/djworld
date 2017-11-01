@@ -55,6 +55,7 @@ public class MemberController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Member m, @RequestParam(required = false) String save, HttpSession session,
 			HttpServletResponse response, Model model) throws IOException {
+		
 		boolean result = memberDao.login(m);
 		m = memberDao.info(m.getId());
 		if (result) {

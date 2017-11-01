@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -53,7 +54,8 @@ public class MinihomeController {
 	private BoardcountDao boardcountDao;
 	
 	@RequestMapping(value= {"/minihome/{id}"})
-	public String home(@PathVariable String id, Model model, HttpSession session) {
+	public String home(@PathVariable String id, Model model, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 		// id의 미니홈피
 		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
@@ -72,7 +74,30 @@ public class MinihomeController {
 		model.addAttribute("id", id);
 		model.addAttribute("message", message);
 		model.addAttribute("count", b);
-	
+		String userId = (String)session.getAttribute("userId");
+		Cookie[] cookies = request.getCookies();
+		Cookie viewCookie = null;
+		
+		for(int i = 0; i< cookies.length; i++){
+			if(cookies[i].getName().equals("userId")){ 
+				viewCookie = cookies[i];
+			}
+		}  
+		 if(viewCookie == null){
+			  System.out.println("VIEWCOOKIE 없음");
+			  Cookie newCookie = new Cookie("VIEWCOOKIE","|"+userId+"|"); //("VIEWCOOKIE"는 name, "|"+bbsno+"|" 는 value 다. 
+			  response.addCookie(newCookie);
+		 }
+		 else{
+			  System.out.println("VIEWCOOKIE 있음");
+			  String value = viewCookie.getValue();
+			  
+			  if(value.indexOf("|"+userId+"|") <  0){
+			   value = value+"|"+userId+"|";
+			   viewCookie.setValue(value);
+			   response.addCookie(viewCookie);
+			  }
+		 }
 		return "mini/minihome";
 	}
 	

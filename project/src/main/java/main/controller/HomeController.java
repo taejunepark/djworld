@@ -30,11 +30,11 @@ public class HomeController {
 
 		String id = (String) session.getAttribute("userId");
 		List<Member> list = new ArrayList<>();
-
+		List<Member> temp = new ArrayList<>();
 		if (id != null) {
 			Member m = memberDao.info(id);
 			session.setAttribute("profile", m.getProfile());
-			List<Member> temp = friendDao.allList(id);
+			 temp = friendDao.allList(id);
 			try {
 				Collections.shuffle(temp);
 				// 일촌이 있는경우
@@ -67,7 +67,18 @@ public class HomeController {
 		
 		// 로그인 하지 않았을 경우
 		else {
-			list = memberDao.allList();
+			temp = memberDao.allList();
+			for(int i = 0; i < temp.size(); i++) {
+				if(temp.get(i).getId().equals(id)){
+					temp.remove(i);
+				}
+			}
+			for (int i = 0; i < temp.size(); i++) {
+				if(i == 3) {
+					break;
+				}
+				list.add(temp.get(i));
+			}
 		}
 		model.addAttribute("friend", list);
 		return "home";
