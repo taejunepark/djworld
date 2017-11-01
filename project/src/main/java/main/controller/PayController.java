@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.bean.Member;
 import main.model.member.MemberDao;
@@ -42,6 +43,7 @@ public class PayController {
 	}
 	
 	@RequestMapping(value="/complete", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
 	public String complete(HttpServletRequest request, HttpSession session) {
 		String 	tid = request.getParameter("imp_tid");
 		String id = (String)session.getAttribute("userId");

@@ -54,7 +54,7 @@ public class VisitorsImpl implements VisitorsDao {
 
 	@Override
 	public List<Visitors> list(String id) {
-		String sql = "select * from visitors where friend=? order by no desc";
+		String sql = "select * from visitors where owner=? order by no desc";
 		List<Visitors> list = jdbcTemplate.query(sql, mapper, id);
 		for (Visitors visitor : list) {
 			Member m = memberDao.info(visitor.getWriter());
