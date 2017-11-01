@@ -37,7 +37,7 @@
 		<!-- 기본적인 업로드 옵션을 지정할 수 있다 -->
 		<property name="defaultEncoding" value="UTF-8"/>
 		<property name="maxUploadSize" value="10000000"/>
-<!-- 		<property name="maxInMemorySize" value="메모리크기(byte)"/> -->
+		<property name="maxInMemorySize" value="10000000"/>
 	</bean>
 	
 </beans>

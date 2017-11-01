@@ -18,7 +18,16 @@ public class Member {
 	private String reg;
 	private String status;
 	private String profile;
+	private int total;
 	
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
 	public String getProfile() {
 		return profile;
 	}
@@ -41,7 +50,6 @@ public class Member {
 	public String getEmail() {
 		return email;
 	}
-	
 
 	public void setEmail(String email) {
 		this.email = email;

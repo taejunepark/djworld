@@ -40,7 +40,8 @@ public class MemberDaoImpl implements MemberDao {
 		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, 0, '일반', sysdate, null)";
 		jdbcTemplate.update(sql, m.getId(), m.getPw(), m.getName(), m.getPhone(), m.getBirth(), m.getEmail(), m.getGender());
 		jdbcTemplate.execute("create sequence "+ m.getId());
-		jdbcTemplate.execute("create sequence "+ m.getId()+"today_seq");
+		sql = "insert into total values(0, ?)";
+		jdbcTemplate.update(sql, m.getId());
 	}
 	
 	public boolean login(Member m) {

@@ -17,7 +17,7 @@
 	}
 </style>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/S.E/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/S.E/js/HuskyEZCreator.js"></script>
 <script>
      $(document).ready(function(){
          var oEditors = [];
@@ -31,7 +31,7 @@
          $("#write_btn").click(function(){
         	 if(validation()){
         		 oEditors[0].exec("UPDATE_CONTENTS_FIELD", [])
-        		 $("form").attr('action', '${pageContext.request.contextPath }/minihome/${owner.id }/diary_write').submit()
+        		 $("form").attr('action', '${pageContext.request.contextPath }/minihome/${owner.id }/diary_edit').submit()
         	 }
         	 
         	 function validation() {

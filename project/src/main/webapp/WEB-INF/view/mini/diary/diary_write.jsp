@@ -17,7 +17,7 @@
 	}
 </style>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/S.E/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/S.E/js/HuskyEZCreator.js"></script>
 <script>
      $(document).ready(function(){
          var oEditors = [];
@@ -56,9 +56,6 @@
                 
                 <div class="highlight">
 					<form action="#" method="post" enctype="multipart/form-data">
-					<input type="file" name="image" onchange("loadname(this,'previewimg')") >
-					<img src="about:blank" name="previewimg" id="previewimg" alt="">
-						<!-- <input type="file" name="file" value="사진 첨부" onchange="this.select(); document.getElementById('filetext').value=document.body.createTextRange();" /> -->
 						<input type="hidden" name="reg" value="${reg}">
 						<textarea name="detail" id="detail" rows="10" cols="100"></textarea>
 						<input type="button" value="등록" id="write_btn">
