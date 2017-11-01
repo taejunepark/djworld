@@ -23,6 +23,7 @@ import main.model.member.MemberDao;
 import mini.bean.Diary;
 import mini.bean.Visitors;
 import mini.model.diary.DiaryDao;
+import mini.model.total.TotalDao;
 import mini.model.visitors.VisitorsDao;
 
 @Controller
@@ -36,12 +37,16 @@ public class DiaryController {
 	@Autowired
 	private VisitorsDao visitorsDao;
 	
+	@Autowired
+	private TotalDao totalDao;
 	
 	@RequestMapping("/minihome/{id}/diary")
 	public String init_diary(@PathVariable String id,Model model) {
 		Date date = new Date();
 		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
+		 owner.setTotal(total);
 		model.addAttribute("list", list);
 		model.addAttribute("owner", owner);
 		model.addAttribute("id", id);
@@ -61,6 +66,8 @@ public class DiaryController {
 	public String select_diary(HttpServletResponse response , @PathVariable String id,@PathVariable String reg, Model model) throws IOException {
 		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
+		 owner.setTotal(total);
 		model.addAttribute("list", list);
 		model.addAttribute("owner", owner);
 		model.addAttribute("id", id);
@@ -78,7 +85,9 @@ public class DiaryController {
 	public String diary_write(@PathVariable String id, Model model,RedirectAttributes redirect, @RequestParam Map<String,Object> map) {
 		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
-		
+		int total = totalDao.count(id);
+		 owner.setTotal(total);
+		 
 		String path = "";
 		String detail = (String)map.get("detail");
 		String reg = (String)map.get("reg");
@@ -107,7 +116,8 @@ public class DiaryController {
 	public String diary_edit(@PathVariable String id, Model model, RedirectAttributes redirect, @RequestParam Map<String,Object> map) {
 		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
-		
+		int total = totalDao.count(id);
+		 owner.setTotal(total);
 		String path = "";
 		String editFlag = (String)map.get("editFlag");
 		String detail = (String)map.get("detail");

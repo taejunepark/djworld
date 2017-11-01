@@ -12,4 +12,6 @@ public interface VisitorsDao {
 	void write(String writer, String detail, String id);
 
 	List<Visitors> list(String id);
+
+	void delete(String id, int no);
 }

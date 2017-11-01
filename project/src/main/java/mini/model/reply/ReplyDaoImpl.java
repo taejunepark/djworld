@@ -47,4 +47,12 @@ public class ReplyDaoImpl implements ReplyDao {
 		}
 		return list;
 	}
+
+	@Override
+	public void delete(String id, int no) {
+		String sql = "delete reply where parent = ? and friend = ?";
+		jdbcTemplate.update(sql, no, id);
+	}
+	
+	
 }

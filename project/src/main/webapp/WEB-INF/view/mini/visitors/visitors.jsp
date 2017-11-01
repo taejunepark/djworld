@@ -1,10 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ include file = "/WEB-INF/view/mini_template/header.jsp" %>
+ <script>
+ 	function visitorsEdit(){
+ 		var detail = document.querySelector("#detail");
+ 		var text = detail.innerHTML;
+ 		var area = $("<textarea/>");
+ 		area.text(text);
+ 		detail.after(area);
+ 	}
+ </script>
 		<aside>
 			<a href="#">미정</a>
 		</aside>
 		<div class="highlight">
+			<c:if test="${userId != owner.id }">
 			<form action="${pageContext.request.contextPath }/minihome/${owner.id }/visitors"
 				method="post" onsubmit="sendCheck()">
 				<input type="hidden" name="writer" value="${userId }">
@@ -40,6 +50,7 @@
 					</tr>
 				</table>
 			</form>
+			</c:if>
 			<table class="visitorListTable">
 				<c:forEach var="list" items="${list }">
 					<tr style="background-color: lightgray">
@@ -52,17 +63,17 @@
 									<c:when test="${list.writer eq userId }">
 										<font style="font-size:0.8em">
 											<a href="#">비밀로 하기</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-											<a href="#">수정</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-											<a href="#">삭제</a>&nbsp;&nbsp;
+											<a onclick="visitorsEdit();">수정</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+											<a href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors/delete/${list.no}">삭제</a>&nbsp;&nbsp;
 										</font>
 									</c:when>
-									<c:otherwise>
+									<c:when test="${userId eq owner.id }">
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<font style="font-size:0.8em">
-											<a href="#">삭제</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+											<a href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors/delete/${list.no}">삭제</a>&nbsp;&nbsp;
 									 		<a href="#">신고</a>&nbsp;&nbsp;
 								 		</font>
-									 </c:otherwise>
+									 </c:when>
 								</c:choose>
 							</div>
 						</td>
@@ -83,7 +94,7 @@
 							</div>
 						</td>
 						<td class="center">
-							<div style="padding-left: 10px; margin: auto, 0px;">${list.detail }</div>
+							<div id="detail" style="padding-left: 10px; margin: auto, 0px;">${list.detail }</div>
 						</td>
 					</tr>
 					<tr>

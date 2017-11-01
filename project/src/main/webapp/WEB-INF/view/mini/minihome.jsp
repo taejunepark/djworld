@@ -70,10 +70,10 @@
 					<input type="submit" class="edit_hello" value="수정">
 					<input type="hidden" name="type" value="update">
 				</c:when>
-				<c:otherwise>
+				<c:when test="${id eq userId && message == null}">
 					<input type="submit" class="edit_hello" value="삽입">
 				<input type="hidden" name="type" value="insert">
-				</c:otherwise>
+				</c:when>
 			</c:choose>
 		</div>
 	</form>
@@ -86,11 +86,12 @@
 			<c:if test="${owner.gender eq '남자'}">(♂)</c:if>
 			<c:if test="${owner.gender eq '여자'}">(♀)</c:if>
 		</h3>
-		<select name="friend-list" style="width: 100%;">
+		<select name="friend-list" style="width: 100%;" 
+			onchange="if(this.value) location.href=(this.value);">
 			<option value="">파도타기</option>
-			<option value="">ㅋㅋㅋ</option>
-			<option value="">ㅋㅋㅋ</option>
-			<option value="">ㅋㅋㅋ</option>
+			<c:forEach var="friend" items="${friendList }">
+				<option value="${pageContext.request.contextPath }/minihome/${friend.id }">${friend.name }</option>
+			</c:forEach>
 		</select>
 	</div>
 </aside>

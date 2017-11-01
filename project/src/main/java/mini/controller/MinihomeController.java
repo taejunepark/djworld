@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import main.bean.Member;
+import main.model.friend.FriendDao;
 import main.model.member.MemberDao;
 import mini.bean.BoardCount;
 import mini.bean.Visitors;
@@ -36,6 +37,9 @@ public class MinihomeController {
 	private MinicommentDao minicommentDao;
 		
 	@Autowired
+	private FriendDao friendDao;
+	
+	@Autowired
 	private BoardcountDao boardcountDao;
 	
 	@Autowired
@@ -45,13 +49,13 @@ public class MinihomeController {
 	public String home(@PathVariable String id, Model model, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 		// id의 미니홈피
-		List<Visitors> list = visitorsDao.list(id);
-		Member owner = memberDao.info(id);
-		String message = minicommentDao.check(id);
-		int visitorsCount = boardcountDao.visitorsCount(id);
+		List<Visitors> list = visitorsDao.list(id); // ?
+		Member owner = memberDao.info(id); // 미니홈피 주인 정보
+		String message = minicommentDao.check(id); // 상태메세지
+		int visitorsCount = boardcountDao.visitorsCount(id); // 게시판 수
 //		int diaryCount = boardcountDao.diaryCount(id);
 //		int photoCount = boardcountDao.photoCount(id);
-		
+		List<Member> friendList = friendDao.allList(id);
 		BoardCount b = new BoardCount();
 		b.setVisitorsCount(visitorsCount);
 //		b.setDiaryCount(diaryCount);
@@ -61,33 +65,32 @@ public class MinihomeController {
 		Cookie[] cookies = request.getCookies();
 		Cookie viewCookie = null;
 		
-		for(int i = 0; i< cookies.length; i++){
-			System.out.println(i+"번째 : " + cookies[i]);
-			if(cookies[i].getName().equals("userId") || cookies[i].getName().equals("ownerId")){ 
-				viewCookie = cookies[i];
-			}
-		}  
+		String temp = userId+id;
+		 if(cookies != null && cookies.length > 0){
+			for(int i = 0; i< cookies.length; i++){
+				if(cookies[i].getName().equals("userId")){ 
+					viewCookie = cookies[i];
+				}
+			}  
+		 }
 		 if(viewCookie == null){
-			  System.out.println("VIEWCOOKIE 없음");
-			  Cookie newCookie = new Cookie("userId","|"+userId+"|"); 
+			  Cookie newCookie = new Cookie("userId","|"+temp+"|"); 
 			  response.addCookie(newCookie);
-			  Cookie newCookie2 = new Cookie("ownerId","|"+id+"|"); 
-			  response.addCookie(newCookie2);
 			  totalDao.plus(id);
 		 }
 		 else{
-			  System.out.println("VIEWCOOKIE 있음");
 			  String value = viewCookie.getValue();
-			  System.out.println(value);
-			  if(value.indexOf("|"+userId+"|") <  0 && value.indexOf("|"+id+"|") <  0 ){
-			   value = value+"|"+userId+"|";
-			   viewCookie.setValue(value);
-			   response.addCookie(viewCookie);
-			   value = value+"|"+id+"|";
-			   viewCookie.setValue(value);
-			   response.addCookie(viewCookie);
+			  if(value.indexOf("|"+temp+"|") <  0){
+				  value = value+"|"+temp+"|";
+				  viewCookie.setValue(value);
+				  response.addCookie(viewCookie);
+				  totalDao.plus(id);
 			  }
 		 }
+		 if(viewCookie != null) {
+			 viewCookie.setMaxAge(24*60*60);
+		 }
+		 
 		 int total = totalDao.count(id);
 		 owner.setTotal(total);
 		 model.addAttribute("list", list);
@@ -95,6 +98,7 @@ public class MinihomeController {
 		 model.addAttribute("id", id);
 		 model.addAttribute("message", message);
 		 model.addAttribute("count", b);
+		 model.addAttribute("friendList", friendList);
 		 
 		return "mini/minihome";
 	}

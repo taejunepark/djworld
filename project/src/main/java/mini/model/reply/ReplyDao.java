@@ -12,4 +12,5 @@ public interface ReplyDao {
 	void insert(String writer, String detail, int parent, String friend);
 	List<Reply> list(int parent, String friend);
 	
+	void delete(String id, int no);
 }

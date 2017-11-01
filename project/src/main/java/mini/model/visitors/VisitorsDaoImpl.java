@@ -14,7 +14,7 @@ import mini.bean.Visitors;
 import mini.model.reply.ReplyDao;
 
 @Repository(value = "visitorsDao")
-public class VisitorsImpl implements VisitorsDao {
+public class VisitorsDaoImpl implements VisitorsDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -64,5 +64,12 @@ public class VisitorsImpl implements VisitorsDao {
 			visitor.setName(m.getName());
 		}
 		return list;
+	}
+
+	@Override
+	public void delete(String id, int no) {
+		String sql = "delete visitors where no = ? and owner = ?";
+		jdbcTemplate.update(sql, no, id);
+		replyDao.delete(id, no);
 	}
 }

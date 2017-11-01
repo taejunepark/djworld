@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class FileController {
@@ -79,9 +78,13 @@ public class FileController {
 				OutputStream os = new FileOutputStream(rlFileNm);
 				System.out.println("OutputStream 생성 완료");
 				byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
-				int numRead = is.read(b, 0, b.length);
-				while (numRead != -1) {
+				while (true) {
+					int numRead = is.read(b, 0, b.length);
 					System.out.println("파일 전송 중");
+					System.out.println(numRead);
+					if(numRead == -1) {
+						break;
+					}
 					os.write(b, 0, numRead);
 				}
 				System.out.println("파일 업로드 완료");
