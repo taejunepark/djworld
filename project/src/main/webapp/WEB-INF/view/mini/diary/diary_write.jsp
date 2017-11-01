@@ -17,14 +17,14 @@
 	}
 </style>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/S.E2/js/HuskyEZCreator.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/S.E/js/HuskyEZCreator.js"></script>
 <script>
      $(document).ready(function(){
          var oEditors = [];
          nhn.husky.EZCreator.createInIFrame({
              oAppRef: oEditors,
              elPlaceHolder: "detail",
-             sSkinURI: "${pageContext.request.contextPath}/S.E2/SmartEditor2Skin.html",
+             sSkinURI: "${pageContext.request.contextPath}/S.E/SmartEditor2Skin.html",
              fCreator: "createSEditor2"
          });
          
