@@ -5,11 +5,12 @@ import java.sql.SQLException;
 
 public class Diary {
 	private String reg, detail, filename, filetype, separate;
-	private int read, filesize;
+	private int no, read, filesize;
 	
 	public Diary(){}
 	
 	public Diary(ResultSet rs) throws SQLException {
+		setNo(rs.getInt("no"));
 		setReg(rs.getString("reg"));
 		setDetail(rs.getString("detail"));
 		setFilename(rs.getString("filename"));
@@ -19,12 +20,20 @@ public class Diary {
 		setFilesize(rs.getInt("filesize"));
 	}
 	
-	
 	@Override
 	public String toString() {
 		return "Diary [reg=" + reg + ", detail=" + detail + ", filename=" + filename + ", filetype=" + filetype
-				+ ", separate=" + separate + ", read=" + read + ", filesize=" + filesize + "]";
+				+ ", separate=" + separate + ", no=" + no + ", read=" + read + ", filesize=" + filesize + "]";
 	}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
 	public String getReg() {
 		return reg;
 	}
