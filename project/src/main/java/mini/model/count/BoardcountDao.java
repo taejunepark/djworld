@@ -5,11 +5,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BoardcountDao {
 	int visitorsCount(String id);
-	int visitorsTodayCount();
+	int visitorsTodayCount(String id);
 	
 	int diaryCount(String id);
-	int diaryTodayCount();
+	int diaryTodayCount(String id);
 
 	int photoCount(String id);
-	int photoTodayCount();
+	int photoTodayCount(String id);
 }

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TJWorld</title>
+<title>DJWorld</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/common.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/minihome.css?ver=3">
@@ -64,13 +64,16 @@
 	<div class="mini">
 		<header>
 			<a class="header_a" href="${pageContext.request.contextPath }/minihome/${userId}">내 홈피</a>
+			<c:if test="${!friendCheck }">
+				<font color="gray" >&nbsp;|&nbsp;일촌맺기</font>
+			</c:if>
 		</header>
 		<div class="info">
 			<div class="visit">
 				Total ${owner.total }
 			</div>
 			<div class="title">
-				<span><font color="blue"  style="font-size: 1.5em;">${owner.name }의 미니 홈피</font></span>
+				<font color="blue"  style="font-size: 1.5em;">${owner.name }의 미니 홈피</font>
 			</div>
 		</div>
 
