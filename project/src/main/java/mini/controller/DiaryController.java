@@ -28,6 +28,7 @@ import mini.model.diary.DiaryDao;
 import mini.model.total.TotalDao;
 import mini.model.upload.UploadDao;
 import mini.model.visitors.VisitorsDao;
+import mini.util.Utility;
 
 @Controller
 public class DiaryController {
@@ -49,11 +50,9 @@ public class DiaryController {
 	@RequestMapping("/minihome/{id}/diary")
 	public String init_diary(@PathVariable String id,Model model) {
 		Date date = new Date();
-		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
 		int total = totalDao.count(id);
 		owner.setTotal(total);
-		model.addAttribute("list", list);
 		model.addAttribute("owner", owner);
 		model.addAttribute("id", id);
 		
@@ -105,25 +104,16 @@ public class DiaryController {
 		}else {
 			redirect.addFlashAttribute("owner", owner);
 			redirect.addFlashAttribute("id", id);
-			String srcs = (String)map.get("srcs");
-			String srcPath;
-			List<String> list = new ArrayList<>();
-			
-			while(srcs.length() != 0) {
-				srcPath = srcs.contains(",")?srcs.substring(0, srcs.indexOf(',')):srcs.substring(0);
-				list.add(srcPath);
-				srcs = srcs.contains(",")?srcs.substring(srcPath.length() + 1):srcs.substring(srcPath.length());
-			}
+			List<String> list = Utility.substrURL((String)map.get("srcs"));
 			
 			Diary d = new Diary();
 			d.setReg(reg);
 			d.setDetail(detail);
 			d.setSeparate(id);
 			diaryDao.insert(d);
-			
 			d = diaryDao.info(reg, id);
 			if(list.size() != 0)
-				uploadDao.insert(list, d.getType(), d.getNo(), d.getSeparate());
+				uploadDao.insert(list, d.getNo(), d.getSeparate());
 			
 			path = "redirect:/minihome/" + id + "/diary";
 		}
@@ -134,7 +124,7 @@ public class DiaryController {
 	public String diary_edit(@PathVariable String id, Model model, RedirectAttributes redirect, @RequestParam Map<String,Object> map) {
 		Member owner = memberDao.info(id);
 		int total = totalDao.count(id);
-		 owner.setTotal(total);
+		owner.setTotal(total);
 		String path = "";
 		String editFlag = (String)map.get("editFlag");
 		String detail = (String)map.get("detail");
@@ -150,15 +140,7 @@ public class DiaryController {
 		}else {
 			redirect.addFlashAttribute("owner", owner);
 			redirect.addFlashAttribute("id", id);
-			String srcs = (String)map.get("srcs");
-			String srcPath;
-			List<String> list = new ArrayList<>();
 			
-			while(srcs.length() != 0) {
-				srcPath = srcs.contains(",")?srcs.substring(0, srcs.indexOf(',')):srcs.substring(0);
-				list.add(srcPath);
-				srcs = srcs.contains(",")?srcs.substring(srcPath.length() + 1):srcs.substring(srcPath.length());
-			}
 			
 			Diary d = new Diary();
 			d.setReg(reg);
@@ -167,11 +149,27 @@ public class DiaryController {
 			diaryDao.edit(d);
 			
 			d = diaryDao.info(reg, id);
+			uploadDao.delete(d);
+			
+			List<String> list = Utility.substrURL((String)map.get("srcs"));
+			System.out.println((String)map.get("srcs"));
+			System.out.println(list.size());
 			if(list.size() != 0)
-				uploadDao.insert(list, d.getType(), d.getNo(), d.getSeparate());
+				uploadDao.insert(list, d.getNo(), d.getSeparate());
 			
 			path = "redirect:/minihome/"+id+"/diary";
 		}
 		return path;
+	}
+	
+	@RequestMapping(value="/minihome/{id}/diary_delete", method=RequestMethod.POST)
+	public String diary_delete(@PathVariable String id, @RequestParam String reg,RedirectAttributes redirect) {
+		Member owner = memberDao.info(id);
+		redirect.addFlashAttribute("owner", owner);
+		redirect.addFlashAttribute("id", id);
+		Diary d = diaryDao.info(reg, id);
+		diaryDao.delete(reg);
+		uploadDao.delete(d);
+		return "redirect:/minihome/"+id+"/diary";
 	}
 }

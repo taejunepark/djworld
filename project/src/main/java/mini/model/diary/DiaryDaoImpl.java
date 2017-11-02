@@ -42,7 +42,7 @@ public class DiaryDaoImpl implements DiaryDao {
 
 	@Override
 	public void insert(Diary d) {
-		String sql = "insert into diary values(" + d.getSeparate() + ".nextVal,?, ?, 0, 'diary',?)";
+		String sql = "insert into diary values(" + d.getSeparate() + ".nextVal,?, ?, 0, ?)";
 		Object[] obj = {
 				d.getReg(), d.getDetail(), d.getSeparate() 
 		};
@@ -56,5 +56,11 @@ public class DiaryDaoImpl implements DiaryDao {
 				d.getDetail(), d.getReg(), d.getSeparate()
 		};
 		jdbctemplate.update(sql, obj);
+	}
+
+	@Override
+	public void delete(String reg) {
+		String sql = "delete diary where reg = ?";
+		jdbctemplate.update(sql,reg);
 	}
 }

@@ -31,6 +31,20 @@
          $("#write_btn").click(function(){
         	 if(validation()){
         		 oEditors[0].exec("UPDATE_CONTENTS_FIELD", [])
+        		 var html = $("#detail").val()
+        		 $("#tmp").html(html)
+        		 var img = $("#tmp img")
+        		 var imgPath = new Array()
+        		 var basePath = 'http://localhost:8080/project/multiupload/'
+        		 for(var i = 0; i < img.length; i++){
+        			 var src = img[i].getAttribute('src')
+        			 src = src.substring(basePath.length)
+        			 src = src.substring(0, src.lastIndexOf('.'))
+        			 imgPath.push(src)
+        		 }
+        		 var input = $("<input/>")
+        		 input.attr('type', 'hidden').attr('name','srcs').val(imgPath)
+        		 $("form").append(input)
         		 $("form").attr('action', '${pageContext.request.contextPath }/minihome/${owner.id }/diary_edit').submit()
         	 }
         	 
@@ -62,5 +76,8 @@
 						<input type="button" value="등록" id="write_btn">
 						<input type="button" value="취소" id="cancle_btn">
 					</form>
+                </div>
+                
+                <div id="tmp" style="display:none;">
                 </div>
 <%@ include file = "/WEB-INF/view/mini_template/footer.jsp" %>        
