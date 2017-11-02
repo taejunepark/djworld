@@ -20,6 +20,7 @@
 	 <mvc:resources location="/res/img/" mapping="/img/**"/>
 	 <mvc:resources location="/res/font/" mapping="/font/**"/>
 	<mvc:resources location="/upload/" mapping="/file/**"/>
+	<mvc:resources location="/multiupload/" mapping="/multiupload/**"/>
 	
 	<context:component-scan base-package="main.controller"/>
 	<context:component-scan base-package="main.model"/>
