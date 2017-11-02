@@ -72,4 +72,10 @@ public class VisitorsDaoImpl implements VisitorsDao {
 		jdbcTemplate.update(sql, no, id);
 		replyDao.delete(id, no);
 	}
+
+	@Override
+	public void edit(String id, int no, String detail) {
+		String sql = "update visitors set detail = ? where no =? and owner = ?";
+		jdbcTemplate.update(sql, detail, no, id);
+	}
 }

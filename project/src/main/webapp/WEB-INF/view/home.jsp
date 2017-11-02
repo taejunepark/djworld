@@ -310,7 +310,7 @@ h2 {
 									<c:choose>
 										<c:when test="${friend.profile != null}">
 										 	<img class=" image-hover img-square-round" src="${pageContext.request.contextPath }/file/${friend.profile}" 
-										 		width="300" height="200">
+										 		width="300" height="200" style="border: none">
 										</c:when>
 										<c:otherwise>
 											<img src="${pageContext.request.contextPath }/img/프로필.jpg"
