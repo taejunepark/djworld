@@ -10,8 +10,11 @@ body {
 	margin: 10px;
 }
 
-#title{
+#titleArea{
 	font-size: 25px;
+	display:flex;
+	flex-direction:row;
+	flex-wrap:no-wrap;
 }
 
 #reg{
@@ -20,7 +23,7 @@ body {
 }
 
 #detailArea{
-	height: 70%;
+	height: 500px;
 }
 
 input[name=reply]{
@@ -37,6 +40,16 @@ input[name=reply]{
 	width: 100%;
 	height: 80%;
 }
+#info{
+	display:flex;
+	flex-direction:row;
+	flex-wrap:wrap;
+}
+
+#info p{
+	/* display:block; */
+}
+
 
 </style>
 <script>
@@ -44,35 +57,43 @@ input[name=reply]{
 		$("#write_btn").click(function(){
 			location.href= "photo_write"
 		})
+		
+		$("#delete_btn").click(function(){
+			var nos = $("#no").text()
+			console.log(nos)
+		})
 	})
 </script>
 
 <c:choose>
 	<c:when test="${not empty list}">
 		<div class="highlight">
-			<div id="titleArea">
-				<label id="title">제목</label>
-			</div>
-			
-			<div id="regArea">
-				<p id="reg">작성일 : 2017-11-02 18:06:52</p>
-				<p id="read">조회 수 : 0</p>
-			</div>
-			
-			<div id="detailArea">
-				내용~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			</div>
-			
-			<div id="replyArea">
-				<input type="text" name="reply" placeholder="댓글을 입력해주세요">
-				<button id="replyWrite_btn">입력</button>
-			</div>
-			
-			<div id="optionArea">
-				<button id="write_btn">등록</button>
-				<button id="delete_btn">삭제</button>
-				<button id="edit_btn">수정</button>
-			</div>
+			<c:forEach var="p" items="${list}">
+				<div id="titleArea">
+					<p id="no" style="display:none;">${p.no }</p><p>${p.title }</p>
+				</div>
+				
+				<div id="info">
+					<p>작성 일 : </p><p>${p.reg }</p> 
+					<p>조회 수 : </p><p>${p.read }</p>
+					<p>댓글 수 : </p><p>${p.reply }</p>
+				</div>
+				
+				<div id="detailArea">
+					${p.detail }
+				</div>
+				
+				<div id="replyArea">
+					<input type="text" name="reply" placeholder="댓글을 입력해주세요">
+					<button id="replyWrite_btn">입력</button>
+				</div>
+				
+				<div id="optionArea">
+					<button id="delete_btn">삭제</button>
+					<button id="edit_btn">수정</button>
+				</div>
+			</c:forEach>
+		<button id="write_btn">등록하기</button>
 		</div>
 	</c:when>
 	
@@ -83,7 +104,7 @@ input[name=reply]{
 			</div>
 			
 			<div id="optionArea">
-				<button id="write_btn">등록</button>
+				<button id="write_btn">등록하기</button>
 			</div>
 		</div>
 	</c:otherwise>

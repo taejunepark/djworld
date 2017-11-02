@@ -28,7 +28,7 @@ public class Photo {
 		this.detail = detail;
 	}
 	public String getReg() {
-		return reg;
+		return reg.substring(0, reg.lastIndexOf('.'));
 	}
 	public void setReg(String reg) {
 		this.reg = reg;
@@ -56,6 +56,4 @@ public class Photo {
 		return "Photo [no=" + no + ", read=" + read + ", reply=" + reply + ", title=" + title + ", detail=" + detail
 				+ ", reg=" + reg + ", separate=" + separate + ", type=" + type + "]";
 	}
-	
-	
 }

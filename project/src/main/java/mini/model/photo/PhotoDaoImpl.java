@@ -34,7 +34,22 @@ public class PhotoDaoImpl implements PhotoDao {
 	
 	@Override
 	public List<Photo> list(String type, String separate) {
-		String sql = "select * from photo where type = ? and separate = ?";
+		String sql = "select * from photo where type = ? and separate = ? order by no desc";
 		return jdbctemplate.query(sql, mapper, type, separate);
+	}
+
+	@Override
+	public void insert(String title, String detail, String separate) {
+		String sql = "insert into photo values("+separate+".nextval,?,?,sysdate,0,0,'photo',?)";
+		Object[] obj = {
+				title, detail, separate
+		};
+		jdbctemplate.update(sql,obj);
+	}
+
+	@Override
+	public int newSeq(String separate) {
+		String sql = "select max(no) from photo where separate = ?";
+		return jdbctemplate.queryForObject(sql, Integer.class, separate);
 	}
 }
