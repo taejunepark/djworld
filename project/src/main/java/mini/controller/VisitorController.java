@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.bean.Member;
+import main.model.friend.FriendDao;
 import main.model.member.MemberDao;
 import mini.bean.Visitors;
+import mini.model.comment.MinicommentDao;
 import mini.model.total.TotalDao;
 import mini.model.visitors.VisitorsDao;
 
@@ -29,6 +31,13 @@ public class VisitorController {
 	
 	@Autowired
 	private TotalDao totalDao;
+	
+	@Autowired
+	private MinicommentDao minicommentDao;
+	
+	@Autowired
+	private FriendDao friendDao;
+	
 	// 방명록
 		@RequestMapping("/minihome/{id}/visitors")
 		public String visitors(@PathVariable String id,Model model, HttpSession session) {
@@ -36,10 +45,14 @@ public class VisitorController {
 			List<Visitors> list = visitorsDao.list(id);
 			Member owner = memberDao.info(id);
 			int total = totalDao.count(id);
+			String message = minicommentDao.check(id); // 상태메세지
+			List<Member> friendList = friendDao.allList(id);
+			
 			owner.setTotal(total);
 			model.addAttribute("list", list);
 			model.addAttribute("owner", owner);
-
+			model.addAttribute("message", message);
+			 model.addAttribute("friendList", friendList);
 			// 접속한 계정의 정보
 			String  userId = (String)session.getAttribute("userId");
 			Member user = memberDao.info(userId);

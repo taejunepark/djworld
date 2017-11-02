@@ -8,7 +8,7 @@
 <title>TJWorld</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/common.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/minihome.css?ver=2">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/minihome.css?ver=5">
 <%-- <link href="${pageContext.request.contextPath }/css/ko_KR/smart_editor2.css?ver=2" rel="stylesheet" type="text/css"> --%>
 <link href="${pageContext.request.contextPath }/css/ko_KR/smart_editor2.css?ver=2" rel="stylesheet" type="text/css">
 <!-- jQuery를 사용하기 위한 CDN 설정 -->
@@ -31,16 +31,8 @@
 <body>
 	<div class="mini">
 		<header>
-			<a class="header_a" href="${pageContext.request.contextPath }/minihome/${userId}">내 홈피</a> |
-			<a class="header_a" href="#">바로 가기</a> |
-			<c:if test="${!loginFlag }">
-				<a class="header_a" href="${pageContext.request.contextPath }/member/login">로그인</a>
-			</c:if>
-			<c:if test="${loginFlag }">
-				<a class="header_a" href="${pageContext.request.contextPath }/member/logout">로그아웃</a>
-			</c:if>
+			<a class="header_a" href="${pageContext.request.contextPath }/minihome/${userId}">내 홈피</a>
 		</header>
-
 		<div class="info">
 			<div class="visit">
 				<span>Total ${owner.total }</span>
