@@ -10,11 +10,16 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import mini.bean.Photo;
+import mini.bean.Reply;
+import mini.model.reply.ReplyDao;
 
 @Repository(value="photoDao")
 public class PhotoDaoImpl implements PhotoDao {
 	@Autowired
 	private JdbcTemplate jdbctemplate;
+	
+	@Autowired
+	private ReplyDao replyDao;
 	
 	private RowMapper<Photo> mapper = new RowMapper<Photo>() {
 		@Override
@@ -25,7 +30,7 @@ public class PhotoDaoImpl implements PhotoDao {
 			p.setDetail(rs.getString("detail"));
 			p.setReg(rs.getString("reg"));
 			p.setRead(rs.getInt("read"));
-			p.setReply(rs.getInt("reply"));
+			p.setReplycount(rs.getInt("reply"));
 			p.setType(rs.getString("type"));
 			p.setSeparate(rs.getString("separate"));
 			return p;
@@ -35,7 +40,12 @@ public class PhotoDaoImpl implements PhotoDao {
 	@Override
 	public List<Photo> list(String type, String separate) {
 		String sql = "select * from photo where type = ? and separate = ? order by no desc";
-		return jdbctemplate.query(sql, mapper, type, separate);
+		List<Photo> list =  jdbctemplate.query(sql, mapper, type, separate);
+		for(Photo p : list) {
+			List<Reply> list2 = replyDao.list(p.getNo(), separate);
+			p.setReply(list2);
+		}
+		return list;
 	}
 
 	@Override

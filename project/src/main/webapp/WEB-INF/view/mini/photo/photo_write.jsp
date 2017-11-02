@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/view/mini_template/header.jsp"%>
 <style>
 div{
-	border: 3px solid black;
+/* 	border: 3px solid black; */
 }
 body {
 	overflow: hidden;
@@ -30,6 +30,9 @@ input[name=title]{
 	height:90%;
 }
 
+#menu_photo{
+	color: blue;
+}
 </style>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/S.E/js/HuskyEZCreator.js"></script>
@@ -87,11 +90,50 @@ input[name=title]{
         })
 	})
 </script>
+<aside>
+		<div class="profile" style="height: 170px;">
+			<c:choose>
+				<c:when test="${owner.profile != null}">
+					<img src="${pageContext.request.contextPath }/file/${owner.profile}"
+						width="150" height="150">
+				</c:when>
+				<c:otherwise>
+					<img src="${pageContext.request.contextPath }/img/프로필.jpg"
+						width="150" height="150">
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<form action="${pageContext.request.contextPath }/minihome/${owner.id}/minicomment" method="post">
+			<div id="hello" class="hello">
+				<input type="hidden" id="comment" name="comment"> 
+				<div id="message" class="message">
+							${message }
+				</div>
+			</div>
+		</form>
+		<div style="height: 40px;"></div>
+		<div class="text-center">
+			<h3>──&nbsp;history&nbsp;──</h3>
+		</div>
+		<div class="name text-center">
+			<h3>
+				${owner.name}
+				<c:if test="${owner.gender eq '남자'}">(♂)</c:if>
+				<c:if test="${owner.gender eq '여자'}">(♀)</c:if>
+			</h3>
+			<select name="friend-list" style="width: 95%;" 
+				onchange="if(this.value) location.href=(this.value);">
+				<option value="">파도타기</option>
+				<c:forEach var="friend" items="${friendList }">
+					<option value="${pageContext.request.contextPath }/minihome/${friend.id }">${friend.name }</option>
+				</c:forEach>
+			</select>
+		</div>
+	</aside>
 
 <div class="highlight">
 	<form action="#" method="post">
 		<div id="titleArea">
-			<span>제목</span>
 			<input type="text" name="title" placeholder="제목을 입력하세요" required>
 		</div>
 		
@@ -101,7 +143,7 @@ input[name=title]{
 		
 		<div id="optionArea">
 			<button id="write_btn">완료</button>
-			<button id="delete_btn">취소</button>
+			<button id="delete_btn" onclick="location.href='${pageContext.request.contextPath}/minihome/${userId }/photo'">취소</button>
 		</div>
 	</form>
 </div>

@@ -15,6 +15,10 @@
 		width:100%;
 		height:70%;
 	}
+	
+	#menu_diary{
+		color: blue;
+	}
 </style>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/S.E/js/HuskyEZCreator.js"></script>

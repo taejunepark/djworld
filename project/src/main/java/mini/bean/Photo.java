@@ -1,8 +1,24 @@
 package mini.bean;
 
+import java.util.List;
+
 public class Photo {
-	private int no, read, reply;
+	private int no, read, replycount;
 	private String title, detail, reg, separate, type;
+	private List<Reply> reply;
+	
+	public int getReplycount() {
+		return replycount;
+	}
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
+	public List<Reply> getReply() {
+		return reply;
+	}
+	public void setReply(List<Reply> reply) {
+		this.reply = reply;
+	}
 	public int getNo() {
 		return no;
 	}
@@ -14,12 +30,6 @@ public class Photo {
 	}
 	public void setRead(int read) {
 		this.read = read;
-	}
-	public int getReply() {
-		return reply;
-	}
-	public void setReply(int reply) {
-		this.reply = reply;
 	}
 	public String getDetail() {
 		return detail;

@@ -5,6 +5,20 @@
 form{
 	margin: 0px;
 }
+#menu_home{
+	color: blue;
+}
+.boardcount-left{
+	border-bottom: 1px dotted gray;
+	border-right: 1px dotted gray;
+	padding: 3px 0px;
+	text-align: center;
+}
+.boardcount-right{
+	border-bottom: 1px dotted gray;
+	padding: 3px 0px;
+	text-align: center;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -95,25 +109,38 @@ form{
 	<div class="partOne">
 		<div class="left">
 			<div>
-				<font size="5">최근 게시물</font>
+				<font size="3">최근 게시물</font>
 				<hr>
 			</div>
 			<div>
-				<font size="3">최근 2주간 새 게시물이 없습니다.<br>
-				소식이 뜸한 친구에게<br>
-				마음의 한마디 남기세요.</font>
+				<div>사진첩</div>
+				<div>다이어리</div>
+				<div>방명록</div>
 			</div>
 		</div>
 
-		<div class="right" style="display:inline-block; ">
-			<div style="float: left; height:170px; width:45%;">
-				<a href="#">다이어리 0/0</a><br><br>
-				<a href="#">공유 다이어리 0/0</a><br><br>
-				<a href="#">게시판 0/0</a><br>
+		<div class="right center" style="display:inline-block; ">
+			<div style="width:100%">
+				<div style="float:left; width:47%;">
+					<a href="${pageContext.request.contextPath }/minihome/${owner.id}/diary">
+					다이어리 <font color="blue" style="font-size: 0.8em;">${count.diaryTodayCount} / ${count.diaryCount}</font></a>
+				</div>
+				<div style="display:inline-block;">
+					<a href="#">
+					게시판 <font color="blue" style="font-size: 0.8em;">0 / 0</font></a>
+				</div>
 			</div>
-			<div style="display: inline-block; height:170px; width:45%;">
-			 	<a href="#">사진첩 0 / 0</a><br><br>
-			 	<a href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors">방명록</a> 0 / ${count.visitorsCount}
+			<div style="width:100%;">
+				<div style="float:left; width:47%;">
+			 		<a href="${pageContext.request.contextPath }/minihome/${owner.id}/photo">
+			 			사진첩 <font color="blue" style="font-size: 0.8em;">${count.photoTodayCount} / ${count.photoCount}</font>
+			 		</a>
+			 	</div>
+			 	<div style="display:inline-block;">
+			 		<a href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors">
+			 			방명록 <font color="blue" style="font-size: 0.8em;">${count.visitorsTodayCount} / ${count.visitorsCount}</font>
+			 		</a>
+			 	</div>
 			</div>
 		</div>
 	</div>
@@ -128,7 +155,7 @@ form{
 	<div class="partThree">
 		<div style="float: left; width: 10%;">일촌평</div>
 		<div style="display: inline-block; width: 90%; height:21px;">
-			<input class="friend-input" type="text"  name="friendcomment" placeholder="입력" required>
+			<input class="friend-input" type="text"  name="friendcomment" placeholder="일촌에게 하고 싶은 말을 남겨보세요~" required>
 			<button id="friendComment_btn">확인</button>
 		</div>
 	</div>
@@ -138,9 +165,11 @@ form{
 		<c:when test="${not empty friendCommentList}">
 			<c:forEach var="friend" items="${friendCommentList}">
 				·&nbsp;${friend.friendComment }&nbsp;&nbsp;
-				(<a href="${pageContext.request.contextPath}/minihome/${friend.writer}">
-					&nbsp;${friend.writer}, <font color="blue">${friend.name }</font>&nbsp;)
-				</a> 
+				<font size="2">
+					(<a href="${pageContext.request.contextPath}/minihome/${friend.writer}">
+						&nbsp;${friend.writer}, <font color="blue">${friend.name }</font>&nbsp;)
+					</a> 
+				</font>
 				 <font color="gray" size="1.7em">(${friend.date})&nbsp;&nbsp;</font>
 				 <a href="${pageContext.request.contextPath }/minihome/${friend.writer}"> <i class="fa fa-home" aria-hidden="true"></i></a>&nbsp;&nbsp;
 				<hr>
