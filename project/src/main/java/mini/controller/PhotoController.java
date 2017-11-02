@@ -2,7 +2,6 @@ package mini.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import main.bean.Member;
+import main.model.friend.FriendDao;
 import main.model.member.MemberDao;
 import mini.bean.Photo;
+import mini.model.comment.MinicommentDao;
 import mini.model.photo.PhotoDao;
 import mini.model.total.TotalDao;
 import mini.model.upload.UploadDao;
@@ -35,14 +36,25 @@ public class PhotoController {
 	@Autowired
 	private TotalDao TotalDao;
 	
+	@Autowired
+	private MinicommentDao minicommentDao;
+	
+	@Autowired
+	private FriendDao friendDao;
+	
 	@RequestMapping("/minihome/{id}/photo")
 	public String photo(@PathVariable String id, Model model) {
 		Member owner = MemberDao.info(id);
-		List<Photo> list = photoDao.list("photo", id); 
 		int total = TotalDao.count(id);
 		owner.setTotal(total);
-		model.addAttribute("list", list);
+		String message = minicommentDao.check(id); // 상태메세지
+		List<Member> friendList = friendDao.allList(id);
+		List<Photo> list = photoDao.list("photo", id); 
+		
 		model.addAttribute("owner", owner);
+		model.addAttribute("message", message);
+		 model.addAttribute("friendList", friendList);
+		model.addAttribute("list", list);
 		model.addAttribute("id", id);
 		return "/mini/photo/photo";
 	}
@@ -52,7 +64,12 @@ public class PhotoController {
 		Member owner = MemberDao.info(id);
 		int total = TotalDao.count(id);
 		owner.setTotal(total);
+		String message = minicommentDao.check(id); // 상태메세지
+		List<Member> friendList = friendDao.allList(id);
+		
 		model.addAttribute("owner", owner);
+		model.addAttribute("message", message);
+		 model.addAttribute("friendList", friendList);
 		model.addAttribute("id", id);
 		return "/mini/photo/photo_write";
 	}

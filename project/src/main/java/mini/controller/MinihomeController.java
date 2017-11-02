@@ -52,16 +52,24 @@ public class MinihomeController {
 		Member owner = memberDao.info(id); // 미니홈피 주인 정보
 		String message = minicommentDao.check(id); // 상태메세지
 		List<Member> friendList = friendDao.allList(id);
-		int visitorsCount = boardcountDao.visitorsCount(id); // 게시판 수
-//		int diaryCount = boardcountDao.diaryCount(id);
-//		int photoCount = boardcountDao.photoCount(id);
 		List<Friendcomment> friendCommentList = minicommentDao.friendCommentList(id);
+		
+		int visitorsCount = boardcountDao.visitorsCount(id); // 게시판 수
+		int diaryCount = boardcountDao.diaryCount(id);
+		int photoCount = boardcountDao.photoCount(id);
+		
+		int visitorsTodayCount = boardcountDao.visitorsTodayCount();
+		int diaryTodayCount = boardcountDao.diaryTodayCount();
+		int photoTodayCount = boardcountDao.photoTodayCount();
 		
 		// 게시판 전체 수
 		BoardCount b = new BoardCount();
 		b.setVisitorsCount(visitorsCount);
-//		b.setDiaryCount(diaryCount);
-//		b.setPhotoCount(photoCount);
+		b.setDiaryCount(diaryCount);
+		b.setPhotoCount(photoCount);
+		b.setVisitorsTodayCount(visitorsTodayCount);
+		b.setPhotoTodayCount(photoTodayCount);
+		b.setDiaryTodayCount(diaryTodayCount);
 		
 		String userId = (String)session.getAttribute("userId");
 		Cookie[] cookies = request.getCookies();

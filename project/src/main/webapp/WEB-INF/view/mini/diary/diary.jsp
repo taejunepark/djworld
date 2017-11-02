@@ -7,6 +7,9 @@ body {
 	overflow: hidden;
 	margin: 10px;
 }
+#menu_diary{
+	color: blue;
+}
 </style>
 <script>
 	$(document).ready(function() {

@@ -9,6 +9,11 @@
 	#edit{
 		cursor: pointer;
 	}
+	
+	#menu_visitors{
+		color: blue;
+	}
+	
  </style>
  <script>
  	function editHandler(no){
@@ -39,39 +44,6 @@
 				}
         	});
             $(".edit"+no).text("수정");
-        }
-    }	
- 	
- 	function replyeditHandler(no, writer){
-        var text = $("#replydetail"+no).html().trim();
-        var area = $("<textarea style='overflow: hidden;' rows='2' cols='40'></textarea>");
-        if($(".replyedit"+no).text() === "수정"){
-        	$("#replydetail"+no).empty();
-        	area.addClass("replyeditDetail"+no).text(text);
-        	$("#replydetail"+no).append(area);
-        	$(".replydate"+no).css("display","none");
-            $(".replyedit"+no).text("완료");
-        }
-        else{
-            var text = $(".replyeditDetail"+no).val();
-            $(".replyeditDetail"+no).empty();
-            $(".replyeditDetail"+no).text(text);
-        	$.ajax({
-        		url: "${pageContext.request.contextPath}/replyedit/"+no+"/"+writer,
-        		type: "post",
-        		data:{
-        			detail : text
-        		},
-        		success:function(detail){
-        			$("#replydetail"+no).empty();
-        			$("#replydetail"+no).html(detail);
-        			$(".replydate"+no).css("display","block");
-        		},
-        		 err:function(err){
-					 console.log("실패");
-				}
-        	});
-            $(".replyedit"+no).text("수정");
         }
     }	
  </script>
