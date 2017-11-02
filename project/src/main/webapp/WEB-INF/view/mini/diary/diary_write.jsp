@@ -82,7 +82,7 @@
                 </aside>
                 
                 <div class="highlight">
-					<form action="#" method="post" enctype="multipart/form-data">
+					<form action="#" method="post">
 						<input type="hidden" name="reg" value="${reg}">
 						<textarea name="detail" id="detail" rows="10" cols="100"></textarea>
 						<input type="button" value="등록" id="write_btn">

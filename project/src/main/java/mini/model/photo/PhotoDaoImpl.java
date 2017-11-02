@@ -21,6 +21,7 @@ public class PhotoDaoImpl implements PhotoDao {
 		public Photo mapRow(ResultSet rs, int index) throws SQLException {
 			Photo p = new Photo();
 			p.setNo(rs.getInt("no"));
+			p.setTitle(rs.getString("title"));
 			p.setDetail(rs.getString("detail"));
 			p.setReg(rs.getString("reg"));
 			p.setRead(rs.getInt("read"));

@@ -2,7 +2,7 @@ package mini.bean;
 
 public class Photo {
 	private int no, read, reply;
-	private String detail, reg, separate, type;
+	private String title, detail, reg, separate, type;
 	public int getNo() {
 		return no;
 	}
@@ -45,10 +45,17 @@ public class Photo {
 	public void setType(String type) {
 		this.type = type;
 	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	@Override
 	public String toString() {
-		return "Photo [no=" + no + ", read=" + read + ", reply=" + reply + ", detail=" + detail + ", reg=" + reg
-				+ ", separate=" + separate + ", type=" + type + "]";
+		return "Photo [no=" + no + ", read=" + read + ", reply=" + reply + ", title=" + title + ", detail=" + detail
+				+ ", reg=" + reg + ", separate=" + separate + ", type=" + type + "]";
 	}
+	
 	
 }
