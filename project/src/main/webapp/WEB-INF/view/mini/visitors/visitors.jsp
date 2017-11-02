@@ -2,13 +2,12 @@
     pageEncoding="UTF-8"%>
  <%@ include file = "/WEB-INF/view/mini_template/header.jsp" %>
  <script>
- 	function visitorsEdit(){
- 		var detail = document.querySelector("#detail");
- 		var text = detail.innerHTML;
- 		var area = $("<textarea/>");
- 		area.text(text);
- 		detail.after(area);
- 	}
+ 	$(document).ready(function(){
+ 		$(".edit").on("click", editHandler);
+ 		
+ 		
+ 	};
+ 
  </script>
 		<aside>
 			<a href="#">미정</a>
@@ -63,7 +62,7 @@
 									<c:when test="${list.writer eq userId }">
 										<font style="font-size:0.8em">
 											<a href="#">비밀로 하기</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-											<a onclick="visitorsEdit();">수정</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+											<a class="edit" onclick="visitorsEdit();">수정</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 											<a href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors/delete/${list.no}">삭제</a>&nbsp;&nbsp;
 										</font>
 									</c:when>
