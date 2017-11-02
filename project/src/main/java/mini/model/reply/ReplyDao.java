@@ -13,4 +13,5 @@ public interface ReplyDao {
 	List<Reply> list(int parent, String friend);
 	
 	void delete(String id, int no);
+	void edit(String writer, int no, String detail);
 }

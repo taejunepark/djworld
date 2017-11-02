@@ -21,13 +21,13 @@
 			event.preventDefault();
 			var result = false;
 			if($(this).val() === "삽입"){
-				var input = $("<input/>").val(text);
+				var input = $("<textarea rows='4' cols='20'></textarea>").val(text);
 				$(this).before(input);
 				$(this).val("완료");
 			}
 			else if($(this).val() === "수정"){
                 var text = $(this).prev().text();
-                var input = $("<input/>").val(text);
+                var input = $("<textarea rows='4' cols='20'></textarea>").val(text);
                 $(this).prev().remove();
                 $(this).before(input);
                 $(this).val("완료");

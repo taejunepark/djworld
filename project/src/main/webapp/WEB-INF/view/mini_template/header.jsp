@@ -7,18 +7,9 @@
 <meta charset="UTF-8">
 <title>TJWorld</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/common.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/minihome.css?ver=1">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/common.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/minihome.css?ver=2">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%-- <link href="${pageContext.request.contextPath }/css/ko_KR/smart_editor2.css?ver=2" rel="stylesheet" type="text/css"> --%>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/common.css">
-	<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath }/css/minihome.css?ver=2">
-<link rel="stylesheet" type="text/css"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="${pageContext.request.contextPath }/css/ko_KR/smart_editor2.css?ver=2" rel="stylesheet" type="text/css">
 <!-- jQuery를 사용하기 위한 CDN 설정 -->
 <script src="https://code.jquery.com/jquery-latest.js"></script>

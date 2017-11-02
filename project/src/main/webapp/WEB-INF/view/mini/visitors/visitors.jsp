@@ -1,19 +1,85 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ include file = "/WEB-INF/view/mini_template/header.jsp" %>
+ <style>
+ 	#replyedit{
+		cursor: pointer;
+	}
+	
+	#edit{
+		cursor: pointer;
+	}
+ </style>
  <script>
- 	$(document).ready(function(){
- 		$(".edit").on("click", editHandler);
- 		
- 		
- 	};
+ 	function editHandler(no){
+        var text = $("#detail"+no).html();
+        var area = $("<textarea rows='5' cols='50'></textarea>");
+        if($(".edit"+no).text() === "수정"){
+        	$("#detail"+no).empty();
+        	area.addClass("editDetail"+no).text(text);
+        	$("#detail"+no).append(area);
+            $(".edit"+no).text("완료");
+        }
+        else{
+            var text = $(".editDetail"+no).val();
+            $(".editDetail"+no).empty();
+            $(".editDetail"+no).text(text);
+        	$.ajax({
+        		url: $(location).attr('href') + "/edit/" + no,
+        		type: "post",
+        		data:{
+        			detail : text
+        		},
+        		success:function(detail){
+        			$("#detail"+no).empty();
+        			$("#detail"+no).html(detail);
+        		},
+        		 err:function(err){
+					 console.log("실패");
+				}
+        	});
+            $(".edit"+no).text("수정");
+        }
+    }	
+ 	
+ 	function replyeditHandler(no, writer){
+        var text = $("#replydetail"+no).html().trim();
+        var area = $("<textarea style='overflow: hidden;' rows='2' cols='40'></textarea>");
+        if($(".replyedit"+no).text() === "수정"){
+        	$("#replydetail"+no).empty();
+        	area.addClass("replyeditDetail"+no).text(text);
+        	$("#replydetail"+no).append(area);
+        	$(".replydate"+no).css("display","none");
+            $(".replyedit"+no).text("완료");
+        }
+        else{
+            var text = $(".replyeditDetail"+no).val();
+            $(".replyeditDetail"+no).empty();
+            $(".replyeditDetail"+no).text(text);
+        	$.ajax({
+        		url: "${pageContext.request.contextPath}/replyedit/"+no+"/"+writer,
+        		type: "post",
+        		data:{
+        			detail : text
+        		},
+        		success:function(detail){
+        			$("#replydetail"+no).empty();
+        			$("#replydetail"+no).html(detail);
+        			$(".replydate"+no).css("display","block");
+        		},
+        		 err:function(err){
+					 console.log("실패");
+				}
+        	});
+            $(".replyedit"+no).text("수정");
+        }
+    }	
  
  </script>
 		<aside>
 			<a href="#">미정</a>
 		</aside>
 		<div class="highlight">
-			<c:if test="${userId != owner.id }">
 			<form action="${pageContext.request.contextPath }/minihome/${owner.id }/visitors"
 				method="post" onsubmit="sendCheck()">
 				<input type="hidden" name="writer" value="${userId }">
@@ -49,6 +115,8 @@
 					</tr>
 				</table>
 			</form>
+			<c:if test="${empty list }">
+				<h1 style="text-align:center;">방명록의 첫 작성자가 되어보세요!</h1>
 			</c:if>
 			<table class="visitorListTable">
 				<c:forEach var="list" items="${list }">
@@ -62,7 +130,7 @@
 									<c:when test="${list.writer eq userId }">
 										<font style="font-size:0.8em">
 											<a href="#">비밀로 하기</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-											<a class="edit" onclick="visitorsEdit();">수정</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+											<a id="edit" class="edit${list.no }" onclick="editHandler(${list.no})" >수정</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 											<a href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors/delete/${list.no}">삭제</a>&nbsp;&nbsp;
 										</font>
 									</c:when>
@@ -93,15 +161,15 @@
 							</div>
 						</td>
 						<td class="center">
-							<div id="detail" style="padding-left: 10px; margin: auto, 0px;">${list.detail }</div>
+							<div id="detail${list.no }" style="padding-left: 10px; margin: auto, 0px;">${list.detail }</div>
 						</td>
 					</tr>
 					<tr>
-						<td algin="center" colspan="2">
+						<td align="center" colspan="2">
 							<table class="area-100" style="background-color:#FAFAFA;">
 								<c:if test="${not empty list.reply }">
 									<c:forEach var="reply" items="${list.reply}">
-										<tr height="40">
+										<tr height="50">
 											<td width="20%">
 												<div style="padding-left: 10px;" class="row text-left font-small">
 													<font color="blue">${reply.name}</font>
@@ -109,12 +177,16 @@
 											</td>
 											<td>
 												<div class="inner-align-left">
-													<div>
-														${reply.web}&nbsp;&nbsp;<font color="gray" size="1.7em">(${reply.time})</font>&nbsp;&nbsp;
+													<div id="replydetail${reply.no }" style="float: left;">
+														${reply.web}
+													</div>
+													<div class="replydate${reply.no }" style="display: inline-block;">
+														&nbsp;&nbsp;<font color="gray" size="1.7em">(${reply.time})</font>&nbsp;&nbsp;
 													</div>
 													<c:if test="${loginFlag && userId eq reply.writer}">
-														<div class="text-right right">
-															<a href="#">수정</a> <a href="#">삭제</a>
+														<div class="text-right right" style="width:60px;">
+															<a  style="font-size: 4;" id="replyedit" class="replyedit${reply.no }" onclick="replyeditHandler(${reply.no}, '${reply.writer }')">수정</a>
+															<a  style="font-size: 4;" href="${pageContext.request.contextPath }/replydelete/${reply.no}/${owner.id}">삭제</a>
 														</div>
 													</c:if>
 												</div>
