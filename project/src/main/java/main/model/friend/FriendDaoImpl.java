@@ -155,5 +155,19 @@ public class FriendDaoImpl implements FriendDao {
 		String sql = "delete friend where rqid =? or rcid=?";
 		jdbcTemplate.update(sql, id, id);
 	}
+
+	@Override
+	public boolean friendCheck(String id, String userId) {
+		String sql = "select count(*) from friend where rqid =? and rcid =? and status='accept'";
+		boolean result = jdbcTemplate.queryForObject(sql, Integer.class, id, userId) > 0;
+		
+		sql = "select count(*) from friend where rqid =? and rcid =? and status='accept'";
+		boolean result2 = jdbcTemplate.queryForObject(sql, Integer.class, userId, id) > 0;
+		boolean result3 = false;
+		if(result || result2) {
+			result3 = true;
+		}
+		return result3;
+	}
 	
 }

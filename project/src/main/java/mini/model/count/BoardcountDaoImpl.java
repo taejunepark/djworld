@@ -17,9 +17,9 @@ public class BoardcountDaoImpl implements BoardcountDao {
 	}
 	
 	@Override
-	public int visitorsTodayCount() {
-		String sql = "select count(*) from visitors where to_char(reg, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')";
-		return jdbcTemplate.queryForObject(sql, Integer.class);
+	public int visitorsTodayCount(String id) {
+		String sql = "select count(*) from visitors where to_char(reg, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd') and owner = ?";
+		return jdbcTemplate.queryForObject(sql, Integer.class, id);
 	}
 
 	@Override
@@ -29,9 +29,9 @@ public class BoardcountDaoImpl implements BoardcountDao {
 	}
 	
 	@Override
-	public int diaryTodayCount() {
-		String sql = "select count(*) from diary where to_char(reg, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')";
-		return jdbcTemplate.queryForObject(sql, Integer.class);
+	public int diaryTodayCount(String id) {
+		String sql = "select count(*) from diary where to_char(reg, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd') and separate = ?";
+		return jdbcTemplate.queryForObject(sql, Integer.class, id);
 	}
 
 	@Override
@@ -41,9 +41,9 @@ public class BoardcountDaoImpl implements BoardcountDao {
 	}
 
 	@Override
-	public int photoTodayCount() {
-		String sql = "select count(*) from photo where to_char(reg, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')";
-		return jdbcTemplate.queryForObject(sql, Integer.class);
+	public int photoTodayCount(String id) {
+		String sql = "select count(*) from photo where to_char(reg, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd') and separate = ?";
+		return jdbcTemplate.queryForObject(sql, Integer.class, id);
 	}
 
 }

@@ -27,13 +27,13 @@ form{
 			event.preventDefault();
 			var result = false;
 			if($(this).val() === "삽입"){
-				var input = $("<textarea rows='4' cols='20'></textarea>").val(text);
+				var input = $("<textarea rows='8' cols='19'></textarea>").val(text);
 				$(this).before(input);
 				$(this).val("완료");
 			}
 			else if($(this).val() === "수정"){
                 var text = $(this).prev().text();
-                var input = $("<textarea rows='4' cols='20'></textarea>").val(text);
+                var input = $("<textarea rows='8' cols='19'></textarea>").val(text);
                 $(this).prev().remove();
                 $(this).before(input);
                 $(this).val("완료");
@@ -71,7 +71,7 @@ form{
 		<div id="hello" class="hello">
 			<input type="hidden" id="comment" name="comment"> 
 			<div id="message" class="message">
-						${message }
+						<font style="font-size: 0.9em;">${message }</font>
 			</div>
 			<c:choose>
 				<c:when test="${owner.id eq userId && message != null}">
@@ -123,11 +123,20 @@ form{
 			<div style="width:100%">
 				<div style="float:left; width:47%;">
 					<a href="${pageContext.request.contextPath }/minihome/${owner.id}/diary">
-					다이어리 <font color="blue" style="font-size: 0.8em;">${count.diaryTodayCount} / ${count.diaryCount}</font></a>
+						다이어리 <font color="blue" style="font-size: 0.8em;">${count.diaryTodayCount} / ${count.diaryCount}</font>
+					</a>
+					<c:if test="${count.diaryTodayCount != 0 }">
+						<img src="${pageContext.request.contextPath }/img/new.png" width="15" height="15"
+						style="border: none; vertical-align:middle;">
+					</c:if>
 				</div>
 				<div style="display:inline-block;">
 					<a href="#">
 					게시판 <font color="blue" style="font-size: 0.8em;">0 / 0</font></a>
+<%-- 					<c:if test="${count.diaryTodayCount != 0 }"> --%>
+<%-- 						<img src="${pageContext.request.contextPath }/img/new.png" width="15" height="15" --%>
+<!-- 						style="border: none; vertical-align:middle;"> -->
+<%-- 					</c:if> --%>
 				</div>
 			</div>
 			<div style="width:100%;">
@@ -135,11 +144,19 @@ form{
 			 		<a href="${pageContext.request.contextPath }/minihome/${owner.id}/photo">
 			 			사진첩 <font color="blue" style="font-size: 0.8em;">${count.photoTodayCount} / ${count.photoCount}</font>
 			 		</a>
+			 		<c:if test="${count.photoTodayCount != 0 }">
+						<img src="${pageContext.request.contextPath }/img/new.png" width="15" height="15"
+						style="border: none; vertical-align:middle;">
+					</c:if>
 			 	</div>
 			 	<div style="display:inline-block;">
 			 		<a href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors">
 			 			방명록 <font color="blue" style="font-size: 0.8em;">${count.visitorsTodayCount} / ${count.visitorsCount}</font>
 			 		</a>
+			 		<c:if test="${count.visitorsTodayCount != 0 }">
+						<img src="${pageContext.request.contextPath }/img/new.png" width="15" height="15"
+						style="border: none; vertical-align:middle;">
+					</c:if>
 			 	</div>
 			</div>
 		</div>

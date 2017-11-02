@@ -48,19 +48,26 @@ public class MinihomeController {
 	@RequestMapping(value= {"/minihome/{id}"})
 	public String home(@PathVariable String id, Model model, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
+		String userId = (String)session.getAttribute("userId");
+		
 		// id의 미니홈피
 		Member owner = memberDao.info(id); // 미니홈피 주인 정보
 		String message = minicommentDao.check(id); // 상태메세지
-		List<Member> friendList = friendDao.allList(id);
-		List<Friendcomment> friendCommentList = minicommentDao.friendCommentList(id);
+		List<Member> friendList = friendDao.allList(id); // 일촌 전체 목록
+		List<Friendcomment> friendCommentList = minicommentDao.friendCommentList(id); // 일촌평
+		boolean result = friendDao.friendCheck(id, userId); // 둘이 일촌인지?
+		model.addAttribute("friendCheck", result);
+		
+		//최근 게시판 목록
+		
 		
 		int visitorsCount = boardcountDao.visitorsCount(id); // 게시판 수
 		int diaryCount = boardcountDao.diaryCount(id);
 		int photoCount = boardcountDao.photoCount(id);
 		
-		int visitorsTodayCount = boardcountDao.visitorsTodayCount();
-		int diaryTodayCount = boardcountDao.diaryTodayCount();
-		int photoTodayCount = boardcountDao.photoTodayCount();
+		int visitorsTodayCount = boardcountDao.visitorsTodayCount(id);
+		int diaryTodayCount = boardcountDao.diaryTodayCount(id);
+		int photoTodayCount = boardcountDao.photoTodayCount(id);
 		
 		// 게시판 전체 수
 		BoardCount b = new BoardCount();
@@ -71,7 +78,7 @@ public class MinihomeController {
 		b.setPhotoTodayCount(photoTodayCount);
 		b.setDiaryTodayCount(diaryTodayCount);
 		
-		String userId = (String)session.getAttribute("userId");
+		
 		Cookie[] cookies = request.getCookies();
 		Cookie viewCookie = null;
 		
@@ -108,6 +115,7 @@ public class MinihomeController {
 		 if(message == null) {
 			 message = "자기소개가 없습니다.";
 		 }
+		 
 		 model.addAttribute("message", message);
 		 model.addAttribute("friendList", friendList);
 		 model.addAttribute("count", b);
