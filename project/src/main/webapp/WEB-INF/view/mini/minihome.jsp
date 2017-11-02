@@ -80,13 +80,13 @@
 	<div class="text-center">
 		<h3>──history──</h3>
 	</div>
-	<div class="name">
+	<div class="name text-center">
 		<h3>
 			${owner.name}
 			<c:if test="${owner.gender eq '남자'}">(♂)</c:if>
 			<c:if test="${owner.gender eq '여자'}">(♀)</c:if>
 		</h3>
-		<select name="friend-list" style="width: 100%;" 
+		<select name="friend-list" style="width: 95%;" 
 			onchange="if(this.value) location.href=(this.value);">
 			<option value="">파도타기</option>
 			<c:forEach var="friend" items="${friendList }">
