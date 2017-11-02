@@ -42,9 +42,9 @@ public class DiaryDaoImpl implements DiaryDao {
 
 	@Override
 	public void insert(Diary d) {
-		String sql = "insert into diary values(diary_seq.nextval,?, ?, 0, ?, ?, ?, ?)";
+		String sql = "insert into diary values(" + d.getSeparate() + ".nextVal,?, ?, 0, 'diary',?)";
 		Object[] obj = {
-				d.getReg(), d.getDetail(), d.getFilename(), d.getFilesize(), d.getFiletype(), d.getSeparate() 
+				d.getReg(), d.getDetail(), d.getSeparate() 
 		};
 		jdbctemplate.update(sql, obj);
 	}

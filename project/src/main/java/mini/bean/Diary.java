@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Diary {
-	private String reg, detail, filename, filetype, separate;
-	private int no, read, filesize;
+	private String reg, detail, separate, type;
+	private int no, read;
 	
 	public Diary(){}
 	
@@ -13,17 +13,41 @@ public class Diary {
 		setNo(rs.getInt("no"));
 		setReg(rs.getString("reg"));
 		setDetail(rs.getString("detail"));
-		setFilename(rs.getString("filename"));
-		setFiletype(rs.getString("filetype"));
 		setSeparate(rs.getString("separate"));
 		setRead(rs.getInt("read"));
-		setFilesize(rs.getInt("filesize"));
+		setType(rs.getString("type"));
 	}
-	
-	@Override
-	public String toString() {
-		return "Diary [reg=" + reg + ", detail=" + detail + ", filename=" + filename + ", filetype=" + filetype
-				+ ", separate=" + separate + ", no=" + no + ", read=" + read + ", filesize=" + filesize + "]";
+
+	public String getReg() {
+		return reg;
+	}
+
+	public void setReg(String reg) {
+		this.reg = reg;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public String getSeparate() {
+		return separate;
+	}
+
+	public void setSeparate(String separate) {
+		this.separate = separate;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public int getNo() {
@@ -34,46 +58,18 @@ public class Diary {
 		this.no = no;
 	}
 
-	public String getReg() {
-		return reg;
-	}
-	public void setReg(String reg) {
-		this.reg = reg;
-	}
-	public String getDetail() {
-		return detail;
-	}
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
-	public String getFilename() {
-		return filename;
-	}
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-	public String getFiletype() {
-		return filetype;
-	}
-	public void setFiletype(String filetype) {
-		this.filetype = filetype;
-	}
-	public String getSeparate() {
-		return separate;
-	}
-	public void setSeparate(String separate) {
-		this.separate = separate;
-	}
 	public int getRead() {
 		return read;
 	}
+
 	public void setRead(int read) {
 		this.read = read;
 	}
-	public int getFilesize() {
-		return filesize;
+
+	@Override
+	public String toString() {
+		return "Diary [reg=" + reg + ", detail=" + detail + ", separate=" + separate + ", type=" + type + ", no=" + no
+				+ ", read=" + read + "]";
 	}
-	public void setFilesize(int filesize) {
-		this.filesize = filesize;
-	}
+	
 }

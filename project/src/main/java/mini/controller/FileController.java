@@ -25,6 +25,7 @@ public class FileController {
 			String sFileInfo = "";
 			// 파일명 수신
 			String filename = request.getHeader("file-name");
+			System.out.println("filename : " + filename);
 			// 파일 확장자 소문자로 변경
 			String filename_ext = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
 			
@@ -55,8 +56,7 @@ public class FileController {
 				System.out.println("dstFilePath : " + dstFilePath);
 
 				// 파일 기본 경로_상세 경로
-				String filePath = dstFilePath + "resources" + File.separator + "editor" + File.separator + "multiupload"
-						+ File.separator;
+				String filePath = dstFilePath + "multiupload" + File.separator;
 				System.out.println("filePath : " + filePath);
 
 				File file = new File(filePath);
@@ -68,7 +68,10 @@ public class FileController {
 				String realFileNm = "";
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 				String today = formatter.format(new Date());
-				realFileNm = today + UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
+				realFileNm = today + UUID.randomUUID().toString();
+				String saveFileNm = realFileNm;
+				System.out.println("saveFileNm : " + saveFileNm);
+				realFileNm += filename.substring(filename.lastIndexOf("."));
 				System.out.println("realFileNm : " + realFileNm);
 				String rlFileNm = filePath + realFileNm;
 				System.out.println("rlFileNm : " + rlFileNm);
@@ -103,7 +106,7 @@ public class FileController {
 				sFileInfo += "&bNewLine=true";
 				// img 태그의 title 속성을 원본 파일명으로 적용시켜주기 위함
 				sFileInfo += "&sFileName=" + filename;
-				sFileInfo += "&sFileURL=" + "/resources/editor/multiupload/" + realFileNm;
+				sFileInfo += "&sFileURL=" + "http://localhost:8080/project/multiupload/" + realFileNm;
 				System.out.println("sFileInfo : " + sFileInfo);
 				PrintWriter pw = response.getWriter();
 				pw.print(sFileInfo);

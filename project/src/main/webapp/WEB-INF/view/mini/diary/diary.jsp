@@ -135,8 +135,7 @@ body {
 
 						function printDetail(date) {
 							$.ajax({
-										url : $(location).attr('href') + '/'
-												+ date,
+										url : $(location).attr('href') + '/'+ date,
 										//contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 										success : function(res) {
 											$(".area").html(res)

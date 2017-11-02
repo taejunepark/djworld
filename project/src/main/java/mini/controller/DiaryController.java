@@ -2,9 +2,11 @@ package mini.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,6 +26,7 @@ import mini.bean.Diary;
 import mini.bean.Visitors;
 import mini.model.diary.DiaryDao;
 import mini.model.total.TotalDao;
+import mini.model.upload.UploadDao;
 import mini.model.visitors.VisitorsDao;
 
 @Controller
@@ -40,13 +43,16 @@ public class DiaryController {
 	@Autowired
 	private TotalDao totalDao;
 	
+	@Autowired
+	private UploadDao uploadDao;
+	
 	@RequestMapping("/minihome/{id}/diary")
 	public String init_diary(@PathVariable String id,Model model) {
 		Date date = new Date();
 		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
 		int total = totalDao.count(id);
-		 owner.setTotal(total);
+		owner.setTotal(total);
 		model.addAttribute("list", list);
 		model.addAttribute("owner", owner);
 		model.addAttribute("id", id);
@@ -83,7 +89,6 @@ public class DiaryController {
 	
 	@RequestMapping(value="/minihome/{id}/diary_write", method=RequestMethod.POST)
 	public String diary_write(@PathVariable String id, Model model,RedirectAttributes redirect, @RequestParam Map<String,Object> map) {
-		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
 		int total = totalDao.count(id);
 		 owner.setTotal(total);
@@ -91,22 +96,35 @@ public class DiaryController {
 		String path = "";
 		String detail = (String)map.get("detail");
 		String reg = (String)map.get("reg");
+		
 		if(detail == null || detail.equals("")) {
-			model.addAttribute("list", list);
 			model.addAttribute("owner", owner);
 			model.addAttribute("id", id);
 			model.addAttribute("reg", reg);
 			path = "mini/diary/diary_write";
 		}else {
-			redirect.addFlashAttribute("list", list);
 			redirect.addFlashAttribute("owner", owner);
 			redirect.addFlashAttribute("id", id);
+			String srcs = (String)map.get("srcs");
+			String srcPath;
+			List<String> list = new ArrayList<>();
+			
+			while(srcs.length() != 0) {
+				srcPath = srcs.contains(",")?srcs.substring(0, srcs.indexOf(',')):srcs.substring(0);
+				list.add(srcPath);
+				srcs = srcs.contains(",")?srcs.substring(srcPath.length() + 1):srcs.substring(srcPath.length());
+			}
+			
 			Diary d = new Diary();
 			d.setReg(reg);
-			//detail = detail.substring(3, detail.length() - 4);
 			d.setDetail(detail);
 			d.setSeparate(id);
 			diaryDao.insert(d);
+			
+			d = diaryDao.info(reg, id);
+			if(list.size() != 0)
+				uploadDao.insert(list, d.getType(), d.getNo(), d.getSeparate());
+			
 			path = "redirect:/minihome/" + id + "/diary";
 		}
 		return path;
@@ -114,7 +132,6 @@ public class DiaryController {
 	
 	@RequestMapping(value="/minihome/{id}/diary_edit", method=RequestMethod.POST)
 	public String diary_edit(@PathVariable String id, Model model, RedirectAttributes redirect, @RequestParam Map<String,Object> map) {
-		List<Visitors> list = visitorsDao.list(id);
 		Member owner = memberDao.info(id);
 		int total = totalDao.count(id);
 		 owner.setTotal(total);
@@ -124,7 +141,6 @@ public class DiaryController {
 		String reg = (String)map.get("reg");
 		
 		if(editFlag.equalsIgnoreCase("true")) {
-			model.addAttribute("list", list);
 			model.addAttribute("owner", owner);
 			model.addAttribute("id", id);
 			model.addAttribute("reg", reg);
@@ -132,14 +148,28 @@ public class DiaryController {
 			model.addAttribute("editFlag", "false");
 			path = "mini/diary/diary_edit";
 		}else {
-			redirect.addFlashAttribute("list", list);
 			redirect.addFlashAttribute("owner", owner);
 			redirect.addFlashAttribute("id", id);
+			String srcs = (String)map.get("srcs");
+			String srcPath;
+			List<String> list = new ArrayList<>();
+			
+			while(srcs.length() != 0) {
+				srcPath = srcs.contains(",")?srcs.substring(0, srcs.indexOf(',')):srcs.substring(0);
+				list.add(srcPath);
+				srcs = srcs.contains(",")?srcs.substring(srcPath.length() + 1):srcs.substring(srcPath.length());
+			}
+			
 			Diary d = new Diary();
 			d.setReg(reg);
 			d.setDetail(detail);
 			d.setSeparate(id);
 			diaryDao.edit(d);
+			
+			d = diaryDao.info(reg, id);
+			if(list.size() != 0)
+				uploadDao.insert(list, d.getType(), d.getNo(), d.getSeparate());
+			
 			path = "redirect:/minihome/"+id+"/diary";
 		}
 		return path;
