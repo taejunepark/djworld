@@ -1,21 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/mini_template/header.jsp"%>
+<style>
+form{
+	margin: 0px;
+}
+</style>
 <script>
 	$(document).ready(function() {
-		$("#comment_btn").click(function() {
-			$.ajax({
-				url : "comment",
-				type : "get",
-				data : {
-					comment : $("#comment").val(),
-				},
-				success : function(res) {
-					$("#addComment").prepend(res)
-				}
-			})
-			$("#comment").val("")
-		})
 
 		$("input[type=submit]").on("click", function() {
 			event.preventDefault();
@@ -49,7 +41,7 @@
 	});
 </script>
 <aside>
-	<div class="profile" style="height: 200px;">
+	<div class="profile" style="height: 170px;">
 		<c:choose>
 			<c:when test="${owner.profile != null}">
 				<img src="${pageContext.request.contextPath }/file/${owner.profile}"
@@ -61,24 +53,27 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
-	<form action="${pageContext.request.contextPath }/minihome/${id}/minicomment" method="post">
-		<div id="hello" class="hello" style="height: 200px;">
+	<form action="${pageContext.request.contextPath }/minihome/${owner.id}/minicomment" method="post">
+		<div id="hello" class="hello">
 			<input type="hidden" id="comment" name="comment"> 
-			<div id="message" class="message">${message }</div>
+			<div id="message" class="message">
+						${message }
+			</div>
 			<c:choose>
-				<c:when test="${id eq userId && message != null}">
+				<c:when test="${owner.id eq userId && message != null}">
 					<input type="submit" class="edit_hello" value="수정">
 					<input type="hidden" name="type" value="update">
 				</c:when>
-				<c:when test="${id eq userId && message == null}">
+				<c:when test="${owner.id eq userId && message == null}">
 					<input type="submit" class="edit_hello" value="삽입">
 				<input type="hidden" name="type" value="insert">
 				</c:when>
 			</c:choose>
 		</div>
 	</form>
+	<div style="height: 40px;"></div>
 	<div class="text-center">
-		<h3>──history──</h3>
+		<h3>──&nbsp;history&nbsp;──</h3>
 	</div>
 	<div class="name text-center">
 		<h3>
@@ -128,15 +123,34 @@
 			width="100%" height="100%">
 	</div>
 
+	<form action="${pageContext.request.contextPath }/minihome/${owner.id}/friendcomment">
+	<input type="hidden" name="writer" value="${userId}">
 	<div class="partThree">
 		<div style="float: left; width: 10%;">일촌평</div>
-		<div style="display: inline-block; width: 90%;">
-			<font size="7"><input class="friend-input" type="text"
-				id="comment" placeholder="입력" required></font>
-			<button id="comment_btn">확인</button>
+		<div style="display: inline-block; width: 90%; height:21px;">
+			<input class="friend-input" type="text"  name="friendcomment" placeholder="입력" required>
+			<button id="friendComment_btn">확인</button>
 		</div>
 	</div>
-	<div class="addComment">일촌평을 남겨주세요~</div>
+	</form>
+	<div class="friendaddComment" style="padding-left: 5px; padding-right: 5px; ">
+		<c:choose>
+		<c:when test="${not empty friendCommentList}">
+			<c:forEach var="friend" items="${friendCommentList}">
+				·&nbsp;${friend.friendComment }&nbsp;&nbsp;
+				(<a href="${pageContext.request.contextPath}/minihome/${friend.writer}">
+					&nbsp;${friend.writer}, <font color="blue">${friend.name }</font>&nbsp;)
+				</a> 
+				 <font color="gray" size="1.7em">(${friend.date})&nbsp;&nbsp;</font>
+				 <a href="${pageContext.request.contextPath }/minihome/${friend.writer}"> <i class="fa fa-home" aria-hidden="true"></i></a>&nbsp;&nbsp;
+				<hr>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			소중한 첫 번째의 일촌평을 남겨보세요~
+		</c:otherwise>
+		</c:choose>
+	</div>
 </div>
 
 <%@ include file="/WEB-INF/view/mini_template/footer.jsp"%>

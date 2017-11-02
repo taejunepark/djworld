@@ -61,6 +61,13 @@ header>a :hover {
 	margin-right: 20px;
 }
 
+.hello{
+	height: 200px;
+	border: 1px solid gray;
+	border-radius: 10px;
+	padding: 5px;
+}
+
 .title {
 	flex-grow: 1;
 	margin: 5px;
@@ -96,8 +103,6 @@ aside {
 	width: 70%;
 	height: 100%;
 	margin: 0 5px;
-	display: flex; flex-direction : column; flex-wrap : nowrap; width : 70%;
-	height : 100%; margin : 0 5px;
 	padding: 5px;
 }
 
