@@ -55,10 +55,10 @@ public class UploadDaoImpl implements UploadDao{
 	}
 
 	@Override
-	public void delete(Diary d) {
+	public void delete(String separate, int no) {
 		String sql = "delete upload where separate = ? and no = ?";
 		Object[] obj = {
-				d.getSeparate(), d.getNo()
+				separate, no
 		};
 		jdbctemplate.update(sql,obj);
 	}

@@ -81,10 +81,6 @@
          })
      })
 </script>
-                <aside>
-                    <a href="#">미정</a>
-                </aside>
-                
                 <div class="highlight">
 					<form action="#" method="post">
 						<input type="hidden" name="reg" value="${reg}">

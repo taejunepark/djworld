@@ -71,47 +71,7 @@ input[name=reply] {
 		})
 	})
 </script>
-<aside>
-	<div class="profile" style="height: 170px;">
-		<c:choose>
-			<c:when test="${owner.profile != null}">
-				<img src="${pageContext.request.contextPath }/file/${owner.profile}"
-					width="150" height="150">
-			</c:when>
-			<c:otherwise>
-				<img src="${pageContext.request.contextPath }/img/프로필.jpg"
-					width="150" height="150">
-			</c:otherwise>
-		</c:choose>
-	</div>
-	<form
-		action="${pageContext.request.contextPath }/minihome/${owner.id}/minicomment"
-		method="post">
-		<div id="hello" class="hello">
-			<input type="hidden" id="comment" name="comment">
-			<div id="message" class="message">${message }</div>
-		</div>
-	</form>
-	<div style="height: 40px;"></div>
-	<div class="text-center">
-		<h3>──&nbsp;history&nbsp;──</h3>
-	</div>
-	<div class="name text-center">
-		<h3>
-			${owner.name}
-			<c:if test="${owner.gender eq '남자'}">(♂)</c:if>
-			<c:if test="${owner.gender eq '여자'}">(♀)</c:if>
-		</h3>
-		<select name="friend-list" style="width: 95%;"
-			onchange="if(this.value) location.href=(this.value);">
-			<option value="">파도타기</option>
-			<c:forEach var="friend" items="${friendList }">
-				<option
-					value="${pageContext.request.contextPath }/minihome/${friend.id }">${friend.name }</option>
-			</c:forEach>
-		</select>
-	</div>
-</aside>
+
 <div class="highlight">
 	<c:if test="${owner.id eq userId }">
 		<div class="center text-right" style="width: 80%; margin-bottom: 10px;">
@@ -128,7 +88,7 @@ input[name=reply] {
 
 					<div id="info">
 						<font style="font-size: 0.9em;"> 작성 일 : ${p.reg }
-							&nbsp;&nbsp;&nbsp; <%-- 						댓글 수 : ${p.replycount } --%>
+							&nbsp;&nbsp;&nbsp;
 						</font>
 					</div>
 
@@ -136,7 +96,8 @@ input[name=reply] {
 					
 					<c:if test="${owner.id eq userId }">
 						<div id="optionArea">
-							<a id="delete_btn${p.no }">삭제</a>&nbsp;|&nbsp; <a id="e	dit_btn${p.no }">수정</a>
+							<a href="${pageContext.request.contextPath }/minihome/${owner.id}/photo_delete/${p.no}">삭제</a>&nbsp;|&nbsp;
+							<a href="${pageContext.request.contextPath }/minihome/${owner.id}/photo_edit/${p.no}">수정</a>
 						</div>
 					</c:if>
 

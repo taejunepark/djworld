@@ -149,11 +149,9 @@ public class DiaryController {
 			diaryDao.edit(d);
 			
 			d = diaryDao.info(reg, id);
-			uploadDao.delete(d);
+			uploadDao.delete(d.getSeparate(), d.getNo());
 			
 			List<String> list = Utility.substrURL((String)map.get("srcs"));
-			System.out.println((String)map.get("srcs"));
-			System.out.println(list.size());
 			if(list.size() != 0)
 				uploadDao.insert(list, d.getNo(), d.getSeparate());
 			
@@ -169,7 +167,7 @@ public class DiaryController {
 		redirect.addFlashAttribute("id", id);
 		Diary d = diaryDao.info(reg, id);
 		diaryDao.delete(reg);
-		uploadDao.delete(d);
+		uploadDao.delete(d.getSeparate(), d.getNo());
 		return "redirect:/minihome/"+id+"/diary";
 	}
 }

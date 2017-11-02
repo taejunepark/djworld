@@ -10,5 +10,5 @@ import mini.bean.Diary;
 public interface UploadDao {
 	void insert(List<String> list, int no, String separate);
 	boolean overlap(String filename);
-	void delete(Diary d);
+	void delete(String separate, int no);
 }

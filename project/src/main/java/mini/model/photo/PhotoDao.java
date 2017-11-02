@@ -10,5 +10,8 @@ import mini.bean.Photo;
 public interface PhotoDao {
 	List<Photo> list(String type, String separate);
 	void insert(String title, String detail, String separate);
+	Photo info(int no);
 	int newSeq(String separate);
+	void edit(String title, String detail, String separate, int no);
+	void delete(String separate, int no);
 }
