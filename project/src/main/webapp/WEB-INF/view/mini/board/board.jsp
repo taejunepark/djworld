@@ -89,13 +89,15 @@ table {
 						</tr>
 					</tbody>
 					
-					<tfoot>
-						<tr>
-							<th colspan="5">
-								<button id="write_btn">등록</button>
-							</th>
-						</tr>
-					</tfoot>
+					<c:if test="${owner.id eq userId}">
+						<tfoot>
+							<tr>
+								<th colspan="5">
+									<button id="write_btn">등록</button>
+								</th>
+							</tr>
+						</tfoot>
+					</c:if>
 				</table>
 			</c:otherwise>
 		</c:choose>

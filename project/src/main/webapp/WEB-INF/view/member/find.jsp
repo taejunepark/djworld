@@ -103,7 +103,7 @@
 			</c:if>
 			<td style="border-right: 2px solid black;">
 				<a href="${pageContext.request.contextPath }/minihome/${member.id}"
-				onClick="window.open(this.href, '', 'width=900, height=600, top=10%, left=200'); return false;">
+				onClick="window.open(this.href, '', 'width=1200, height=700, top=10%, left=200'); return false;">
 				 	<i class="fa fa-home" aria-hidden="true"></i>
 				</a>&nbsp;&nbsp;
 			</td>

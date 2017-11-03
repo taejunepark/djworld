@@ -223,11 +223,13 @@ body {
 		<input type="hidden" id="detail" name="detail">
 		<div class="area"></div>
 
-		<div class="btnArea">
-			<button id="write_btn">등록</button>
-			<button id="delete_btn">삭제</button>
-			<button id="edit_btn">수정</button>
-		</div>
+		<c:if test="${owner.id eq userId}">
+			<div class="btnArea">
+				<button id="write_btn">등록</button>
+				<button id="delete_btn">삭제</button>
+				<button id="edit_btn">수정</button>
+			</div>
+		</c:if>
 	</form>
 </div>
 <%@ include file="/WEB-INF/view/mini_template/footer.jsp"%>
