@@ -361,7 +361,10 @@ form {
 							<a
 								href="${pageContext.request.contextPath }/minihome/${friend.writer}">
 								<i class="fa fa-home" aria-hidden="true"></i>
-							</a>&nbsp;&nbsp;
+							</a>&nbsp;&nbsp;&nbsp;&nbsp;
+							<c:if test="${owner.id eq userId }">
+								<a href="${pageContext.request.contextPath}/minihome/${owner.id }/friendcomment/delete/${friend.writer }/${friend.friendComment }">삭제</a>
+							</c:if>
 				<hr>
 						</c:forEach>
 					</c:when>

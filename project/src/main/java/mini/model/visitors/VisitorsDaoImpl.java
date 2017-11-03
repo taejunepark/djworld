@@ -87,7 +87,7 @@ public class VisitorsDaoImpl implements VisitorsDao {
 			String sql = "select tmp.detail from (select * from visitors order by reg desc)tmp where rownum = 1 and owner= ?";
 			result = jdbcTemplate.queryForObject(sql, String.class, id);
 			if(result.length() > 10) {
-				result.substring(0, 10);
+				result = result.substring(0, 10);
 			}
 		}
 		catch(EmptyResultDataAccessException e) {

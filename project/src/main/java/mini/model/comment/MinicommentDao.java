@@ -19,4 +19,6 @@ public interface MinicommentDao {
 
 	List<Friendcomment> friendCommentList(String id);
 
+	void friendCommentDelete(String writer, String id, String comment);
+
 }

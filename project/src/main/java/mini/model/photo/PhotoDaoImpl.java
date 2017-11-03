@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -99,5 +100,21 @@ public class PhotoDaoImpl implements PhotoDao {
 	public void delete(String separate, int no) {
 		String sql = "delete photo where separate = ? and no = ?";
 		jdbctemplate.update(sql, separate, no);
+	}
+
+	@Override
+	public String title(String id) {
+		String result = null;
+		try {
+			String sql = "select tmp.title from (select * from photo order by reg desc)tmp where rownum = 1 and separate = ?";
+			result = jdbctemplate.queryForObject(sql, String.class, id);
+			if(result.length() > 10) {
+				result = result.substring(0, 10)+"..";
+			}
+		}
+		catch(EmptyResultDataAccessException e) {
+			result = null;
+		}
+		return result;
 	}
 }
