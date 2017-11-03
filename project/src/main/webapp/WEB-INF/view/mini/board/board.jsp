@@ -49,7 +49,7 @@ table {
 								<th>${b.no }</th>
 								<td>
 									<a href="${pageContext.request.contextPath}/minihome/${owner.id}/board_detail/${b.no}">
-										${b.title } [${b.reply }]
+										${b.title }
 									</a>
 								</td>
 								<th>${b.writer }</th>

@@ -108,12 +108,11 @@ input[name=title]{
 		<div id="detailArea">
 			<textarea name="detail" id="detail" rows="10" cols="100">${photo.detail }</textarea>
 		</div>
-		
+	</form>	
 		<div id="optionArea">
 			<button id="write_btn">완료</button>
 			<button id="delete_btn" onclick="location.href='${pageContext.request.contextPath}/minihome/${userId }/photo'">취소</button>
 		</div>
-	</form>
 </div>
 
 <div id="tmp" style="display:none;"></div>

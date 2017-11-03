@@ -99,4 +99,19 @@ public class BoardDaoImpl implements BoardDao{
 		b.setReplyList(replyList);
 		return b;
 	}
+
+	@Override
+	public void edit(String title, String detail, String separate, int no) {
+		String sql = "update board set title = ?, detail = ? where separate = ? and no = ?";
+		Object[] obj = {
+				title, detail, separate, no
+		};
+		jdbctemplate.update(sql,obj);
+	}
+
+	@Override
+	public void delete(String separate, int no) {
+		String sql = "delete board where separate = ? and no = ?";
+		jdbctemplate.update(sql, separate, no);
+	}
 }
