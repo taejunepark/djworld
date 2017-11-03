@@ -25,6 +25,7 @@ input[name=title]{
 #optionArea{
 	margin: 0px auto;
 }
+
 #detail{
 	width:100%;
 	height:90%;

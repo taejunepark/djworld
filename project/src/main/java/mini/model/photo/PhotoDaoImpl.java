@@ -55,7 +55,7 @@ public class PhotoDaoImpl implements PhotoDao {
 	
 	@Override
 	public List<Photo> list(String type, String separate) {
-		String sql = "select * from photo where type = ? and separate = ? order by no desc";
+		String sql = "select * from photo where type = ? and separate = ? order by reg desc";
 		List<Photo> list =  jdbctemplate.query(sql, mapper, type, separate);
 		for(Photo p : list) {
 			List<Reply> list2 = replyDao.list(p.getNo(), separate);

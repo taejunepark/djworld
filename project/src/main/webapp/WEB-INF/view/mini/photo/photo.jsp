@@ -64,11 +64,6 @@ input[name=reply] {
 		$("#write_btn").click(function(){
 			location.href= "photo_write"
 		})
-		
-		$("#delete_btn").click(function(){
-			var nos = $("#no").text()
-			console.log(nos)
-		})
 	})
 </script>
 
