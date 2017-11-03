@@ -1,205 +1,270 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/mini_template/header.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<html>
+<head>
+<title>DJWorld</title>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath }/css/common.css">
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath }/css/minihome.css?ver=3">
+<%-- <link href="${pageContext.request.contextPath }/css/ko_KR/smart_editor2.css?ver=2" rel="stylesheet" type="text/css"> --%>
+<link
+	href="${pageContext.request.contextPath }/css/ko_KR/smart_editor2.css?ver=2"
+	rel="stylesheet" type="text/css">
+<!-- jQuery를 사용하기 위한 CDN 설정 -->
+
 <style>
-form{
+form {
 	margin: 0px;
 }
-#menu_home{
+
+#menu_home {
 	color: blue;
 }
-.boardcount-left{
+
+.boardcount-left {
 	border-bottom: 1px dotted gray;
 	border-right: 1px dotted gray;
 	padding: 3px 0px;
 	text-align: center;
 }
-.boardcount-right{
+
+.boardcount-right {
 	border-bottom: 1px dotted gray;
 	padding: 3px 0px;
 	text-align: center;
 }
 </style>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
-	$(document).ready(function() {
+	$(document)
+			.ready(
+					function() {
 
-		$("input[type=submit]").on("click", function() {
-			event.preventDefault();
-			var result = false;
-			if($(this).val() === "삽입"){
-				var input = $("<textarea rows='8' cols='19'></textarea>").val(text);
-				$(this).before(input);
-				$(this).val("완료");
-			}
-			else if($(this).val() === "수정"){
-                var text = $(this).prev().text();
-                var input = $("<textarea rows='8' cols='19'></textarea>").val(text);
-                $(this).prev().remove();
-                $(this).before(input);
-                $(this).val("완료");
-            }
-            else{
-                var text = $(this).prev().val();
-                var div = $("<div/>").addClass("message").text(text);
-                $(this).prev().remove();
-                $(this).before(div);
-                $(this).val("수정");
-                $("#comment").val($(".message").text())
-                result = true;
-            }
-            if(result){
-                var form = document.querySelector("form");
-        		form.submit();
-            }
-        });
-	});
+						$("input[type=submit]")
+								.on(
+										"click",
+										function() {
+											event.preventDefault();
+											var result = false;
+											if ($(this).val() === "삽입") {
+												var input = $(
+														"<textarea rows='8' cols='19'></textarea>")
+														.val(text);
+												$(this).before(input);
+												$(this).val("완료");
+											} else if ($(this).val() === "수정") {
+												var text = $(this).prev()
+														.text();
+												var input = $(
+														"<textarea rows='8' cols='19'></textarea>")
+														.val(text);
+												$(this).prev().remove();
+												$(this).before(input);
+												$(this).val("완료");
+											} else {
+												var text = $(this).prev().val();
+												var div = $("<div/>").addClass(
+														"message").text(text);
+												$(this).prev().remove();
+												$(this).before(div);
+												$(this).val("수정");
+												$("#comment").val(
+														$(".message").text())
+												result = true;
+											}
+											if (result) {
+												var form = document
+														.querySelector("form");
+												form.submit();
+											}
+										});
+					});
 </script>
-<<<<<<< HEAD
-=======
-<aside>
-	<div class="profile" style="height: 170px;">
-		<c:choose>
-			<c:when test="${owner.profile != null}">
-				<img src="${pageContext.request.contextPath }/file/${owner.profile}"
-					width="150" height="150">
-			</c:when>
-			<c:otherwise>
-				<img src="${pageContext.request.contextPath }/img/프로필.jpg"
-					width="150" height="150">
-			</c:otherwise>
-		</c:choose>
-	</div>
-	<form action="${pageContext.request.contextPath }/minihome/${owner.id}/minicomment" method="post">
-		<div id="hello" class="hello">
-			<input type="hidden" id="comment" name="comment"> 
-			<div id="message" class="message">
+<body>
+	<div class="mini">
+		<header>
+			<a class="header_a"
+				href="${pageContext.request.contextPath }/minihome/${userId}">내
+				홈피</a>
+			<c:if test="${!friendCheck }">
+				<font color="gray">&nbsp;|&nbsp;일촌맺기</font>
+			</c:if>
+		</header>
+		<div class="info">
+			<div class="visit">Total ${owner.total }</div>
+			<div class="title">
+				<font color="blue" style="font-size: 1.5em;">${owner.name }의
+					미니 홈피</font>
+			</div>
+		</div>
+		<main>
+		<aside>
+			<div class="profile" style="height: 170px;">
+				<c:choose>
+					<c:when test="${owner.profile != null}">
+						<img
+							src="${pageContext.request.contextPath }/file/${owner.profile}"
+							width="150" height="150">
+					</c:when>
+					<c:otherwise>
+						<img src="${pageContext.request.contextPath }/img/프로필.jpg"
+							width="150" height="150">
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<form
+				action="${pageContext.request.contextPath }/minihome/${owner.id}/minicomment"
+				method="post">
+				<div id="hello" class="hello">
+					<input type="hidden" id="comment" name="comment">
+					<div id="message" class="message">
 						<font style="font-size: 0.9em;">${message }</font>
-			</div>
-			<c:choose>
-				<c:when test="${owner.id eq userId && message != null}">
-					<input type="submit" class="edit_hello" value="수정">
-					<input type="hidden" name="type" value="update">
-				</c:when>
-				<c:when test="${owner.id eq userId && message == null}">
-					<input type="submit" class="edit_hello" value="삽입">
-				<input type="hidden" name="type" value="insert">
-				</c:when>
-			</c:choose>
-		</div>
-	</form>
-	<div style="height: 40px;"></div>
-	<div class="text-center">
-		<h3>──&nbsp;history&nbsp;──</h3>
-	</div>
-	<div class="name text-center">
-		<h3>
-			${owner.name}
-			<c:if test="${owner.gender eq '남자'}">(♂)</c:if>
-			<c:if test="${owner.gender eq '여자'}">(♀)</c:if>
-		</h3>
-		<select name="friend-list" style="width: 95%;" 
-			onchange="if(this.value) location.href=(this.value);">
-			<option value="">파도타기</option>
-			<c:forEach var="friend" items="${friendList }">
-				<option value="${pageContext.request.contextPath }/minihome/${friend.id }">${friend.name }</option>
-			</c:forEach>
-		</select>
-	</div>
-</aside>
->>>>>>> branch 'master' of https://github.com/taejunepark/djworld
-
-<div class="highlight">
-	<div class="partOne">
-		<div class="left">
-			<div>
-				<font size="3">최근 게시물</font>
-				<hr>
-			</div>
-			<div>
-				<div>사진첩</div>
-				<div>다이어리</div>
-				<div>방명록</div>
-			</div>
-		</div>
-
-		<div class="right center" style="display:inline-block; ">
-			<div style="width:100%">
-				<div style="float:left; width:47%;">
-					<a href="${pageContext.request.contextPath }/minihome/${owner.id}/diary">
-						다이어리 <font color="blue" style="font-size: 0.8em;">${count.diaryTodayCount} / ${count.diaryCount}</font>
-					</a>
-					<c:if test="${count.diaryTodayCount != 0 }">
-						<img src="${pageContext.request.contextPath }/img/new.png" width="15" height="15"
-						style="border: none; vertical-align:middle;">
-					</c:if>
+					</div>
+					<c:choose>
+						<c:when test="${owner.id eq userId && message != null}">
+							<input type="submit" class="edit_hello" value="수정">
+							<input type="hidden" name="type" value="update">
+						</c:when>
+						<c:when test="${owner.id eq userId && message == null}">
+							<input type="submit" class="edit_hello" value="삽입">
+							<input type="hidden" name="type" value="insert">
+						</c:when>
+					</c:choose>
 				</div>
-				<div style="display:inline-block;">
-					<a href="#">
-					게시판 <font color="blue" style="font-size: 0.8em;">0 / 0</font></a>
-<%-- 					<c:if test="${count.diaryTodayCount != 0 }"> --%>
-<%-- 						<img src="${pageContext.request.contextPath }/img/new.png" width="15" height="15" --%>
-<!-- 						style="border: none; vertical-align:middle;"> -->
-<%-- 					</c:if> --%>
+			</form>
+			<div style="height: 40px;"></div>
+			<div class="text-center">
+				<h3>──&nbsp;history&nbsp;──</h3>
+			</div>
+			<div class="name text-center">
+				<h3>
+					${owner.name}
+					<c:if test="${owner.gender eq '남자'}">(♂)</c:if>
+					<c:if test="${owner.gender eq '여자'}">(♀)</c:if>
+				</h3>
+				<select name="friend-list" style="width: 95%;"
+					onchange="if(this.value) location.href=(this.value);">
+					<option value="">파도타기</option>
+					<c:forEach var="friend" items="${friendList }">
+						<option
+							value="${pageContext.request.contextPath }/minihome/${friend.id }">${friend.name }</option>
+					</c:forEach>
+				</select>
+			</div>
+		</aside>
+
+		<div class="highlight">
+			<div class="partOne">
+				<div class="left">
+					<div>
+						<font size="3">최근 게시물</font>
+						<hr>
+					</div>
+					<div>
+						<div>사진첩</div>
+						<div>다이어리</div>
+						<div>방명록</div>
+					</div>
+				</div>
+
+				<div class="right center" style="display: inline-block;">
+					<div style="width: 100%">
+						<div style="float: left; width: 47%;">
+							<a
+								href="${pageContext.request.contextPath }/minihome/${owner.id}/diary">
+								다이어리 <font color="blue" style="font-size: 0.8em;">${count.diaryTodayCount}
+									/ ${count.diaryCount}</font>
+							</a>
+							<c:if test="${count.diaryTodayCount != 0 }">
+								<img src="${pageContext.request.contextPath }/img/new.png"
+									width="15" height="15"
+									style="border: none; vertical-align: middle;">
+							</c:if>
+						</div>
+						<div style="display: inline-block;">
+							<a href="#"> 게시판 <font color="blue" style="font-size: 0.8em;">0
+									/ 0</font></a>
+							<%-- 					<c:if test="${count.diaryTodayCount != 0 }"> --%>
+							<%-- 						<img src="${pageContext.request.contextPath }/img/new.png" width="15" height="15" --%>
+							<!-- 						style="border: none; vertical-align:middle;"> -->
+							<%-- 					</c:if> --%>
+						</div>
+					</div>
+					<div style="width: 100%;">
+						<div style="float: left; width: 47%;">
+							<a
+								href="${pageContext.request.contextPath }/minihome/${owner.id}/photo">
+								사진첩 <font color="blue" style="font-size: 0.8em;">${count.photoTodayCount}
+									/ ${count.photoCount}</font>
+							</a>
+							<c:if test="${count.photoTodayCount != 0 }">
+								<img src="${pageContext.request.contextPath }/img/new.png"
+									width="15" height="15"
+									style="border: none; vertical-align: middle;">
+							</c:if>
+						</div>
+						<div style="display: inline-block;">
+							<a
+								href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors">
+								방명록 <font color="blue" style="font-size: 0.8em;">${count.visitorsTodayCount}
+									/ ${count.visitorsCount}</font>
+							</a>
+							<c:if test="${count.visitorsTodayCount != 0 }">
+								<img src="${pageContext.request.contextPath }/img/new.png"
+									width="15" height="15"
+									style="border: none; vertical-align: middle;">
+							</c:if>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div style="width:100%;">
-				<div style="float:left; width:47%;">
-			 		<a href="${pageContext.request.contextPath }/minihome/${owner.id}/photo">
-			 			사진첩 <font color="blue" style="font-size: 0.8em;">${count.photoTodayCount} / ${count.photoCount}</font>
-			 		</a>
-			 		<c:if test="${count.photoTodayCount != 0 }">
-						<img src="${pageContext.request.contextPath }/img/new.png" width="15" height="15"
-						style="border: none; vertical-align:middle;">
-					</c:if>
-			 	</div>
-			 	<div style="display:inline-block;">
-			 		<a href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors">
-			 			방명록 <font color="blue" style="font-size: 0.8em;">${count.visitorsTodayCount} / ${count.visitorsCount}</font>
-			 		</a>
-			 		<c:if test="${count.visitorsTodayCount != 0 }">
-						<img src="${pageContext.request.contextPath }/img/new.png" width="15" height="15"
-						style="border: none; vertical-align:middle;">
-					</c:if>
-			 	</div>
+
+			<div class="partTwo">
+				<img src="${pageContext.request.contextPath }/img/miniroom.gif"
+					width="100%" height="100%">
 			</div>
-		</div>
-	</div>
 
-	<div class="partTwo">
-		<img src="${pageContext.request.contextPath }/img/miniroom.gif"
-			width="100%" height="100%">
-	</div>
-
-	<form action="${pageContext.request.contextPath }/minihome/${owner.id}/friendcomment">
-	<input type="hidden" name="writer" value="${userId}">
-	<div class="partThree">
-		<div style="float: left; width: 10%;">일촌평</div>
-		<div style="display: inline-block; width: 90%; height:21px;">
-			<input class="friend-input" type="text"  name="friendcomment" placeholder="일촌에게 하고 싶은 말을 남겨보세요~" required>
-			<button id="friendComment_btn">확인</button>
-		</div>
-	</div>
-	</form>
-	<div class="friendaddComment" style="padding-left: 5px; padding-right: 5px; ">
-		<c:choose>
-		<c:when test="${not empty friendCommentList}">
-			<c:forEach var="friend" items="${friendCommentList}">
+			<form
+				action="${pageContext.request.contextPath }/minihome/${owner.id}/friendcomment">
+				<input type="hidden" name="writer" value="${userId}">
+				<div class="partThree">
+					<div style="float: left; width: 10%;">일촌평</div>
+					<div style="display: inline-block; width: 90%; height: 21px;">
+						<input class="friend-input" type="text" name="friendcomment"
+							placeholder="일촌에게 하고 싶은 말을 남겨보세요~" required>
+						<button id="friendComment_btn">확인</button>
+					</div>
+				</div>
+			</form>
+			<div class="friendaddComment"
+				style="padding-left: 5px; padding-right: 5px;">
+				<c:choose>
+					<c:when test="${not empty friendCommentList}">
+						<c:forEach var="friend" items="${friendCommentList}">
 				·&nbsp;${friend.friendComment }&nbsp;&nbsp;
-				<font size="2">
-					(<a href="${pageContext.request.contextPath}/minihome/${friend.writer}">
-						&nbsp;${friend.writer}, <font color="blue">${friend.name }</font>&nbsp;)
-					</a> 
-				</font>
-				 <font color="gray" size="1.7em">(${friend.date})&nbsp;&nbsp;</font>
-				 <a href="${pageContext.request.contextPath }/minihome/${friend.writer}"> <i class="fa fa-home" aria-hidden="true"></i></a>&nbsp;&nbsp;
+				<font size="2"> (<a
+								href="${pageContext.request.contextPath}/minihome/${friend.writer}">
+									&nbsp;${friend.writer}, <font color="blue">${friend.name }</font>&nbsp;)
+							</a>
+							</font>
+							<font color="gray" size="1.7em">(${friend.date})&nbsp;&nbsp;</font>
+							<a
+								href="${pageContext.request.contextPath }/minihome/${friend.writer}">
+								<i class="fa fa-home" aria-hidden="true"></i>
+							</a>&nbsp;&nbsp;
 				<hr>
-			</c:forEach>
-		</c:when>
-		<c:otherwise>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
 			소중한 첫 번째의 일촌평을 남겨보세요~
 		</c:otherwise>
-		</c:choose>
-	</div>
-</div>
+				</c:choose>
+			</div>
+		</div>
 
-<%@ include file="/WEB-INF/view/mini_template/footer.jsp"%>
+		<%@ include file="/WEB-INF/view/mini_template/footer.jsp"%>
