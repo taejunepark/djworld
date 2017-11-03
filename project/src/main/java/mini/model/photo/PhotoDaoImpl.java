@@ -31,8 +31,6 @@ public class PhotoDaoImpl implements PhotoDao {
 			p.setTitle(rs.getString("title"));
 			p.setDetail(rs.getString("detail"));
 			p.setReg(rs.getString("reg"));
-			p.setRead(rs.getInt("read"));
-			p.setReplycount(rs.getInt("reply"));
 			p.setType(rs.getString("type"));
 			p.setSeparate(rs.getString("separate"));
 			return p;
@@ -47,8 +45,6 @@ public class PhotoDaoImpl implements PhotoDao {
 				p.setTitle(rs.getString("title"));
 				p.setDetail(rs.getString("detail"));
 				p.setReg(rs.getString("reg"));
-				p.setRead(rs.getInt("read"));
-				p.setReplycount(rs.getInt("reply"));
 				p.setType(rs.getString("type"));
 				p.setSeparate(rs.getString("separate"));
 				return p;
@@ -70,7 +66,7 @@ public class PhotoDaoImpl implements PhotoDao {
 
 	@Override
 	public void insert(String title, String detail, String separate) {
-		String sql = "insert into photo values("+separate+".nextval,?,?,sysdate,0,0,'photo',?)";
+		String sql = "insert into photo values("+separate+".nextval,?,?,sysdate,'photo',?)";
 		Object[] obj = {
 				title, detail, separate
 		};
