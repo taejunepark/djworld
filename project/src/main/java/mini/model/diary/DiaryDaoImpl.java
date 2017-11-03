@@ -63,4 +63,5 @@ public class DiaryDaoImpl implements DiaryDao {
 		String sql = "delete diary where reg = ?";
 		jdbctemplate.update(sql,reg);
 	}
+
 }

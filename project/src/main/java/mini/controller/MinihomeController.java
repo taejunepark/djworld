@@ -70,11 +70,11 @@ public class MinihomeController {
 		String visitorsDetail = visitorsDao.detail(id);
 		model.addAttribute("newVisitors", visitorsDetail);
 		
-//		String photoTitle = photoDao.title(id);
-//		model.addAttribute("newPhoto", photoTitle);
-//		
-//		String diaryTitle = diaryDao.title(id);
-//		model.addAttribute("newDiary", diaryTitle);
+		String photoTitle = photoDao.title(id);
+		model.addAttribute("newPhoto", photoTitle);
+		
+//		String boardTitle = boardDao.title(id);
+//		model.addAttribute("newBoard", boardTitle);
 		
 		int visitorsCount = boardcountDao.visitorsCount(id); // 게시판 수
 		int diaryCount = boardcountDao.diaryCount(id);
@@ -150,6 +150,12 @@ public class MinihomeController {
 	@RequestMapping(value="/minihome/{id}/friendcomment")
 	public String comment(@PathVariable String id, String friendcomment, String writer) {
 		minicommentDao.friendCommentInsert(writer, id, friendcomment);
+		return "redirect:/minihome/"+id;
+	}
+	
+	@RequestMapping(value="/minihome/{id}/friendcomment/delete/{writer}/{comment}")
+	public String commentDelete(@PathVariable String id,@PathVariable String writer,  @PathVariable String comment) {
+		minicommentDao.friendCommentDelete(writer, id, comment);
 		return "redirect:/minihome/"+id;
 	}
 }

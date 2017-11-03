@@ -14,4 +14,5 @@ public interface PhotoDao {
 	int newSeq(String separate);
 	void edit(String title, String detail, String separate, int no);
 	void delete(String separate, int no);
+	String title(String id);
 }

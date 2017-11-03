@@ -69,4 +69,10 @@ public class MinicommentDaoImpl implements MinicommentDao {
 		}
 		return list;
 	}
+
+	@Override
+	public void friendCommentDelete(String writer, String id, String comment) {
+		String sql = "delete friendcomment where writer = ? and owner = ? and friendcomment = ?";
+		jdbcTemplate.update(sql, writer, id, comment);
+	}
 }
