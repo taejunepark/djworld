@@ -47,4 +47,6 @@ public interface FriendDao {
 	// 회원 탈퇴시 친구 삭제
 	void delete(String id);
 
+	boolean friendCheck(String id, String userId);
+
 }

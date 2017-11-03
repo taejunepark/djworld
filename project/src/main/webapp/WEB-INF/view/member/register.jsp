@@ -150,7 +150,7 @@ button {
 			 return true;
 		 }
 		 else if(input.value.length < 6 || input.value.length > 20 ){
-			 input.className = "incorrect";
+			 input.className = "incorrect";p
 			 $('#pwMSG').html('<p style="color:red">비밀번호는 영문, 숫자, 기호 총 6~20글자로 정해주세요.</p>');
 			 return false;
 		 }
@@ -327,7 +327,7 @@ button {
 					placeholder="생년월일(ex)19931105"></th>
 			</tr>
 			<tr>
-				<th><input type="text" name="phone" placeholder="휴대폰 번호(11자리)">
+				<th><input type="text" name="phone" placeholder="휴대폰 번호(11자리)" maxlength="11">
 				</th>
 			</tr>
 			<tr>

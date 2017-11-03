@@ -53,6 +53,13 @@ public class ReplyDaoImpl implements ReplyDao {
 		String sql = "delete reply where no = ? and friend = ?";
 		jdbcTemplate.update(sql, no, id);
 	}
+	
+	@Override
+	public void deleteAll(String friend, int parent) {
+		String sql = "delete reply where friend = ? and parent = ?";
+		jdbcTemplate.update(sql, friend, parent);
+		
+	}
 
 	@Override
 	public void edit(String writer, int no, String detail) {

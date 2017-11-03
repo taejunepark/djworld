@@ -191,7 +191,8 @@ h2 {
 									<div class="row center inner-align-left"
 										style="border-right: 1px solid white">
 										<div class="area-30" style="padding-left: 15px;">
-											<a href="#"> <c:choose>
+											<a href="#"> 
+												<c:choose>
 													<c:when test="${profile != null}">
 														<img
 															src="${pageContext.request.contextPath }/file/${profile}"
@@ -242,9 +243,7 @@ h2 {
 								<div class="swiper-wrapper">
 									<!-- 1장의 이미지 영역 -->
 									<div class="swiper-slide">
-										<a
-											href="${pageContext.request.contextPath }/member/pwcheck/info">내
-											정보</a>
+										<a 	href="${pageContext.request.contextPath }/member/pwcheck/info">내 정보</a>
 									</div>
 									<div class="swiper-slide">
 										<a href="${pageContext.request.contextPath }/member/find">회원찾기</a>
@@ -300,7 +299,12 @@ h2 {
 					</c:if>
 					<tr style="height: 50px;">
 						<c:forEach var="friend" items="${friend }">
-							<th >${friend.name }</th>
+							<th >
+								<a href="${pageContext.request.contextPath }/minihome/${friend.id}"
+									onClick="window.open(this.href, '', 'width=900, height=600, top=10%, left=200'); return false;">
+									<font color="white">${friend.name }</font>
+								</a>		
+							</th>
 						</c:forEach>
 					</tr>
 					<tr style="height: 250px">
@@ -309,12 +313,18 @@ h2 {
 								<div class="text-center">
 									<c:choose>
 										<c:when test="${friend.profile != null}">
-										 	<img class=" image-hover img-square-round" src="${pageContext.request.contextPath }/file/${friend.profile}" 
-										 		width="300" height="200" style="border: none">
+										 	<a href="${pageContext.request.contextPath }/minihome/${friend.id}"
+										 		onClick="window.open(this.href, '', 'width=900, height=600, top=10%, left=200'); return false;">
+										 		<img class=" image-hover img-square-round" src="${pageContext.request.contextPath }/file/${friend.profile}" 
+										 			width="300" height="200" style="border: none">
+										 	</a>
 										</c:when>
 										<c:otherwise>
-											<img src="${pageContext.request.contextPath }/img/프로필.jpg"
-												width="300" height="200">
+											<a href="${pageContext.request.contextPath }/minihome/${friend.id}"
+										 		onClick="window.open(this.href, '', 'width=900, height=600, top=10%, left=200'); return false;">
+												<img src="${pageContext.request.contextPath }/img/프로필.jpg"
+													width="300" height="200">
+											</a>
 										</c:otherwise>
 									</c:choose>
 								</div>

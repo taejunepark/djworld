@@ -5,6 +5,28 @@ public class BoardCount {
 	private int visitorsCount;
 	private int photoCount;
 	
+	private int diaryTodayCount;
+	private int visitorsTodayCount;
+	private int photoTodayCount;
+	
+	public int getDiaryTodayCount() {
+		return diaryTodayCount;
+	}
+	public void setDiaryTodayCount(int diaryTodayCount) {
+		this.diaryTodayCount = diaryTodayCount;
+	}
+	public int getVisitorsTodayCount() {
+		return visitorsTodayCount;
+	}
+	public void setVisitorsTodayCount(int visitorsTodayCount) {
+		this.visitorsTodayCount = visitorsTodayCount;
+	}
+	public int getPhotoTodayCount() {
+		return photoTodayCount;
+	}
+	public void setPhotoTodayCount(int photoTodayCount) {
+		this.photoTodayCount = photoTodayCount;
+	}
 	public int getDiaryCount() {
 		return diaryCount;
 	}
