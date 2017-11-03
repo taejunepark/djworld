@@ -17,6 +17,7 @@
 		<li><a id="menu_photo"
 			href="${pageContext.request.contextPath }/minihome/${owner.id}/photo">사진첩</a>
 		</li>
+<<<<<<< HEAD
 
 		<!-- 		<li> -->
 		<!-- 			<a href="#">게시판</a> -->
@@ -24,6 +25,15 @@
 
 		<li><a id="menu_visitors"
 			href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors">방명록</a>
+=======
+		
+		<li>
+			<a id="menu_board" href ="${pageContext.request.contextPath }/minihome/${owner.id}/board">게시판</a>
+		</li>
+		
+		<li>
+			<a id="menu_visitors" href="${pageContext.request.contextPath }/minihome/${owner.id}/visitors">방명록</a>
+>>>>>>> branch 'master' of https://github.com/taejunepark/djworld.git
 		</li>
 	</ul>
 </nav>

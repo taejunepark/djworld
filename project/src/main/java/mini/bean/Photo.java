@@ -3,21 +3,13 @@ package mini.bean;
 import java.util.List;
 
 public class Photo {
-	private int no, read, replycount;
+	private int no;
 	private String title, detail, reg, separate, type;
 	private List<Reply> reply;
-	
-	public int getReplycount() {
-		return replycount;
-	}
-	public void setReplycount(int replycount) {
-		this.replycount = replycount;
-	}
-	public List<Reply> getReply() {
-		return reply;
-	}
-	public void setReply(List<Reply> reply) {
-		this.reply = reply;
+	@Override
+	public String toString() {
+		return "Photo [no=" + no + ", title=" + title + ", detail=" + detail + ", reg=" + reg + ", separate=" + separate
+				+ ", type=" + type + ", reply=" + reply + "]";
 	}
 	public int getNo() {
 		return no;
@@ -25,11 +17,11 @@ public class Photo {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public int getRead() {
-		return read;
+	public String getTitle() {
+		return title;
 	}
-	public void setRead(int read) {
-		this.read = read;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getDetail() {
 		return detail;
@@ -38,7 +30,7 @@ public class Photo {
 		this.detail = detail;
 	}
 	public String getReg() {
-		return reg.substring(0, reg.lastIndexOf('.'));
+		return reg;
 	}
 	public void setReg(String reg) {
 		this.reg = reg;
@@ -55,15 +47,12 @@ public class Photo {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getTitle() {
-		return title;
+	public List<Reply> getReply() {
+		return reply;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setReply(List<Reply> reply) {
+		this.reply = reply;
 	}
-	@Override
-	public String toString() {
-		return "Photo [no=" + no + ", read=" + read + ", reply=" + reply + ", title=" + title + ", detail=" + detail
-				+ ", reg=" + reg + ", separate=" + separate + ", type=" + type + "]";
-	}
+	
+	
 }

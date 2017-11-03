@@ -26,7 +26,7 @@ import mini.util.Utility;
 @Controller
 public class PhotoController {
 	@Autowired
-	private MemberDao MemberDao;
+	private MemberDao memberDao;
 	
 	@Autowired
 	private UploadDao uploadDao;
@@ -35,7 +35,7 @@ public class PhotoController {
 	private PhotoDao photoDao;
 	
 	@Autowired
-	private TotalDao TotalDao;
+	private TotalDao totalDao;
 	
 	@Autowired
 	private MinicommentDao minicommentDao;
@@ -48,8 +48,8 @@ public class PhotoController {
 	
 	@RequestMapping("/minihome/{id}/photo")
 	public String photo(@PathVariable String id, Model model) {
-		Member owner = MemberDao.info(id);
-		int total = TotalDao.count(id);
+		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
 		owner.setTotal(total);
 		String message = minicommentDao.check(id); // 상태메세지
 		List<Member> friendList = friendDao.allList(id);
@@ -57,7 +57,8 @@ public class PhotoController {
 		
 		model.addAttribute("owner", owner);
 		model.addAttribute("message", message);
-		 model.addAttribute("friendList", friendList);
+		model.addAttribute("friendList", friendList);
+		
 		model.addAttribute("list", list);
 		model.addAttribute("id", id);
 		return "/mini/photo/photo";
@@ -65,8 +66,8 @@ public class PhotoController {
 	
 	@RequestMapping("/minihome/{id}/photo_write")
 	public String view_write(@PathVariable String id, Model model) {
-		Member owner = MemberDao.info(id);
-		int total = TotalDao.count(id);
+		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
 		owner.setTotal(total);
 		String message = minicommentDao.check(id); // 상태메세지
 		List<Member> friendList = friendDao.allList(id);
@@ -80,8 +81,8 @@ public class PhotoController {
 	
 	@RequestMapping(value = "/minihome/{id}/photo_write", method=RequestMethod.POST)
 	public String photo_write(@PathVariable String id, Model model, RedirectAttributes redirect, @RequestParam Map<String,Object> map) {
-		Member owner = MemberDao.info(id);
-		int total = TotalDao.count(id);
+		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
 		String title = (String)map.get("title");
 		String detail = (String)map.get("detail");
 		photoDao.insert(title, detail, id);
@@ -96,8 +97,8 @@ public class PhotoController {
 	
 	@RequestMapping("/minihome/{id}/photo_edit/{no}")
 	public String view_edit(@PathVariable String id, @PathVariable int no, Model model) {
-		Member owner = MemberDao.info(id);
-		int total = TotalDao.count(id);
+		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
 		owner.setTotal(total);
 		String message = minicommentDao.check(id); // 상태메세지
 		List<Member> friendList = friendDao.allList(id);
@@ -114,8 +115,8 @@ public class PhotoController {
 	
 	@RequestMapping(value="/minihome/{id}/photo_edit/{no}", method=RequestMethod.POST)
 	public String photo_edit(@PathVariable String id, @PathVariable int no, Model model, @RequestParam Map<String,Object> map, RedirectAttributes redirect) {
-		Member owner = MemberDao.info(id);
-		int total = TotalDao.count(id);
+		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
 		owner.setTotal(total);
 		String message = minicommentDao.check(id); // 상태메세지
 		List<Member> friendList = friendDao.allList(id);
@@ -141,8 +142,8 @@ public class PhotoController {
 	
 	@RequestMapping(value="/minihome/{id}/photo_delete/{no}")
 	public String photo_delete(@PathVariable String id, @PathVariable int no, Model model, @RequestParam Map<String,Object> map, RedirectAttributes redirect) {
-		Member owner = MemberDao.info(id);
-		int total = TotalDao.count(id);
+		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
 		owner.setTotal(total);
 		String message = minicommentDao.check(id); // 상태메세지
 		List<Member> friendList = friendDao.allList(id);
