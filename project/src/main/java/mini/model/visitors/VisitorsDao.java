@@ -16,4 +16,7 @@ public interface VisitorsDao {
 	void delete(String id, int no);
 
 	void edit(String id, int no, String detail);
+
+	// 최근 방명록
+	String detail(String id);
 }

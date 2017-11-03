@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
 <html>
 <head>
 <title>DJWorld</title>
@@ -38,20 +38,84 @@ form {
 	padding: 3px 0px;
 	text-align: center;
 }
+
+.btn {
+	border-radius: 5px;
+	padding: 3px;
+	font-size: 12px;
+	text-decoration: none;
+	color: #fff;
+}
+
+.btn:active {
+	transform: translate(0px, 5px);
+	-webkit-transform: translate(0px, 5px);
+	box-shadow: 0px 1px 0px 0px;
+}
+
+.blue {
+	background-color: #55acee;
+	box-shadow: 0px 5px 0px 0px #3C93D5;
+}
+
+.blue:hover {
+	background-color: #6FC6FF;
+}
+
+.green {
+	background-color: #2ecc71;
+	box-shadow: 0px 5px 0px 0px #15B358;
+}
+
+.green:hover {
+	background-color: #48E68B;
+}
+
+.yellow {
+	background-color: #f1c40f;
+	box-shadow: 0px 5px 0px 0px #D8AB00;
+}
+
+.yellow:hover {
+	background-color: #FFDE29;
+}
+
+.partOne {
+	width: 100%;
+	height: 25%;
+	margin: 0 5px;
+}
+
+.partOne .left {
+	float: left;
+	border: 1px solid black;
+	width: 47.5%;
+	height: 120px;
+	padding: 5px;
+}
+
+.partOne .right {
+	display: inline-block;
+	border: 1px solid black;
+	width: 47.5%;
+	height: 120px;
+	padding: 5px;
+}
+}
 </style>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
 	$(document)
 			.ready(
 					function() {
-
-						$("input[type=submit]")
+						$(".edit_hello")
 								.on(
 										"click",
 										function() {
 											event.preventDefault();
 											var result = false;
 											if ($(this).val() === "삽입") {
+												$(".empty").empty();
 												var input = $(
 														"<textarea rows='8' cols='19'></textarea>")
 														.val(text);
@@ -59,7 +123,7 @@ form {
 												$(this).val("완료");
 											} else if ($(this).val() === "수정") {
 												var text = $(this).prev()
-														.text();
+														.text().trim();
 												var input = $(
 														"<textarea rows='8' cols='19'></textarea>")
 														.val(text);
@@ -69,24 +133,26 @@ form {
 											} else {
 												var text = $(this).prev().val();
 												var div = $("<div/>").addClass(
-														"message").text(text);
+														"message").text(text)
+														.css("font-size",
+																"0.9em");
 												$(this).prev().remove();
 												$(this).before(div);
 												$(this).val("수정");
 												$("#comment").val(
-														$(".message").text())
+														$(".message").text());
 												result = true;
 											}
 											if (result) {
 												var form = document
-														.querySelector("form");
+														.querySelector("#helloform");
 												form.submit();
 											}
 										});
 					});
 </script>
-<body>
-	<div class="mini">
+<body >
+	<div class="mini" >
 		<header>
 			<a class="header_a"
 				href="${pageContext.request.contextPath }/minihome/${userId}">내
@@ -117,13 +183,22 @@ form {
 					</c:otherwise>
 				</c:choose>
 			</div>
-			<form
+			<form id="helloform"
 				action="${pageContext.request.contextPath }/minihome/${owner.id}/minicomment"
 				method="post">
 				<div id="hello" class="hello">
 					<input type="hidden" id="comment" name="comment">
 					<div id="message" class="message">
-						<font style="font-size: 0.9em;">${message }</font>
+						<c:choose>
+							<c:when test="${message == null }">
+								<div class="empty">
+									<font style="font-size: 0.9em;">자기소개가 없습니다.</font>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<font style="font-size: 0.9em;">${message }</font>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<c:choose>
 						<c:when test="${owner.id eq userId && message != null}">
@@ -161,19 +236,49 @@ form {
 		<div class="highlight">
 			<div class="partOne">
 				<div class="left">
-					<div>
-						<font size="3">최근 게시물</font>
-						<hr>
+					<div style="background-color: skyblue;">
+						<font size="3" style="font-weight: bold">최근 게시물</font>
+						<hr style="margin: 0px; margin-bottom: 3px;">
 					</div>
-					<div>
-						<div>사진첩</div>
-						<div>다이어리</div>
-						<div>방명록</div>
+					<div style="background-color: lightgray; height: 97px; paddin-top:5px;">
+						<div style="margin-bottom: 10px;">
+							<a href="#" class="btn green">사진첩</a>&nbsp;&nbsp;
+								<c:choose>
+									<c:when test="${newPhoto == null}">
+										업로드된 사진이 없습니다.
+									</c:when>
+									<c:otherwise>
+										${newPhoto }
+									</c:otherwise>
+								</c:choose>
+						</div>
+						<div style="margin-bottom: 10px;">
+							<a href="#" class="btn yellow">게시판</a>&nbsp;&nbsp;
+								<c:choose>
+									<c:when test="${newBoard == null}">
+										업로드된 게시판이 없습니다.
+									</c:when>
+									<c:otherwise>
+										${newBoard }
+									</c:otherwise>
+								</c:choose>
+						</div>
+						<div>
+							<a href="#" class="btn blue">방명록</a>&nbsp;&nbsp;
+								<c:choose>
+									<c:when test="${newVisitors == null}">
+										업로드된 사진이 없습니다.
+									</c:when>
+									<c:otherwise>
+										${newVisitors }
+									</c:otherwise>
+								</c:choose>
+						</div>
 					</div>
 				</div>
 
 				<div class="right center" style="display: inline-block;">
-					<div style="width: 100%">
+					<div style="width: 100%; border-bottom : 1px dotted gray; margin-bottom: 10px;">
 						<div style="float: left; width: 47%;">
 							<a
 								href="${pageContext.request.contextPath }/minihome/${owner.id}/diary">
@@ -195,7 +300,7 @@ form {
 							<%-- 					</c:if> --%>
 						</div>
 					</div>
-					<div style="width: 100%;">
+					<div style="width: 100%; border-bottom : 1px dotted gray; margin-bottom: 10px;">
 						<div style="float: left; width: 47%;">
 							<a
 								href="${pageContext.request.contextPath }/minihome/${owner.id}/photo">

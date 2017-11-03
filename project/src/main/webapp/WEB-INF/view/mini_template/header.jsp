@@ -8,23 +8,16 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/common.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/minihome.css?ver=3">
-<%-- <link href="${pageContext.request.contextPath }/css/ko_KR/smart_editor2.css?ver=2" rel="stylesheet" type="text/css"> --%>
 <link href="${pageContext.request.contextPath }/css/ko_KR/smart_editor2.css?ver=2" rel="stylesheet" type="text/css">
 <!-- jQuery를 사용하기 위한 CDN 설정 -->
+<style>
+form {
+	margin: 0px;
+}
+</style>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
-	function sendCheck() {
-		event.preventDefault();
-
-		var input = document.querySelector("textarea[id=visitorArea]");
-		if (input.value == "") {
-			alert("내용을 적어주세요.");
-			return;
-		}
-		//전송
-		var form = document.querySelector("form");
-		form.submit();
-	}
+	
 	function replyeditHandler(no, writer){
         var text = $("#replydetail"+no).html().trim();
         var area = $("<textarea style='overflow: hidden;' rows='2' cols='40'></textarea>");
@@ -95,7 +88,16 @@
 				method="post">
 				<div id="hello" class="hello">
 					<input type="hidden" id="comment" name="comment">
-					<div id="message" class="message">${message }</div>
+					<div id="message" class="message">
+						<c:choose>
+							<c:when test="${message == null }">
+								<div class="empty"><font style="font-size: 0.9em;">자기소개가 없습니다.</font></div>
+							</c:when>
+							<c:otherwise>
+								<font style="font-size: 0.9em;">${message }</font>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</div>
 			</form>
 			<div style="height: 40px;"></div>

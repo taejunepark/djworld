@@ -47,12 +47,12 @@ public class VisitorController {
 			int total = totalDao.count(id);
 			String message = minicommentDao.check(id); // 상태메세지
 			List<Member> friendList = friendDao.allList(id);
+			model.addAttribute("message", message);
+			model.addAttribute("friendList", friendList);
 			
 			owner.setTotal(total);
 			model.addAttribute("list", list);
 			model.addAttribute("owner", owner);
-			model.addAttribute("message", message);
-			 model.addAttribute("friendList", friendList);
 			// 접속한 계정의 정보
 			String  userId = (String)session.getAttribute("userId");
 			Member user = memberDao.info(userId);

@@ -2,11 +2,9 @@ package mini.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import main.bean.Member;
+import main.model.friend.FriendDao;
 import main.model.member.MemberDao;
 import mini.bean.Diary;
 import mini.bean.Visitors;
+import mini.model.comment.MinicommentDao;
 import mini.model.diary.DiaryDao;
 import mini.model.total.TotalDao;
 import mini.model.upload.UploadDao;
@@ -47,6 +47,12 @@ public class DiaryController {
 	@Autowired
 	private UploadDao uploadDao;
 	
+	@Autowired
+	private MinicommentDao minicommentDao;
+	
+	@Autowired
+	private FriendDao friendDao;
+	
 	@RequestMapping("/minihome/{id}/diary")
 	public String init_diary(@PathVariable String id,Model model) {
 		Date date = new Date();
@@ -55,6 +61,11 @@ public class DiaryController {
 		owner.setTotal(total);
 		model.addAttribute("owner", owner);
 		model.addAttribute("id", id);
+		
+		String message = minicommentDao.check(id); // 상태메세지
+		List<Member> friendList = friendDao.allList(id);
+		model.addAttribute("message", message);
+		model.addAttribute("friendList", friendList);
 		
 		String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
 
@@ -77,6 +88,12 @@ public class DiaryController {
 		model.addAttribute("owner", owner);
 		model.addAttribute("id", id);
 		
+		String message = minicommentDao.check(id); // 상태메세지
+		List<Member> friendList = friendDao.allList(id);
+		model.addAttribute("message", message);
+		model.addAttribute("friendList", friendList);
+
+		
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		Diary d = diaryDao.info(reg, id);
@@ -91,6 +108,12 @@ public class DiaryController {
 		Member owner = memberDao.info(id);
 		int total = totalDao.count(id);
 		 owner.setTotal(total);
+		
+		 String message = minicommentDao.check(id); // 상태메세지
+		List<Member> friendList = friendDao.allList(id);
+		model.addAttribute("message", message);
+		model.addAttribute("friendList", friendList);
+
 		 
 		String path = "";
 		String detail = (String)map.get("detail");
@@ -125,6 +148,13 @@ public class DiaryController {
 		Member owner = memberDao.info(id);
 		int total = totalDao.count(id);
 		owner.setTotal(total);
+		
+		String message = minicommentDao.check(id); // 상태메세지
+		List<Member> friendList = friendDao.allList(id);
+		model.addAttribute("message", message);
+		model.addAttribute("friendList", friendList);
+
+		
 		String path = "";
 		String editFlag = (String)map.get("editFlag");
 		String detail = (String)map.get("detail");
@@ -165,6 +195,7 @@ public class DiaryController {
 		Member owner = memberDao.info(id);
 		redirect.addFlashAttribute("owner", owner);
 		redirect.addFlashAttribute("id", id);
+		
 		Diary d = diaryDao.info(reg, id);
 		diaryDao.delete(reg);
 		uploadDao.delete(d.getSeparate(), d.getNo());

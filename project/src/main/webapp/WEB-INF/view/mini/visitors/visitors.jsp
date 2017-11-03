@@ -16,6 +16,20 @@
 	
  </style>
  <script>
+	function sendCheck() {
+		event.preventDefault();
+
+		var input = document.querySelector("textarea[id=visitorArea]");
+		if (input.value == "") {
+			alert("내용을 적어주세요.");
+			return;
+		}
+		//전송
+		var form = document.querySelector("#visitorsForm");
+		form.submit();
+	}
+
+ 
  	function editHandler(no){
         var text = $("#detail"+no).html();
         var area = $("<textarea rows='5' cols='50'></textarea>");
@@ -48,7 +62,7 @@
     }	
  </script>
 		<div class="highlight">
-			<form action="${pageContext.request.contextPath }/minihome/${owner.id }/visitors"
+			<form action="${pageContext.request.contextPath }/minihome/${owner.id }/visitors" id="visitorsForm"
 				method="post" onsubmit="sendCheck()">
 				<input type="hidden" name="writer" value="${userId }">
 				<table class="visitorTable">
@@ -83,11 +97,13 @@
 					</tr>
 				</table>
 			</form>
+			
 			<c:if test="${empty list }">
 				<h1 style="text-align:center;">방명록의 첫 작성자가 되어보세요!</h1>
 			</c:if>
 			<table class="visitorListTable">
 				<c:forEach var="list" items="${list }">
+					<div style="height:30px;"></div>
 					<tr style="background-color: lightgray">
 						<td colspan="2" style="border-top: 1px solid gray;">
 							<div style="padding-left: 20px;" class="text-left row">

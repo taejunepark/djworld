@@ -27,9 +27,10 @@ public class ReplyController {
 	}
 	
 	@RequestMapping(value="/replydelete/{no}/{id}")
-	public String replyDelete(@PathVariable int no, @PathVariable String id) {
+	public String replyDelete(@PathVariable int no, @PathVariable String id, HttpServletRequest request) {
 		replyDao.delete(id, no);
-		return "redirect:/minihome/"+id+"/visitors";
+		String referer = request.getHeader("Referer");
+		return "redirect:"+referer;
 	}
 	
 	@RequestMapping(value="/replyedit/{no}/{writer}",  produces = "application/text; charset=utf8")

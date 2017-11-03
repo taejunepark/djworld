@@ -22,6 +22,8 @@ import mini.bean.BoardCount;
 import mini.bean.Friendcomment;
 import mini.model.comment.MinicommentDao;
 import mini.model.count.BoardcountDao;
+import mini.model.diary.DiaryDao;
+import mini.model.photo.PhotoDao;
 import mini.model.total.TotalDao;
 import mini.model.visitors.VisitorsDao;
 
@@ -45,6 +47,12 @@ public class MinihomeController {
 	@Autowired
 	private TotalDao totalDao;
 	
+	@Autowired
+	private PhotoDao photoDao;
+	
+	@Autowired
+	private DiaryDao diaryDao;
+	
 	@RequestMapping(value= {"/minihome/{id}"})
 	public String home(@PathVariable String id, Model model, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -58,8 +66,15 @@ public class MinihomeController {
 		boolean result = friendDao.friendCheck(id, userId); // 둘이 일촌인지?
 		model.addAttribute("friendCheck", result);
 		
-		//최근 게시판 목록
+		//최근 게시판 목록(제목)
+		String visitorsDetail = visitorsDao.detail(id);
+		model.addAttribute("newVisitors", visitorsDetail);
 		
+//		String photoTitle = photoDao.title(id);
+//		model.addAttribute("newPhoto", photoTitle);
+//		
+//		String diaryTitle = diaryDao.title(id);
+//		model.addAttribute("newDiary", diaryTitle);
 		
 		int visitorsCount = boardcountDao.visitorsCount(id); // 게시판 수
 		int diaryCount = boardcountDao.diaryCount(id);
@@ -77,7 +92,6 @@ public class MinihomeController {
 		b.setVisitorsTodayCount(visitorsTodayCount);
 		b.setPhotoTodayCount(photoTodayCount);
 		b.setDiaryTodayCount(diaryTodayCount);
-		
 		
 		Cookie[] cookies = request.getCookies();
 		Cookie viewCookie = null;
@@ -112,9 +126,6 @@ public class MinihomeController {
 		 owner.setTotal(total);
 		 model.addAttribute("owner", owner);
 		 model.addAttribute("id", id);
-		 if(message == null) {
-			 message = "자기소개가 없습니다.";
-		 }
 		 
 		 model.addAttribute("message", message);
 		 model.addAttribute("friendList", friendList);

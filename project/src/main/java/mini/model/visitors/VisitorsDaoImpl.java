@@ -3,6 +3,7 @@ package mini.model.visitors;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -77,5 +78,21 @@ public class VisitorsDaoImpl implements VisitorsDao {
 	public void edit(String id, int no, String detail) {
 		String sql = "update visitors set detail = ? where no =? and owner = ?";
 		jdbcTemplate.update(sql, detail, no, id);
+	}
+
+	@Override
+	public String detail(String id) {
+		String result = null;
+		try {
+			String sql = "select tmp.detail from (select * from visitors order by reg desc)tmp where rownum = 1 and owner= ?";
+			result = jdbcTemplate.queryForObject(sql, String.class, id);
+			if(result.length() > 10) {
+				result.substring(0, 10);
+			}
+		}
+		catch(EmptyResultDataAccessException e) {
+			result = null;
+		}
+		return result;
 	}
 }
