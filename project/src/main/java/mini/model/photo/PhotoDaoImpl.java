@@ -33,7 +33,7 @@ public class PhotoDaoImpl implements PhotoDao {
 			p.setDetail(rs.getString("detail"));
 			p.setReg(rs.getString("reg"));
 			p.setType(rs.getString("type"));
-			p.setSeparate(rs.getString("separate"));
+			p.setOwner(rs.getString("owner"));
 			return p;
 		}
 	};
@@ -47,7 +47,7 @@ public class PhotoDaoImpl implements PhotoDao {
 				p.setDetail(rs.getString("detail"));
 				p.setReg(rs.getString("reg"));
 				p.setType(rs.getString("type"));
-				p.setSeparate(rs.getString("separate"));
+				p.setOwner(rs.getString("owner"));
 				return p;
 			}
 			return null;
@@ -55,29 +55,29 @@ public class PhotoDaoImpl implements PhotoDao {
 	};
 	
 	@Override
-	public List<Photo> list(String type, String separate) {
-		String sql = "select * from photo where type = ? and separate = ? order by reg desc";
-		List<Photo> list =  jdbctemplate.query(sql, mapper, type, separate);
+	public List<Photo> list(String type, String owner) {
+		String sql = "select * from photo where type = ? and owner = ? order by reg desc";
+		List<Photo> list =  jdbctemplate.query(sql, mapper, type, owner);
 		for(Photo p : list) {
-			List<Reply> list2 = replyDao.list(p.getNo(), separate);
+			List<Reply> list2 = replyDao.list(p.getNo(), owner);
 			p.setReply(list2);
 		}
 		return list;
 	}
 
 	@Override
-	public void insert(String title, String detail, String separate) {
-		String sql = "insert into photo values("+separate+".nextval,?,?,sysdate,'photo',?)";
+	public void insert(String title, String detail, String owner) {
+		String sql = "insert into photo values("+owner+".nextval,?,?,sysdate,'photo',?)";
 		Object[] obj = {
-				title, detail, separate
+				title, detail, owner
 		};
 		jdbctemplate.update(sql,obj);
 	}
 
 	@Override
-	public int newSeq(String separate) {
-		String sql = "select max(no) from photo where separate = ?";
-		return jdbctemplate.queryForObject(sql, Integer.class, separate);
+	public int newSeq(String owner) {
+		String sql = "select max(no) from photo where owner = ?";
+		return jdbctemplate.queryForObject(sql, Integer.class, owner);
 	}
 
 	@Override
@@ -87,26 +87,26 @@ public class PhotoDaoImpl implements PhotoDao {
 	}
 
 	@Override
-	public void edit(String title, String detail, String separate, int no) {
-		String sql = "update photo set title = ?, detail = ? where separate = ? and no = ?";
+	public void edit(String title, String detail, String owner, int no) {
+		String sql = "update photo set title = ?, detail = ? where owner = ? and no = ?";
 		Object[] obj = {
-				title, detail, separate, no
+				title, detail, owner, no
 		};
 		jdbctemplate.update(sql,obj);
 		
 	}
 
 	@Override
-	public void delete(String separate, int no) {
-		String sql = "delete photo where separate = ? and no = ?";
-		jdbctemplate.update(sql, separate, no);
+	public void delete(String owner, int no) {
+		String sql = "delete photo where owner = ? and no = ?";
+		jdbctemplate.update(sql, owner, no);
 	}
 
 	@Override
 	public String title(String id) {
 		String result = null;
 		try {
-			String sql = "select tmp.title from (select * from photo order by reg desc)tmp where rownum = 1 and separate = ?";
+			String sql = "select tmp.title from (select * from photo order by reg desc)tmp where rownum = 1 and owner = ?";
 			result = jdbctemplate.queryForObject(sql, String.class, id);
 			if(result.length() > 10) {
 				result = result.substring(0, 10)+"..";

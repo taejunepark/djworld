@@ -97,7 +97,7 @@ public class BoardController {
 		b.setTitle((String)map.get("title"));
 		b.setWriter(memberDao.info((String)request.getSession().getAttribute("userId")).getName());
 		b.setDetail((String)map.get("detail"));
-		b.setSeparate(id);
+		b.setOwner(id);
 		boardDao.insert(b);
 		List<String> list = Utility.substrURL((String)map.get("srcs"));
 		int no = boardDao.newSeq(id);
@@ -155,11 +155,11 @@ public class BoardController {
 		
 		boardDao.edit(title, detail, id, no);
 		Board b = boardDao.info(no, id);
-		uploadDao.delete(b.getSeparate(), b.getNo());
+		uploadDao.delete(b.getOwner(), b.getNo());
 		
 		List<String> list = Utility.substrURL((String)map.get("srcs"));
 		if(list.size() != 0)
-			uploadDao.insert(list, b.getNo(), b.getSeparate());
+			uploadDao.insert(list, b.getNo(), b.getOwner());
 		
 		return "redirect:/minihome/"+id+"/board_detail/" + no;
 	}

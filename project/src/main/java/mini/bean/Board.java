@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Board {
 	private int no, read, reply;
-	private String writer, title, detail, reg, type, separate;
+	private String writer, title, detail, reg, type, owner;
 	private List<Reply> replyList;
 	
 	
@@ -65,11 +65,11 @@ public class Board {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getSeparate() {
-		return separate;
+	public String getOwner() {
+		return owner;
 	}
-	public void setSeparate(String separate) {
-		this.separate = separate;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	public String getDate() {
 		String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -78,7 +78,7 @@ public class Board {
 	@Override
 	public String toString() {
 		return "Board [no=" + no + ", read=" + read + ", reply=" + reply + ", writer=" + writer + ", title=" + title
-				+ ", detail=" + detail + ", reg=" + reg + ", type=" + type + ", separate=" + separate + ", replyList="
+				+ ", detail=" + detail + ", reg=" + reg + ", type=" + type + ", owner=" + owner + ", replyList="
 				+ replyList + "]";
 	}
 	

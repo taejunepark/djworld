@@ -132,11 +132,11 @@ public class DiaryController {
 			Diary d = new Diary();
 			d.setReg(reg);
 			d.setDetail(detail);
-			d.setSeparate(id);
+			d.setOwner(id);
 			diaryDao.insert(d);
 			d = diaryDao.info(reg, id);
 			if(list.size() != 0)
-				uploadDao.insert(list, d.getNo(), d.getSeparate());
+				uploadDao.insert(list, d.getNo(), d.getOwner());
 			
 			path = "redirect:/minihome/" + id + "/diary";
 		}
@@ -175,15 +175,15 @@ public class DiaryController {
 			Diary d = new Diary();
 			d.setReg(reg);
 			d.setDetail(detail);
-			d.setSeparate(id);
+			d.setOwner(id);
 			diaryDao.edit(d);
 			
 			d = diaryDao.info(reg, id);
-			uploadDao.delete(d.getSeparate(), d.getNo());
+			uploadDao.delete(d.getOwner(), d.getNo());
 			
 			List<String> list = Utility.substrURL((String)map.get("srcs"));
 			if(list.size() != 0)
-				uploadDao.insert(list, d.getNo(), d.getSeparate());
+				uploadDao.insert(list, d.getNo(), d.getOwner());
 			
 			path = "redirect:/minihome/"+id+"/diary";
 		}
@@ -198,7 +198,7 @@ public class DiaryController {
 		
 		Diary d = diaryDao.info(reg, id);
 		diaryDao.delete(reg);
-		uploadDao.delete(d.getSeparate(), d.getNo());
+		uploadDao.delete(d.getOwner(), d.getNo());
 		return "redirect:/minihome/"+id+"/diary";
 	}
 }
