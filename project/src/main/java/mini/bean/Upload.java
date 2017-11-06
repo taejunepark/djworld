@@ -1,9 +1,8 @@
 package mini.bean;
 
 public class Upload {
-	private String filename, type, separate;
+	private String filename, type, owner;
 	private int no;
-	
 	public String getFilename() {
 		return filename;
 	}
@@ -16,11 +15,11 @@ public class Upload {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getSeparate() {
-		return separate;
+	public String getOwner() {
+		return owner;
 	}
-	public void setSeparate(String separate) {
-		this.separate = separate;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	public int getNo() {
 		return no;
@@ -30,8 +29,6 @@ public class Upload {
 	}
 	@Override
 	public String toString() {
-		return "Upload [filename=" + filename + ", type=" + type + ", separate=" + separate + ", no=" + no + "]";
+		return "Upload [filename=" + filename + ", type=" + type + ", owner=" + owner + ", no=" + no + "]";
 	}
-	
-	
 }

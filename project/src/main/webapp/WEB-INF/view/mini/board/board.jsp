@@ -49,7 +49,7 @@ table {
 								<th>${b.no }</th>
 								<td>
 									<a href="${pageContext.request.contextPath}/minihome/${owner.id}/board_detail/${b.no}">
-										${b.title } [${b.reply }]
+										${b.title }
 									</a>
 								</td>
 								<th>${b.writer }</th>
@@ -89,13 +89,15 @@ table {
 						</tr>
 					</tbody>
 					
-					<tfoot>
-						<tr>
-							<th colspan="5">
-								<button id="write_btn">등록</button>
-							</th>
-						</tr>
-					</tfoot>
+					<c:if test="${owner.id eq userId}">
+						<tfoot>
+							<tr>
+								<th colspan="5">
+									<button id="write_btn">등록</button>
+								</th>
+							</tr>
+						</tfoot>
+					</c:if>
 				</table>
 			</c:otherwise>
 		</c:choose>

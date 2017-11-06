@@ -32,28 +32,28 @@ public class DiaryDaoImpl implements DiaryDao {
 	};
 	
 	@Override
-	public Diary info(String reg, String separate) {
-		String sql = "select * from diary where reg = ? and separate = ?";
+	public Diary info(String reg, String owner) {
+		String sql = "select * from diary where reg = ? and owner = ?";
 		Object[] obj = {
-				reg, separate
+				reg, owner
 		};
 		return jdbctemplate.query(sql, obj, extractor);
 	}
 
 	@Override
 	public void insert(Diary d) {
-		String sql = "insert into diary values(" + d.getSeparate() + ".nextVal,?, ?, 'diary', ?)";
+		String sql = "insert into diary values(" + d.getOwner() + ".nextVal,?, ?, 'diary', ?)";
 		Object[] obj = {
-				d.getReg(), d.getDetail(), d.getSeparate() 
+				d.getReg(), d.getDetail(), d.getOwner() 
 		};
 		jdbctemplate.update(sql, obj);
 	}
 
 	@Override
 	public void edit(Diary d) {
-		String sql = "update diary set detail = ? where reg = ? and separate = ?";
+		String sql = "update diary set detail = ? where reg = ? and owner = ?";
 		Object[] obj = {
-				d.getDetail(), d.getReg(), d.getSeparate()
+				d.getDetail(), d.getReg(), d.getOwner()
 		};
 		jdbctemplate.update(sql, obj);
 	}

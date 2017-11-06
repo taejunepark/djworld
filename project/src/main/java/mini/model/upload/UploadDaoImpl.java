@@ -26,7 +26,7 @@ public class UploadDaoImpl implements UploadDao{
 				u.setFilename(rs.getString("filename"));
 				u.setType(rs.getString("type"));
 				u.setNo(rs.getInt("no"));
-				u.setSeparate(rs.getString("separate"));
+				u.setOwner(rs.getString("owner"));
 				return u;
 			}
 			
@@ -35,13 +35,13 @@ public class UploadDaoImpl implements UploadDao{
 	};
 	
 	@Override
-	public void insert(List<String> list, int no, String separate) {
+	public void insert(List<String> list, int no, String owner) {
 		for(String filename : list) {
 			if(overlap(filename))
 				continue;
 			String sql = "insert into upload values(?,?,?)";
 			Object[] obj = {
-					filename, no, separate
+					filename, no, owner
 			};
 			jdbctemplate.update(sql,obj);
 		}
@@ -55,10 +55,10 @@ public class UploadDaoImpl implements UploadDao{
 	}
 
 	@Override
-	public void delete(String separate, int no) {
-		String sql = "delete upload where separate = ? and no = ?";
+	public void delete(String owner, int no) {
+		String sql = "delete upload where owner = ? and no = ?";
 		Object[] obj = {
-				separate, no
+				owner, no
 		};
 		jdbctemplate.update(sql,obj);
 	}

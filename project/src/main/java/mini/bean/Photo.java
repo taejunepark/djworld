@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Photo {
 	private int no;
-	private String title, detail, reg, separate, type;
+	private String title, detail, reg, owner, type;
 	private List<Reply> reply;
 	@Override
 	public String toString() {
-		return "Photo [no=" + no + ", title=" + title + ", detail=" + detail + ", reg=" + reg + ", separate=" + separate
+		return "Photo [no=" + no + ", title=" + title + ", detail=" + detail + ", reg=" + reg + ", owner=" + owner
 				+ ", type=" + type + ", reply=" + reply + "]";
 	}
 	public int getNo() {
@@ -35,11 +35,11 @@ public class Photo {
 	public void setReg(String reg) {
 		this.reg = reg;
 	}
-	public String getSeparate() {
-		return separate;
+	public String getOwner() {
+		return owner;
 	}
-	public void setSeparate(String separate) {
-		this.separate = separate;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	public String getType() {
 		return type;

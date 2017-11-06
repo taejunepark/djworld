@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Diary {
-	private String reg, detail, type, separate;
+	private String reg, detail, type, owner;
 	private int no;
 	
 	public Diary(){}
@@ -13,7 +13,7 @@ public class Diary {
 		setNo(rs.getInt("no"));
 		setReg(rs.getString("reg"));
 		setDetail(rs.getString("detail"));
-		setSeparate(rs.getString("separate"));
+		setOwner(rs.getString("owner"));
 		setType(rs.getString("type"));
 	}
 
@@ -41,12 +41,12 @@ public class Diary {
 		this.type = type;
 	}
 
-	public String getSeparate() {
-		return separate;
+	public String getOwner() {
+		return owner;
 	}
 
-	public void setSeparate(String separate) {
-		this.separate = separate;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
 	public int getNo() {
@@ -59,7 +59,7 @@ public class Diary {
 
 	@Override
 	public String toString() {
-		return "Diary [reg=" + reg + ", detail=" + detail + ", type=" + type + ", separate=" + separate + ", no=" + no
+		return "Diary [reg=" + reg + ", detail=" + detail + ", type=" + type + ", owner=" + owner + ", no=" + no
 				+ "]";
 	}
 	

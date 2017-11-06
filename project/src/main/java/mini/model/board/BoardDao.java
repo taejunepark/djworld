@@ -12,4 +12,6 @@ public interface BoardDao {
 	int newSeq(String separate);
 	List<Board> list(String type, String separate);
 	Board info(int no, String separate);
+	void edit(String title, String detail, String separate, int no);
+	void delete(String separate, int no);
 }

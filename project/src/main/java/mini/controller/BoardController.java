@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,9 +22,11 @@ import main.model.friend.FriendDao;
 import main.model.member.MemberDao;
 import mini.bean.Board;
 import mini.bean.Diary;
+import mini.bean.Photo;
 import mini.model.board.BoardDao;
 import mini.model.comment.MinicommentDao;
 import mini.model.diary.DiaryDao;
+import mini.model.reply.ReplyDao;
 import mini.model.total.TotalDao;
 import mini.model.upload.UploadDao;
 import mini.model.visitors.VisitorsDao;
@@ -48,6 +51,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private ReplyDao replyDao;
 	
 	@RequestMapping("/minihome/{id}/board")
 	public String init_board(@PathVariable String id,Model model) {
@@ -91,7 +97,7 @@ public class BoardController {
 		b.setTitle((String)map.get("title"));
 		b.setWriter(memberDao.info((String)request.getSession().getAttribute("userId")).getName());
 		b.setDetail((String)map.get("detail"));
-		b.setSeparate(id);
+		b.setOwner(id);
 		boardDao.insert(b);
 		List<String> list = Utility.substrURL((String)map.get("srcs"));
 		int no = boardDao.newSeq(id);
@@ -114,5 +120,65 @@ public class BoardController {
 		model.addAttribute("id", id);
 		model.addAttribute("board", board);
 		return "/mini/board/board_detail";
+	}
+	
+	@RequestMapping("/minihome/{id}/board_edit/{no}")
+	public String view_edit(@PathVariable String id, @PathVariable int no, Model model) {
+		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
+		owner.setTotal(total);
+		String message = minicommentDao.check(id); // 상태메세지
+		List<Member> friendList = friendDao.allList(id);
+		Board board = boardDao.info(no, id);
+		
+		model.addAttribute("board", board);
+		model.addAttribute("owner", owner);
+		model.addAttribute("message", message);
+		model.addAttribute("friendList", friendList);
+		model.addAttribute("id", id);
+		
+		return "/mini/board/board_edit";
+	}
+	
+	@RequestMapping(value="/minihome/{id}/board_edit/{no}", method=RequestMethod.POST)
+	public String photo_edit(@PathVariable String id, @PathVariable int no, Model model, @RequestParam Map<String,Object> map, RedirectAttributes redirect) {
+		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
+		owner.setTotal(total);
+		String message = minicommentDao.check(id); // 상태메세지
+		List<Member> friendList = friendDao.allList(id);
+		
+		String title = (String)map.get("title");
+		String detail = (String)map.get("detail");
+		System.out.println("title : " + title);
+		System.out.println("detail : " + detail);
+		
+		boardDao.edit(title, detail, id, no);
+		Board b = boardDao.info(no, id);
+		uploadDao.delete(b.getOwner(), b.getNo());
+		
+		List<String> list = Utility.substrURL((String)map.get("srcs"));
+		if(list.size() != 0)
+			uploadDao.insert(list, b.getNo(), b.getOwner());
+		
+		return "redirect:/minihome/"+id+"/board_detail/" + no;
+	}
+	
+	@RequestMapping(value="/minihome/{id}/board_delete/{no}")
+	public String photo_delete(@PathVariable String id, @PathVariable int no, Model model, @RequestParam Map<String,Object> map, RedirectAttributes redirect) {
+		Member owner = memberDao.info(id);
+		int total = totalDao.count(id);
+		owner.setTotal(total);
+		String message = minicommentDao.check(id); // 상태메세지
+		List<Member> friendList = friendDao.allList(id);
+		
+		String title = (String)map.get("title");
+		String detail = (String)map.get("detail");
+		
+		boardDao.delete(id, no);
+		uploadDao.delete(id, no);
+		replyDao.deleteAll(id, no);
+		
+		return "redirect:/minihome/"+id+"/board";
 	}
 }

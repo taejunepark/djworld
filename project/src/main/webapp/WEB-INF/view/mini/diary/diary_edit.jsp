@@ -7,9 +7,9 @@
 		margin: 10px;
 	}
 	
-	div{
+	/* div{
 		border: 3px solid black;
-	}
+	} */
 	
 	#detail{
 		width:100%;

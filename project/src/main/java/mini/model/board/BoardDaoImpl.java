@@ -37,7 +37,7 @@ public class BoardDaoImpl implements BoardDao{
 			b.setDetail(rs.getString("detail"));
 			b.setReg(rs.getString("reg"));
 			b.setType(rs.getString("type"));
-			b.setSeparate(rs.getString("separate"));
+			b.setOwner(rs.getString("owner"));
 			return b;
 		}
 	};
@@ -55,7 +55,7 @@ public class BoardDaoImpl implements BoardDao{
 				b.setDetail(rs.getString("detail"));
 				b.setReg(rs.getString("reg"));
 				b.setType(rs.getString("type"));
-				b.setSeparate(rs.getString("separate"));
+				b.setOwner(rs.getString("owner"));
 				return b;
 			}
 			return null;
@@ -65,38 +65,53 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public void insert(Board b) {
 		String sql = "insert into board "
-				+ "values(" + b.getSeparate()+ ".nextval, ?, ?, ?, 0, 0, sysdate, 'board', ?)";
+				+ "values(" + b.getOwner()+ ".nextval, ?, ?, ?, 0, 0, sysdate, 'board', ?)";
 		Object[] obj = {
-				b.getTitle(), b.getWriter(), b.getDetail(), b.getSeparate()
+				b.getTitle(), b.getWriter(), b.getDetail(), b.getOwner()
 		};
 		jdbctemplate.update(sql, obj);
 	}
 
 	@Override
-	public int newSeq(String separate) {
-		String sql = "select max(no) from board where separate = ?";
-		return jdbctemplate.queryForObject(sql, Integer.class, separate);
+	public int newSeq(String owner) {
+		String sql = "select max(no) from board where owner = ?";
+		return jdbctemplate.queryForObject(sql, Integer.class, owner);
 	}
 
 	@Override
-	public List<Board> list(String type, String separate) {
-		String sql = "select * from board where type = ? and separate = ? order by reg desc";
+	public List<Board> list(String type, String owner) {
+		String sql = "select * from board where type = ? and owner = ? order by reg desc";
 		Object[] obj = {
-				type,separate
+				type,owner
 		};
 		return jdbctemplate.query(sql, obj,mapper);
 		
 	}
 
 	@Override
-	public Board info(int no, String separate) {
-		String sql = "select * from board where no = ? and separate = ?";
+	public Board info(int no, String owner) {
+		String sql = "select * from board where no = ? and owner = ?";
 		Object[] obj = {
-				no, separate
+				no, owner
 		};
 		Board b = jdbctemplate.query(sql, obj, extractor);
-		List<Reply> replyList = replyDao.list(no, separate);
+		List<Reply> replyList = replyDao.list(no, owner);
 		b.setReplyList(replyList);
 		return b;
+	}
+
+	@Override
+	public void edit(String title, String detail, String owner, int no) {
+		String sql = "update board set title = ?, detail = ? where owner = ? and no = ?";
+		Object[] obj = {
+				title, detail, owner, no
+		};
+		jdbctemplate.update(sql,obj);
+	}
+
+	@Override
+	public void delete(String owner, int no) {
+		String sql = "delete board where owner = ? and no = ?";
+		jdbctemplate.update(sql, owner, no);
 	}
 }

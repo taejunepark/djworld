@@ -126,11 +126,11 @@ public class PhotoController {
 		
 		photoDao.edit(title, detail, id, no);
 		Photo p = photoDao.info(no);
-		uploadDao.delete(p.getSeparate(), p.getNo());
+		uploadDao.delete(p.getOwner(), p.getNo());
 		
 		List<String> list = Utility.substrURL((String)map.get("srcs"));
 		if(list.size() != 0)
-			uploadDao.insert(list, p.getNo(), p.getSeparate());
+			uploadDao.insert(list, p.getNo(), p.getOwner());
 		
 		redirect.addFlashAttribute("owner", owner);
 		redirect.addFlashAttribute("message", message);

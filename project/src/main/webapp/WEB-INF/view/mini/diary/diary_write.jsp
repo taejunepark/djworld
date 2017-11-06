@@ -8,9 +8,9 @@
 		margin: 10px;
 	}
 	
-	div{
+	/* div{
 		border: 3px solid black;
-	}
+	} */
 	
 	#detail{
 		width:100%;
@@ -62,7 +62,7 @@
         		 input.attr('type', 'hidden').attr('name','srcs').val(imgPath)
         		 // form에 추가
         		 $("form").append(input)
-         		 $("form").attr('action', '${pageContext.request.contextPath }/minihome/${owner.id }/board_write').submit()
+         		 $("form").attr('action', '${pageContext.request.contextPath }/minihome/${owner.id }/diary_write').submit()
         	 }
         	 
         	 function validation() {

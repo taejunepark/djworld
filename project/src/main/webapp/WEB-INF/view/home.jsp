@@ -218,7 +218,7 @@ h2 {
 							<tr>
 								<th colspan="3" style="height: 50px;">
 									<a href="${pageContext.request.contextPath }/minihome/${userId }"
-									onClick="window.open(this.href, '', 'width=900, height=600, top=10%, left=200'); return false;">내
+									onClick="window.open(this.href, '', 'width=1200, height=700, top=10%, left=200'); return false;">내
 										홈피 가기</a></th>
 								<th colspan="2"><a
 									href="${pageContext.request.contextPath}/member/logout">로그아웃</a></th>
@@ -301,7 +301,7 @@ h2 {
 						<c:forEach var="friend" items="${friend }">
 							<th >
 								<a href="${pageContext.request.contextPath }/minihome/${friend.id}"
-									onClick="window.open(this.href, '', 'width=900, height=600, top=10%, left=200'); return false;">
+									onClick="window.open(this.href, '', 'width=1200, height=700, top=10%, left=200'); return false;">
 									<font color="white">${friend.name }</font>
 								</a>		
 							</th>
@@ -314,14 +314,14 @@ h2 {
 									<c:choose>
 										<c:when test="${friend.profile != null}">
 										 	<a href="${pageContext.request.contextPath }/minihome/${friend.id}"
-										 		onClick="window.open(this.href, '', 'width=900, height=600, top=10%, left=200'); return false;">
+										 		onClick="window.open(this.href, '', 'width=1200, height=700, top=10%, left=200'); return false;">
 										 		<img class=" image-hover img-square-round" src="${pageContext.request.contextPath }/file/${friend.profile}" 
 										 			width="300" height="200" style="border: none">
 										 	</a>
 										</c:when>
 										<c:otherwise>
 											<a href="${pageContext.request.contextPath }/minihome/${friend.id}"
-										 		onClick="window.open(this.href, '', 'width=900, height=600, top=10%, left=200'); return false;">
+										 		onClick="window.open(this.href, '', 'width=1200, height=800, top=10%, left=200'); return false;">
 												<img src="${pageContext.request.contextPath }/img/프로필.jpg"
 													width="300" height="200">
 											</a>

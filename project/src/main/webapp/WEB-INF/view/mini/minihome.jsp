@@ -292,7 +292,7 @@ form {
 							</c:if>
 						</div>
 						<div style="display: inline-block;">
-							<a href="#"> 게시판 <font color="blue" style="font-size: 0.8em;">0
+							<a href="${pageContext.request.contextPath }/minihome/${owner.id}/board"> 게시판 <font color="blue" style="font-size: 0.8em;">0
 									/ 0</font></a>
 							<%-- 					<c:if test="${count.diaryTodayCount != 0 }"> --%>
 							<%-- 						<img src="${pageContext.request.contextPath }/img/new.png" width="15" height="15" --%>

@@ -20,12 +20,15 @@ public class FileController {
 	@RequestMapping(value="/file_uploader")
 	public void fileUpload(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("파일 업로더 컨트롤러 실행");
+		String URL= request.getRequestURL().toString();
+		URL = URL.substring(0, URL.lastIndexOf('/') + 1) + "multiupload/";
+		System.out.println(URL);
+		
 		try {
 			// 파일 정보
 			String sFileInfo = "";
 			// 파일명 수신
 			String filename = request.getHeader("file-name");
-			System.out.println("filename : " + filename);
 			// 파일 확장자 소문자로 변경
 			String filename_ext = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
 			
@@ -44,7 +47,6 @@ public class FileController {
 
 			// 이미지가 아닐 경우
 			if (cnt == 0) {
-				System.out.println("이미지가 아니올시다");
 				PrintWriter pw = response.getWriter();
 				pw.print("Not Allow_" + filename);
 				pw.flush();
@@ -106,7 +108,7 @@ public class FileController {
 				sFileInfo += "&bNewLine=true";
 				// img 태그의 title 속성을 원본 파일명으로 적용시켜주기 위함
 				sFileInfo += "&sFileName=" + filename;
-				sFileInfo += "&sFileURL=" + "http://localhost:8080/project/multiupload/" + realFileNm;
+				sFileInfo += "&sFileURL=" + URL + realFileNm;
 				System.out.println("sFileInfo : " + sFileInfo);
 				PrintWriter pw = response.getWriter();
 				pw.print(sFileInfo);
