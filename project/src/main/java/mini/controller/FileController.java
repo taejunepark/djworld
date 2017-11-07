@@ -19,10 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class FileController {
 	@RequestMapping(value="/file_uploader")
 	public void fileUpload(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("파일 업로더 컨트롤러 실행");
+		System.out.println("FileController 실행");
 		String URL= request.getRequestURL().toString();
 		URL = URL.substring(0, URL.lastIndexOf('/') + 1) + "multiupload/";
-		System.out.println(URL);
 		
 		try {
 			// 파일 정보
@@ -43,8 +42,6 @@ public class FileController {
 				}
 			}
 			
-			System.out.println("cnt : " + cnt);
-
 			// 이미지가 아닐 경우
 			if (cnt == 0) {
 				PrintWriter pw = response.getWriter();
@@ -55,15 +52,12 @@ public class FileController {
 				// 이미지이므로 신규 파일 디렉토리 설정 및 업로드
 				// 파일 기본 경로
 				String dstFilePath = request.getSession().getServletContext().getRealPath("/");
-				System.out.println("dstFilePath : " + dstFilePath);
 
 				// 파일 기본 경로_상세 경로
 				String filePath = dstFilePath + "multiupload" + File.separator;
-				System.out.println("filePath : " + filePath);
 
 				File file = new File(filePath);
 				if (!file.exists()) {
-					System.out.println("폴더 생성 완료");
 					file.mkdirs();
 				}
 
@@ -72,36 +66,27 @@ public class FileController {
 				String today = formatter.format(new Date());
 				realFileNm = today + UUID.randomUUID().toString();
 				String saveFileNm = realFileNm;
-				System.out.println("saveFileNm : " + saveFileNm);
 				realFileNm += filename.substring(filename.lastIndexOf("."));
-				System.out.println("realFileNm : " + realFileNm);
 				String rlFileNm = filePath + realFileNm;
-				System.out.println("rlFileNm : " + rlFileNm);
+				System.out.println(filePath);
+				System.out.println(rlFileNm);
 				/**서버에 파일 쓰기*/
 				InputStream is = request.getInputStream();
-				System.out.println("InputStream 생성 완료");
 				OutputStream os = new FileOutputStream(rlFileNm);
-				System.out.println("OutputStream 생성 완료");
 				byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
 				while (true) {
 					int numRead = is.read(b, 0, b.length);
-					System.out.println("파일 전송 중");
-					System.out.println(numRead);
 					if(numRead == -1) {
 						break;
 					}
 					os.write(b, 0, numRead);
 				}
-				System.out.println("파일 업로드 완료");
 				
 				if (is != null) {
 					is.close();
 				}
-				System.out.println("InputStream close");
 				os.flush();
 				os.close();
-				System.out.println("OutputStream close");
-				
 				
 				/**서버에 파일 쓰기*/
 				// 정보 출력
@@ -109,12 +94,10 @@ public class FileController {
 				// img 태그의 title 속성을 원본 파일명으로 적용시켜주기 위함
 				sFileInfo += "&sFileName=" + filename;
 				sFileInfo += "&sFileURL=" + URL + realFileNm;
-				System.out.println("sFileInfo : " + sFileInfo);
 				PrintWriter pw = response.getWriter();
 				pw.print(sFileInfo);
 				pw.flush();
 				pw.close();
-				System.out.println("끝");
 			}
 		} // try end
 		catch (Exception e) {

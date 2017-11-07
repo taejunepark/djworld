@@ -127,7 +127,12 @@ public class DiaryController {
 		}else {
 			redirect.addFlashAttribute("owner", owner);
 			redirect.addFlashAttribute("id", id);
-			List<String> list = Utility.substrURL((String)map.get("srcs"));
+			
+			String srcs = (String)map.get("srcs");
+			List<String> list = null;
+			if(srcs != null) {
+				list = Utility.substrURL((String)map.get("srcs"));
+			}
 			
 			Diary d = new Diary();
 			d.setReg(reg);
@@ -135,7 +140,7 @@ public class DiaryController {
 			d.setOwner(id);
 			diaryDao.insert(d);
 			d = diaryDao.info(reg, id);
-			if(list.size() != 0)
+			if(list != null && list.size() != 0)
 				uploadDao.insert(list, d.getNo(), d.getOwner());
 			
 			path = "redirect:/minihome/" + id + "/diary";
@@ -181,8 +186,13 @@ public class DiaryController {
 			d = diaryDao.info(reg, id);
 			uploadDao.delete(d.getOwner(), d.getNo());
 			
-			List<String> list = Utility.substrURL((String)map.get("srcs"));
-			if(list.size() != 0)
+			String srcs = (String)map.get("srcs");
+			List<String> list = null;
+			if(srcs != null) {
+				list = Utility.substrURL((String)map.get("srcs"));
+			}
+			
+			if(list != null && list.size() != 0)
 				uploadDao.insert(list, d.getNo(), d.getOwner());
 			
 			path = "redirect:/minihome/"+id+"/diary";

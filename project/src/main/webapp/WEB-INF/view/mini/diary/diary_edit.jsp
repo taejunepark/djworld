@@ -39,17 +39,26 @@
         		 $("#tmp").html(html)
         		 var img = $("#tmp img")
         		 var imgPath = new Array()
-        		 var basePath = 'http://localhost:8080/project/multiupload/'
-        		 for(var i = 0; i < img.length; i++){
-        			 var src = img[i].getAttribute('src')
-        			 src = src.substring(basePath.length)
-        			 src = src.substring(0, src.lastIndexOf('.'))
-        			 imgPath.push(src)
+        		 if(img.length != 0) {
+            		 var tmp = img[0].getAttribute('src')
+            		 var basePath = ''
+            		 
+            		 for(var i = 0; i < 5; i++) {
+            			 basePath += tmp.substring(0, tmp.indexOf('/') + 1)
+                		 tmp = tmp.substring(tmp.indexOf('/') + 1)
+            		 }
+         		     
+            		 for(var i = 0; i < img.length; i++){
+            			 var src = img[i].getAttribute('src')
+            			 src = src.substring(basePath.length)
+            			 src = src.substring(0, src.lastIndexOf('.'))
+            			 imgPath.push(src)
+            		 }
+            		 var input = $("<input/>")
+            		 input.attr('type', 'hidden').attr('name','srcs').val(imgPath)
+            		 $("form").append(input)
         		 }
-        		 var input = $("<input/>")
-        		 input.attr('type', 'hidden').attr('name','srcs').val(imgPath)
-        		 $("form").append(input)
-        		 $("form").attr('action', '${pageContext.request.contextPath }/minihome/${owner.id }/diary_edit').submit()
+         		 $("form").attr('action', '${pageContext.request.contextPath }/minihome/${owner.id }/diary_edit').submit()
         	 }
         	 
         	 function validation() {

@@ -86,9 +86,14 @@ public class PhotoController {
 		String title = (String)map.get("title");
 		String detail = (String)map.get("detail");
 		photoDao.insert(title, detail, id);
-		List<String> list = Utility.substrURL((String)map.get("srcs"));
+		String srcs = (String)map.get("srcs");
+		List<String> list = null;
+		if(srcs != null) {
+			list = Utility.substrURL(srcs);
+		}
 		int no = photoDao.newSeq(id);
-		uploadDao.insert(list, no, id);
+		if(list != null && list.size() != 0)
+			uploadDao.insert(list, no, id);
 		owner.setTotal(total);
 		redirect.addFlashAttribute("owner", owner);
 		redirect.addFlashAttribute("id", id);
@@ -128,8 +133,14 @@ public class PhotoController {
 		Photo p = photoDao.info(no);
 		uploadDao.delete(p.getOwner(), p.getNo());
 		
-		List<String> list = Utility.substrURL((String)map.get("srcs"));
-		if(list.size() != 0)
+		String srcs = (String)map.get("srcs");
+		
+		List<String> list = null;
+		if(srcs != null) {
+			list = Utility.substrURL(srcs);
+		}
+		
+		if(list != null && list.size() != 0)
 			uploadDao.insert(list, p.getNo(), p.getOwner());
 		
 		redirect.addFlashAttribute("owner", owner);

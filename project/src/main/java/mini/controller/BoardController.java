@@ -1,12 +1,9 @@
 package mini.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,15 +18,11 @@ import main.bean.Member;
 import main.model.friend.FriendDao;
 import main.model.member.MemberDao;
 import mini.bean.Board;
-import mini.bean.Diary;
-import mini.bean.Photo;
 import mini.model.board.BoardDao;
 import mini.model.comment.MinicommentDao;
-import mini.model.diary.DiaryDao;
 import mini.model.reply.ReplyDao;
 import mini.model.total.TotalDao;
 import mini.model.upload.UploadDao;
-import mini.model.visitors.VisitorsDao;
 import mini.util.Utility;
 
 @Controller
@@ -99,9 +92,16 @@ public class BoardController {
 		b.setDetail((String)map.get("detail"));
 		b.setOwner(id);
 		boardDao.insert(b);
-		List<String> list = Utility.substrURL((String)map.get("srcs"));
+		String srcs = (String)map.get("srcs");
+		
+		List<String> list = null;
+		if(srcs != null) {
+			list = Utility.substrURL(srcs);
+		}
+		
 		int no = boardDao.newSeq(id);
-		uploadDao.insert(list, no, id);
+		if(list != null && list.size() != 0)
+			uploadDao.insert(list, no, id);
 		return "redirect:/minihome/"+id+"/board";
 	}
 	
@@ -157,8 +157,12 @@ public class BoardController {
 		Board b = boardDao.info(no, id);
 		uploadDao.delete(b.getOwner(), b.getNo());
 		
-		List<String> list = Utility.substrURL((String)map.get("srcs"));
-		if(list.size() != 0)
+		String srcs = (String)map.get("srcs");
+		List<String> list = null;
+		if(srcs != null) {
+			list = Utility.substrURL(srcs);
+		}
+		if(list != null && list.size() != 0)
 			uploadDao.insert(list, b.getNo(), b.getOwner());
 		
 		return "redirect:/minihome/"+id+"/board_detail/" + no;

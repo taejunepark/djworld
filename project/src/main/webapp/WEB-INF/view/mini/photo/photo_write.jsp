@@ -52,6 +52,11 @@ input[name=title]{
    		 var res = createSrcs()
    		 console.log(res)
    		 if(res){
+   			 if($("input[name=title]").val().length==0){
+   				 alert("제목 입력 바랍니다.")
+   				 return
+   			 }
+   				 
    			$("form").attr('action', '${pageContext.request.contextPath }/minihome/${owner.id }/photo_write').submit()
    		 }else{
    			 $("form").submit(function(){
@@ -75,26 +80,24 @@ input[name=title]{
        			return false
        		}
        		
-       		// 배열 변수 생성
        		var imgPath = new Array()
-       		// 이미지의 src 파일 이름 앞 부분 잘라낼 변수
-       		var basePath = 'http://localhost:8080/project/multiupload/'
-       		for(var i = 0; i < img.length; i++){
-       			// img[i]번방의 src 경로 추출
-       			var src = img[i].getAttribute('src')
-       			// 파일 이름 앞부분 잘라냄
-       			src = src.substring(basePath.length)
-       			// 파일 이름 뒤의 확장자 제거
-       			src = src.substring(0, src.lastIndexOf('.'))
-       			// 파일 이름만 남은 src를 배열에 추가
-       			imgPath.push(src)
-       		}
-       		// input 태그 생성
-       		var input = $("<input/>")
-       		// <input type="hidden" name="srcs" value="imgPath">로 설정
-       		input.attr('type', 'hidden').attr('name','srcs').val(imgPath)
-       		// form에 추가
-       		$("form").append(input)
+			var tmp = img[0].getAttribute('src')
+   		 	var basePath = ''
+   		 
+   		 	for(var i = 0; i < 5; i++) {
+   			 	basePath += tmp.substring(0, tmp.indexOf('/') + 1)
+       		 	tmp = tmp.substring(tmp.indexOf('/') + 1)
+   		 	}
+		     
+   		 	for(var i = 0; i < img.length; i++){
+   			 	var src = img[i].getAttribute('src')
+   			 	src = src.substring(basePath.length)
+   			 	src = src.substring(0, src.lastIndexOf('.'))
+   			 	imgPath.push(src)
+   		 	}
+   		 	var input = $("<input/>")
+   		 	input.attr('type', 'hidden').attr('name','srcs').val(imgPath)
+   		 	$("form").append(input)
        		return true
        	 }
 	})
