@@ -150,7 +150,7 @@ button {
 			 return true;
 		 }
 		 else if(input.value.length < 6 || input.value.length > 20 ){
-			 input.className = "incorrect";p
+			 input.className = "incorrect";
 			 $('#pwMSG').html('<p style="color:red">비밀번호는 영문, 숫자, 기호 총 6~20글자로 정해주세요.</p>');
 			 return false;
 		 }
@@ -175,6 +175,19 @@ button {
 			return false;
 		}
 	}
+	
+	function birthCheck(){
+		var input = document.querySelector("input[name=birth]");
+		var regex = /^(19|20)[0-9]{2}(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|12[0-9]|30))|(02(0[1-9]|[12][0-9])))$/g;
+		if(regex.test(input.value)){
+			input.style = "border:2px solid blue";
+			return true;
+		}
+		else{
+			input.style = "border:2px solid red";
+			return false;
+		}
+	}
 
 	function nameCheck() {
 		var input = document.querySelector("input[name=name]");
@@ -196,10 +209,8 @@ button {
 		//기본 이벤트를 중지시키는 명령
 		event.preventDefault();
 		
-		
-         
 		//검사
-		var result = idFlag && pwCheck() && pw2Check() && nameCheck();
+		var result = idFlag && pwCheck() && pw2Check() && nameCheck() && birthCheck();
 		if (!idFlag){
 			alert("입력한 아이디를 다시 한번 확인해주세요.");
 			return;
@@ -220,10 +231,16 @@ button {
 			alert("이메일을 다시 한번 확인해주세요.");
 			return;
 		}
+		else if(!birthCheck()){
+			alert("생년월일을 다시 한번 확인해주세요.");
+			return;
+		}
 		
-		var pw = $("input[name=pw]").val();
-        var encrypt = SHA256(pw);
-        $("input[name=pw]").val(encrypt);
+		if(result){
+			var pw = $("input[name=pw]").val();
+	        var encrypt = SHA256(pw);
+	        $("input[name=pw]").val(encrypt);
+		}
 		
 		//전송
 		var form = document.querySelector("form");
@@ -299,8 +316,6 @@ button {
 				</th>
 			</tr>
 			<tr>
-				<th>
-			<tr>
 				<td>
 					<div class="gender">
 						<div style="float: left; width: 50%;">
@@ -320,11 +335,9 @@ button {
 					</div>
 				</td>
 			</tr>
-			</th>
-			</tr>
 			<tr>
 				<th><input type="text" name="birth"
-					placeholder="생년월일(ex)19931105"></th>
+					placeholder="생년월일(ex)19931105" onblur="birthCheck()"></th>
 			</tr>
 			<tr>
 				<th><input type="text" name="phone" placeholder="휴대폰 번호(11자리)" maxlength="11">

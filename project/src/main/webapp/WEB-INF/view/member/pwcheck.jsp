@@ -2,6 +2,22 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/template/infoHeader.jsp"%>
 
+<script>
+function sendCheck() {
+	//폼의 전송을 중지하고 검사한 뒤에 합격이면 전송한다
+
+	//기본 이벤트를 중지시키는 명령
+	event.preventDefault();
+	
+	var pw = $("input[name=pw]").val();
+    var encrypt = SHA256(pw);
+    $("input[name=pw]").val(encrypt);
+    
+    var form = document.querySelector("form");
+	form.submit();
+}
+</script>
+
 <c:if test="${pwFlag}">
 	<script>
 		alert('비밀번호가 맞지 않습니다.');
@@ -23,7 +39,8 @@
 	<div class="font-small row" >개인정보를 위해
 		비밀번호를 입력해주세요.</div>
 	<div class="empty-row"></div>
-	<form action="${path }" method="post">
+	<form action="${pageContext.request.contextPath }/member/pwcheck/${path}" 
+		method="post"  onsubmit="sendCheck();">
 		<table class="area-100">
 			<tr>
 				<th>

@@ -130,9 +130,11 @@ public class MemberController {
 		String id = (String) session.getAttribute("userId");
 		if (id == null) {
 			redirect.addFlashAttribute("loginCheck", true);
+			System.out.println(path+id);
 			return "redirect:/member/login";
 		}
 		model.addAttribute("path", path);
+		System.out.println(path+id);
 		return "member/pwcheck";
 	}
 
@@ -141,6 +143,7 @@ public class MemberController {
 	public String pwcheck(@PathVariable String path, Model model, HttpSession session, String pw) {
 		String id = (String) session.getAttribute("userId");
 		boolean result = memberDao.pwCheck(id, pw);
+		System.out.println(path+id);
 		if (result) {
 			if (path.equals("info")) {
 				return "redirect:/member/info";

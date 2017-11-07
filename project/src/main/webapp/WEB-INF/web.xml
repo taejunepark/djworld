@@ -47,6 +47,15 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+<error-page>
+		<error-code>404</error-code>
+		<location>/error/404.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/500.jsp</location>
+	</error-page>
 
 	<!-- 주소를 변경하면 홈페이지 시작페이지가 설정 -->
 <!-- 	<welcome-file-list> -->

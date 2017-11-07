@@ -83,7 +83,6 @@ button {
 	<script type="text/javascript">
 		function sendCheck() {
 			event.preventDefault();
-			console.log($("input[type=password]").val());
 			var pw = $("input[type=password]").val();
 			var encrypt = SHA256(pw);
 			$("input[id=pw]").val(encrypt);
@@ -103,6 +102,13 @@ button {
 			alert('로그인 먼저 해주세요!');
 		</script>
 	</c:if>
+	
+	<c:if test="${loginFlag}">
+		<script>
+			alert('$path');
+		</script>
+	</c:if>
+	
 
 	<!-- 아래로 밀고 싶은 만큼 empty-row를 추가 -->
 	<div class="back"
@@ -130,8 +136,7 @@ button {
 						</div>
 						<div class="row">
 							<div class="col" align="left">
-								<input type="checkbox" name="save" value="remember"> 아이디
-								저장
+								<input type="checkbox" name="save" value="remember"> 아이디 저장
 							</div>
 					</c:when>
 					<c:otherwise>
@@ -140,7 +145,7 @@ button {
 								value="${cookie.remember.value }" required>
 						</div>
 						<div class="row" align="center">
-							<input type="password" name="pw" placeholder="비밀번호" required>
+							<input id="pw" type="password" name="pw" placeholder="비밀번호" required>
 						</div>
 						<div class="row">
 							<div class="col" align="left">
